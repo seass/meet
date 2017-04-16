@@ -1,0 +1,111 @@
+<extend name="Public/base" />
+
+<block name="body">
+	<div class="main-title cf">
+		<h2>{:isset($info['id'])?'编辑':'新增'}参会人员</h2>
+	</div>
+<form action="{:U()}" method="post" class="form-horizontal">
+		<div class="form-item cf">
+			<label class="item-label"><span style="color:red;">*</span> 绑定门店<span class="check-tips">（启用状态下的门店）</span></label>
+			<div class="controls">
+				<select name="store_id">
+					<option value="0">请选择所属门店</option>
+					<volist name=":get_store_list()" id="vo">
+						<option value="{$vo.id}">{$vo.store_name}</option>
+					</volist>
+				</select>
+			</div>
+		</div>
+		<div class="form-item cf">
+			<label class="item-label"><span style="color:red;">*</span> 分配班级<span class="check-tips">（启用状态下的班级）</span></label>
+			<div class="controls">
+				<select name="classes_id">
+					<option value="0">请选择所属班级</option>
+					<volist name=":get_classes_list()" id="vo">
+						<option value="{$vo.id}">{$vo.classes_name}</option>
+					</volist>
+				</select>
+			</div>
+		</div>
+        <div class="form-item">
+            <label class="item-label"><span style="color:red;">*</span> 人员姓名<span class="check-tips">（必填）</span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="realname" value="{$info.realname|default=''}">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label"><span style="color:red;">*</span> 性别<span class="check-tips"></span></label>
+            <div class="controls">
+                <label class="radio"><input type="radio" name="sex" value="1" checked>男</label>
+                <label class="radio"><input type="radio" name="sex" value="2">女</label>
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label"><span style="color:red;">*</span> 人员手机号<span class="check-tips">（必填）</span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="phone" value="{$info.phone|default=''}">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label"><span style="color:red;">*</span> 人员证件号<span class="check-tips">（必填）</span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="idcard" value="{$info.idcard|default=''}">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label"><span style="color:red;">*</span> 职务<span class="check-tips">（必填）</span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="position" value="{$info.position|default=''}">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label"> 头像照片<span class="check-tips"></span></label>
+            <div class="controls">
+                <input type="file" class="text " name="headimg" >
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label"> 考试成绩<span class="check-tips">（默认-1表示未参加考试）</span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="score" value="{$info.score|default='-1'}">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label"> 是否可以其他人合住酒店<span class="check-tips"></span></label>
+            <div class="controls">
+                <label class="radio"><input type="radio" name="is_share" value="0" checked>不可以</label>
+                <label class="radio"><input type="radio" name="is_share" value="1">可以</label>
+            </div>
+        </div>
+        <div class="form-item cf">
+			<label class="item-label"> 餐饮要求<span class="check-tips">（输入餐饮要求）</span></label>
+			<div class="controls">
+				<label class="textarea input-large"><textarea name="food_req">{$info.food_req}</textarea></label>
+			</div>
+		</div>
+        <div class="form-item">
+            <label class="item-label"><span style="color:red;">*</span> 状态<span class="check-tips"></span></label>
+            <div class="controls">
+                <label class="radio"><input type="radio" name="status" value="1">启用</label>
+                <label class="radio"><input type="radio" name="status" value="0">禁用</label>
+            </div>
+        </div>
+        <div class="form-item">
+        		<input type="hidden" name="id" value="{$info.id|default=''}">
+            <button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+            <button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+        </div>
+    </form>
+</block>
+<block name="script">
+<script type="text/javascript" charset="utf-8">
+	Think.setValue("status", {$info.status|default = 0});
+	Think.setValue('store_id',{$info.store_id|default=0});
+	Think.setValue('classes_id',{$info.classes_id|default=0});
+	Think.setValue('sex',{$info.sex|default=0});
+	Think.setValue('is_share',{$info.is_share|default=0});
+	//导航高亮
+	highlight_subnav('{:U('index')}');
+</script>
+</block>
+

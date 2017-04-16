@@ -1,0 +1,106 @@
+[ 2017-04-04T16:57:17+08:00 ] ::1 /onethink/install.php?s=/Install/step2.html
+ERR: Access denied for user 'root'@'localhost' (using password: NO)
+
+[ 2017-04-04T16:57:59+08:00 ] ::1 /onethink/install.php?s=/Install/step2.html
+ERR: Access denied for user 'root'@'localhost' (using password: NO)
+
+[ 2017-04-04T17:14:12+08:00 ] ::1 /onethink/index.php?s=/admin/think/lists/model/document.html
+ERR: 1054:Unknown column 'status_text' in 'field list'
+ [ SQL语句 ] : SELECT `id`,`category_id`,`title`,`type`,`level`,`update_time`,`status_text`,`view` FROM `onethink_document` ORDER BY id DESC LIMIT 0,10  
+
+[ 2017-04-04T17:45:08+08:00 ] ::1 /onethink/index.php?s=/admin/model/generate.html
+ERR: 1062:Duplicate entry '4' for key 'PRIMARY'
+ [ SQL语句 ] : INSERT INTO `onethink_model` (`id`,`name`,`title`,`extend`,`relation`,`need_pk`,`field_sort`,`field_group`,`attribute_list`,`template_list`,`template_add`,`template_edit`,`list_grid`,`list_row`,`search_key`,`search_list`,`create_time`,`update_time`,`status`,`engine_type`) VALUES (4,'sea','SEA测试',0,'',1,'','1:基础','','','','','',10,'','',1491298571,1491298571,1,'InnoDB')
+
+[ 2017-04-04T17:45:13+08:00 ] ::1 /onethink/index.php?s=/admin/think/lists/model/sea.html
+ERR: 1054:Unknown column '' in 'field list'
+ [ SQL语句 ] : SELECT ``,`id` FROM `onethink_sea` ORDER BY id DESC LIMIT 0,10  
+
+[ 2017-04-04T17:45:27+08:00 ] ::1 /onethink/index.php?s=/admin/think/lists/model/sea.html
+ERR: 1054:Unknown column '' in 'field list'
+ [ SQL语句 ] : SELECT ``,`id` FROM `onethink_sea` ORDER BY id DESC LIMIT 0,10  
+
+[ 2017-04-04T17:45:29+08:00 ] ::1 /onethink/index.php?s=/admin/think/lists/model/sea.html
+ERR: 1054:Unknown column '' in 'field list'
+ [ SQL语句 ] : SELECT ``,`id` FROM `onethink_sea` ORDER BY id DESC LIMIT 0,10  
+
+[ 2017-04-04T17:45:40+08:00 ] ::1 /onethink/index.php?s=/admin/think/lists/model/sea.html
+ERR: 1054:Unknown column '' in 'field list'
+ [ SQL语句 ] : SELECT ``,`id` FROM `onethink_sea` ORDER BY id DESC LIMIT 0,10  
+
+[ 2017-04-04T17:45:48+08:00 ] ::1 /onethink/index.php?s=/admin/think/lists/model/sea.html
+ERR: 1054:Unknown column '' in 'field list'
+ [ SQL语句 ] : SELECT ``,`id` FROM `onethink_sea` ORDER BY id DESC LIMIT 0,10  
+
+[ 2017-04-04T17:46:00+08:00 ] ::1 /onethink/index.php?s=/admin/think/lists/model/sea.html
+ERR: 1054:Unknown column '' in 'field list'
+ [ SQL语句 ] : SELECT ``,`id` FROM `onethink_sea` ORDER BY id DESC LIMIT 0,10  
+
+[ 2017-04-04T17:46:03+08:00 ] ::1 /onethink/index.php?s=/admin/think/lists/model/sea.html
+ERR: 1054:Unknown column '' in 'field list'
+ [ SQL语句 ] : SELECT ``,`id` FROM `onethink_sea` ORDER BY id DESC LIMIT 0,10  
+
+[ 2017-04-04T17:47:32+08:00 ] ::1 /onethink/index.php?s=/admin/think/lists/model/sea.html
+ERR: 1054:Unknown column '' in 'field list'
+ [ SQL语句 ] : SELECT ``,`id` FROM `onethink_sea` ORDER BY id DESC LIMIT 0,10  
+
+[ 2017-04-04T17:47:37+08:00 ] ::1 /onethink/index.php?s=/admin/think/lists/model/sea&title=sea
+ERR: 1054:Unknown column '' in 'field list'
+ [ SQL语句 ] : SELECT ``,`id` FROM `onethink_sea` ORDER BY id DESC LIMIT 0,10  
+
+[ 2017-04-04T17:47:37+08:00 ] ::1 /onethink/index.php?s=/admin/think/lists/model/sea&title=sea
+ERR: 1054:Unknown column '' in 'field list'
+ [ SQL语句 ] : SELECT ``,`id` FROM `onethink_sea` ORDER BY id DESC LIMIT 0,10  
+
+[ 2017-04-04T17:47:37+08:00 ] ::1 /onethink/index.php?s=/admin/think/lists/model/sea&title=sea
+ERR: 1054:Unknown column '' in 'field list'
+ [ SQL语句 ] : SELECT ``,`id` FROM `onethink_sea` ORDER BY id DESC LIMIT 0,10  
+
+[ 2017-04-04T17:47:37+08:00 ] ::1 /onethink/index.php?s=/admin/think/lists/model/sea&title=sea
+ERR: 1054:Unknown column '' in 'field list'
+ [ SQL语句 ] : SELECT ``,`id` FROM `onethink_sea` ORDER BY id DESC LIMIT 0,10  
+
+[ 2017-04-04T17:47:37+08:00 ] ::1 /onethink/index.php?s=/admin/think/lists/model/sea&title=sea
+ERR: 1054:Unknown column '' in 'field list'
+ [ SQL语句 ] : SELECT ``,`id` FROM `onethink_sea` ORDER BY id DESC LIMIT 0,10  
+
+[ 2017-04-04T17:47:46+08:00 ] ::1 /onethink/index.php?s=/admin/think/lists/model/sea.html
+ERR: 1054:Unknown column '' in 'field list'
+ [ SQL语句 ] : SELECT ``,`id` FROM `onethink_sea` ORDER BY id DESC LIMIT 0,10  
+
+[ 2017-04-04T17:47:50+08:00 ] ::1 /onethink/index.php?s=/admin/think/lists/model/sea.html
+ERR: 1054:Unknown column '' in 'field list'
+ [ SQL语句 ] : SELECT ``,`id` FROM `onethink_sea` ORDER BY id DESC LIMIT 0,10  
+
+[ 2017-04-04T17:47:58+08:00 ] ::1 /onethink/index.php?s=/admin/think/lists/model/sea.html
+ERR: 1054:Unknown column '' in 'field list'
+ [ SQL语句 ] : SELECT ``,`id` FROM `onethink_sea` ORDER BY id DESC LIMIT 0,10  
+
+[ 2017-04-04T17:48:02+08:00 ] ::1 /onethink/index.php?s=/admin/think/lists/model/sea.html
+ERR: 1054:Unknown column '' in 'field list'
+ [ SQL语句 ] : SELECT ``,`id` FROM `onethink_sea` ORDER BY id DESC LIMIT 0,10  
+
+[ 2017-04-04T17:48:18+08:00 ] ::1 /onethink/index.php?s=/admin/think/lists/model/sea.html
+ERR: 1054:Unknown column '' in 'field list'
+ [ SQL语句 ] : SELECT ``,`id` FROM `onethink_sea` ORDER BY id DESC LIMIT 0,10  
+
+[ 2017-04-04T17:48:19+08:00 ] ::1 /onethink/index.php?s=/admin/think/lists/model/sea.html
+ERR: 1054:Unknown column '' in 'field list'
+ [ SQL语句 ] : SELECT ``,`id` FROM `onethink_sea` ORDER BY id DESC LIMIT 0,10  
+
+[ 2017-04-04T17:48:19+08:00 ] ::1 /onethink/index.php?s=/admin/think/lists/model/sea.html
+ERR: 1054:Unknown column '' in 'field list'
+ [ SQL语句 ] : SELECT ``,`id` FROM `onethink_sea` ORDER BY id DESC LIMIT 0,10  
+
+[ 2017-04-04T17:48:19+08:00 ] ::1 /onethink/index.php?s=/admin/think/lists/model/sea.html
+ERR: 1054:Unknown column '' in 'field list'
+ [ SQL语句 ] : SELECT ``,`id` FROM `onethink_sea` ORDER BY id DESC LIMIT 0,10  
+
+[ 2017-04-04T17:48:19+08:00 ] ::1 /onethink/index.php?s=/admin/think/lists/model/sea.html
+ERR: 1054:Unknown column '' in 'field list'
+ [ SQL语句 ] : SELECT ``,`id` FROM `onethink_sea` ORDER BY id DESC LIMIT 0,10  
+
+[ 2017-04-04T18:05:15+08:00 ] ::1 /onethink/index.php?s=/admin/think/lists/model/sea.html
+ERR: 1054:Unknown column '' in 'field list'
+ [ SQL语句 ] : SELECT ``,`id` FROM `onethink_sea` ORDER BY id DESC LIMIT 0,10  
+

@@ -1,0 +1,285 @@
+[ 2017-04-16T13:43:19+08:00 ] ::1 /onethink/index.php?s=/admin/region/add.html
+ERR: 模板不存在:./Application/Admin/View/Region/add.html
+
+[ 2017-04-16T15:54:07+08:00 ] ::1 /onethink/index.php?s=/admin/store/add.html
+ERR: 1054:Unknown column 'region_name' in 'field list'
+ [ SQL语句 ] : SELECT `id`,`region_name` FROM `onethink_model` WHERE ( `status` = 1 ) 
+
+[ 2017-04-16T15:55:50+08:00 ] ::1 /onethink/index.php?s=/admin/store/add.html
+ERR: 1054:Unknown column 'region_name' in 'field list'
+ [ SQL语句 ] : SELECT `id`,`region_name` FROM `onethink_model` WHERE ( `status` = 1 ) 
+
+[ 2017-04-16T15:56:03+08:00 ] ::1 /onethink/index.php?s=/admin/store/add.html
+ERR: 1054:Unknown column 'region_name' in 'field list'
+ [ SQL语句 ] : SELECT `id`,`region_name` FROM `onethink_model` WHERE ( `status` = 1 ) 
+
+[ 2017-04-16T15:57:43+08:00 ] ::1 /onethink/index.php?s=/admin/store/add.html
+ERR: 1054:Unknown column 'region_name' in 'field list'
+ [ SQL语句 ] : SELECT `id`,`region_name` FROM `onethink_model` WHERE ( `status` = 1 ) 
+
+[ 2017-04-16T15:58:01+08:00 ] ::1 /onethink/index.php?s=/admin/store/add.html
+ERR: 1054:Unknown column 'region_name' in 'field list'
+ [ SQL语句 ] : SELECT `id`,`region_name` FROM `onethink_model` WHERE ( `status` = 1 ) 
+
+[ 2017-04-16T15:58:03+08:00 ] ::1 /onethink/index.php?s=/admin/store/add.html
+ERR: 1054:Unknown column 'region_name' in 'field list'
+ [ SQL语句 ] : SELECT `id`,`region_name` FROM `onethink_model` WHERE ( `status` = 1 ) 
+
+[ 2017-04-16T15:58:04+08:00 ] ::1 /onethink/index.php?s=/admin/store/add.html
+ERR: 1054:Unknown column 'region_name' in 'field list'
+ [ SQL语句 ] : SELECT `id`,`region_name` FROM `onethink_model` WHERE ( `status` = 1 ) 
+
+[ 2017-04-16T19:59:44+08:00 ] ::1 /onethink/index.php?s=/admin/meet_member/index.html
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `onethink_MeetMember`
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SELECT COUNT(*) AS tp_count FROM onethink_MeetMember m INNER JOIN onethink_meet me ON me.id=m.meet_id INNER JOIN onethink_classes c ON c.id=m.classes_id  WHERE ( m.status >= 0 ) ORDER BY mm.id DESC LIMIT 1  
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `onethink_MeetMember`
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SELECT m.id,m.user_no,m.realname,m.phone,m.sex,m.idcard,m.position,m.status,m.create_time,me.meet_name,me.begin_time,me.end_time,c.classes_name FROM onethink_MeetMember m INNER JOIN onethink_meet me ON me.id=m.meet_id INNER JOIN onethink_classes c ON c.id=m.classes_id  WHERE ( m.status >= 0 ) ORDER BY mm.id DESC LIMIT 0,10  
+
+[ 2017-04-16T20:00:06+08:00 ] ::1 /onethink/index.php?s=/admin/meet_member/index.html
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `onethink_MeetMember`
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SELECT COUNT(*) AS tp_count FROM onethink_MeetMember m INNER JOIN onethink_meet me ON me.id=m.meet_id INNER JOIN onethink_classes c ON c.id=m.classes_id  WHERE ( m.status >= 0 ) ORDER BY mm.id DESC LIMIT 1  
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `onethink_MeetMember`
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SELECT m.id,m.user_no,m.realname,m.phone,m.sex,m.idcard,m.position,m.status,m.create_time,me.meet_name,me.begin_time,me.end_time,c.classes_name FROM onethink_MeetMember m INNER JOIN onethink_meet me ON me.id=m.meet_id INNER JOIN onethink_classes c ON c.id=m.classes_id  WHERE ( m.status >= 0 ) ORDER BY mm.id DESC LIMIT 0,10  
+
+[ 2017-04-16T20:00:10+08:00 ] ::1 /onethink/index.php?s=/admin/meet_member/add.html
+ERR: 模板不存在:./Application/Admin/View/MeetMember/edit.html
+
+[ 2017-04-16T20:09:55+08:00 ] ::1 /onethink/index.php?s=/admin/meet_member/index.html
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `onethink_MeetMember`
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SELECT COUNT(*) AS tp_count FROM onethink_MeetMember m INNER JOIN onethink_meet me ON me.id=m.meet_id INNER JOIN onethink_classes c ON c.id=m.classes_id  WHERE ( m.status >= 0 ) ORDER BY mm.id DESC LIMIT 1  
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `onethink_MeetMember`
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SELECT m.id,m.user_no,m.realname,m.phone,m.sex,m.idcard,m.position,m.status,m.create_time,me.meet_name,me.begin_time,me.end_time,c.classes_name FROM onethink_MeetMember m INNER JOIN onethink_meet me ON me.id=m.meet_id INNER JOIN onethink_classes c ON c.id=m.classes_id  WHERE ( m.status >= 0 ) ORDER BY mm.id DESC LIMIT 0,10  
+
+[ 2017-04-16T20:09:57+08:00 ] ::1 /onethink/index.php?s=/admin/meet_member/add.html
+ERR: 模板不存在:./Application/Admin/View/MeetMember/edit.html
+
+[ 2017-04-16T20:10:02+08:00 ] ::1 /onethink/index.php?s=/admin/meet_member/index.html
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `onethink_MeetMember`
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SELECT COUNT(*) AS tp_count FROM onethink_MeetMember m INNER JOIN onethink_meet me ON me.id=m.meet_id INNER JOIN onethink_classes c ON c.id=m.classes_id  WHERE ( m.status >= 0 ) ORDER BY mm.id DESC LIMIT 1  
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `onethink_MeetMember`
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SELECT m.id,m.user_no,m.realname,m.phone,m.sex,m.idcard,m.position,m.status,m.create_time,me.meet_name,me.begin_time,me.end_time,c.classes_name FROM onethink_MeetMember m INNER JOIN onethink_meet me ON me.id=m.meet_id INNER JOIN onethink_classes c ON c.id=m.classes_id  WHERE ( m.status >= 0 ) ORDER BY mm.id DESC LIMIT 0,10  
+
+[ 2017-04-16T20:10:06+08:00 ] ::1 /onethink/index.php?s=/admin/meet_member/index.html
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `onethink_MeetMember`
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SELECT COUNT(*) AS tp_count FROM onethink_MeetMember m INNER JOIN onethink_meet me ON me.id=m.meet_id INNER JOIN onethink_classes c ON c.id=m.classes_id  WHERE ( m.status >= 0 ) ORDER BY mm.id DESC LIMIT 1  
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `onethink_MeetMember`
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SELECT m.id,m.user_no,m.realname,m.phone,m.sex,m.idcard,m.position,m.status,m.create_time,me.meet_name,me.begin_time,me.end_time,c.classes_name FROM onethink_MeetMember m INNER JOIN onethink_meet me ON me.id=m.meet_id INNER JOIN onethink_classes c ON c.id=m.classes_id  WHERE ( m.status >= 0 ) ORDER BY mm.id DESC LIMIT 0,10  
+
+[ 2017-04-16T20:10:52+08:00 ] ::1 /onethink/index.php?s=/admin/meet_member/index.html
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `onethink_MeetMember`
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SELECT COUNT(*) AS tp_count FROM onethink_MeetMember m INNER JOIN onethink_meet me ON me.id=m.meet_id INNER JOIN onethink_classes c ON c.id=m.classes_id  WHERE ( m.status >= 0 ) ORDER BY mm.id DESC LIMIT 1  
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `onethink_MeetMember`
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SELECT m.id,m.user_no,m.realname,m.phone,m.sex,m.idcard,m.position,m.status,m.create_time,me.meet_name,me.begin_time,me.end_time,c.classes_name FROM onethink_MeetMember m INNER JOIN onethink_meet me ON me.id=m.meet_id INNER JOIN onethink_classes c ON c.id=m.classes_id  WHERE ( m.status >= 0 ) ORDER BY mm.id DESC LIMIT 0,10  
+
+[ 2017-04-16T20:20:45+08:00 ] ::1 /onethink/index.php?s=/admin/meet_member/index.html
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `onethink_MeetMember`
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SELECT COUNT(*) AS tp_count FROM onethink_MeetMember m INNER JOIN onethink_meet me ON me.id=m.meet_id INNER JOIN onethink_classes c ON c.id=m.classes_id  WHERE ( m.status >= 0 ) ORDER BY mm.id DESC LIMIT 1  
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `onethink_MeetMember`
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SELECT m.id,m.user_no,m.realname,m.phone,m.sex,m.idcard,m.position,m.status,m.create_time,me.meet_name,me.begin_time,me.end_time,c.classes_name FROM onethink_MeetMember m INNER JOIN onethink_meet me ON me.id=m.meet_id INNER JOIN onethink_classes c ON c.id=m.classes_id  WHERE ( m.status >= 0 ) ORDER BY mm.id DESC LIMIT 0,10  
+
+[ 2017-04-16T21:07:48+08:00 ] ::1 /onethink/index.php?s=/admin/meet_member/index.html
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `onethink_MeetMember`
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SELECT COUNT(*) AS tp_count FROM onethink_MeetMember m INNER JOIN onethink_meet me ON me.id=m.meet_id INNER JOIN onethink_classes c ON c.id=m.classes_id  WHERE ( m.status >= 0 ) ORDER BY mm.id DESC LIMIT 1  
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `onethink_MeetMember`
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SELECT m.id,m.user_no,m.realname,m.phone,m.sex,m.idcard,m.position,m.status,m.create_time,me.meet_name,me.begin_time,me.end_time,c.classes_name FROM onethink_MeetMember m INNER JOIN onethink_meet me ON me.id=m.meet_id INNER JOIN onethink_classes c ON c.id=m.classes_id  WHERE ( m.status >= 0 ) ORDER BY mm.id DESC LIMIT 0,10  
+
+[ 2017-04-16T21:08:28+08:00 ] ::1 /onethink/index.php?s=/admin/meet_member/index.html
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `onethink_MeetMember`
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SELECT COUNT(*) AS tp_count FROM onethink_MeetMember m INNER JOIN onethink_meet me ON me.id=m.meet_id INNER JOIN onethink_classes c ON c.id=m.classes_id  WHERE ( m.status >= 0 ) ORDER BY mm.id DESC LIMIT 1  
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `onethink_MeetMember`
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SELECT m.id,m.user_no,m.realname,m.phone,m.sex,m.idcard,m.position,m.status,m.create_time,me.meet_name,me.begin_time,me.end_time,c.classes_name FROM onethink_MeetMember m INNER JOIN onethink_meet me ON me.id=m.meet_id INNER JOIN onethink_classes c ON c.id=m.classes_id  WHERE ( m.status >= 0 ) ORDER BY mm.id DESC LIMIT 0,10  
+
+[ 2017-04-16T21:08:31+08:00 ] ::1 /onethink/index.php?s=/admin/meet_member/index.html
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `onethink_MeetMember`
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SELECT COUNT(*) AS tp_count FROM onethink_MeetMember m INNER JOIN onethink_meet me ON me.id=m.meet_id INNER JOIN onethink_classes c ON c.id=m.classes_id  WHERE ( m.status >= 0 ) ORDER BY mm.id DESC LIMIT 1  
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `onethink_MeetMember`
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SELECT m.id,m.user_no,m.realname,m.phone,m.sex,m.idcard,m.position,m.status,m.create_time,me.meet_name,me.begin_time,me.end_time,c.classes_name FROM onethink_MeetMember m INNER JOIN onethink_meet me ON me.id=m.meet_id INNER JOIN onethink_classes c ON c.id=m.classes_id  WHERE ( m.status >= 0 ) ORDER BY mm.id DESC LIMIT 0,10  
+
+[ 2017-04-16T21:08:32+08:00 ] ::1 /onethink/index.php?s=/admin/meet_member/index.html
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `onethink_MeetMember`
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SELECT COUNT(*) AS tp_count FROM onethink_MeetMember m INNER JOIN onethink_meet me ON me.id=m.meet_id INNER JOIN onethink_classes c ON c.id=m.classes_id  WHERE ( m.status >= 0 ) ORDER BY mm.id DESC LIMIT 1  
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `onethink_MeetMember`
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SELECT m.id,m.user_no,m.realname,m.phone,m.sex,m.idcard,m.position,m.status,m.create_time,me.meet_name,me.begin_time,me.end_time,c.classes_name FROM onethink_MeetMember m INNER JOIN onethink_meet me ON me.id=m.meet_id INNER JOIN onethink_classes c ON c.id=m.classes_id  WHERE ( m.status >= 0 ) ORDER BY mm.id DESC LIMIT 0,10  
+
+[ 2017-04-16T21:08:32+08:00 ] ::1 /onethink/index.php?s=/admin/meet_member/index.html
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `onethink_MeetMember`
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SELECT COUNT(*) AS tp_count FROM onethink_MeetMember m INNER JOIN onethink_meet me ON me.id=m.meet_id INNER JOIN onethink_classes c ON c.id=m.classes_id  WHERE ( m.status >= 0 ) ORDER BY mm.id DESC LIMIT 1  
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `onethink_MeetMember`
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SELECT m.id,m.user_no,m.realname,m.phone,m.sex,m.idcard,m.position,m.status,m.create_time,me.meet_name,me.begin_time,me.end_time,c.classes_name FROM onethink_MeetMember m INNER JOIN onethink_meet me ON me.id=m.meet_id INNER JOIN onethink_classes c ON c.id=m.classes_id  WHERE ( m.status >= 0 ) ORDER BY mm.id DESC LIMIT 0,10  
+
+[ 2017-04-16T21:11:31+08:00 ] ::1 /onethink/index.php?s=/admin/meet_member/index.html
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `onethink_MeetMember`
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SELECT COUNT(*) AS tp_count FROM onethink_MeetMember m INNER JOIN onethink_meet me ON me.id=m.meet_id INNER JOIN onethink_classes c ON c.id=m.classes_id  WHERE ( m.status >= 0 ) ORDER BY m.id DESC LIMIT 1  
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `onethink_MeetMember`
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SELECT m.id,m.user_no,m.realname,m.phone,m.sex,m.idcard,m.position,m.status,m.create_time,me.meet_name,me.begin_time,me.end_time,c.classes_name FROM onethink_MeetMember m INNER JOIN onethink_meet me ON me.id=m.meet_id INNER JOIN onethink_classes c ON c.id=m.classes_id  WHERE ( m.status >= 0 ) ORDER BY m.id DESC LIMIT 0,10  
+
+[ 2017-04-16T21:11:33+08:00 ] ::1 /onethink/index.php?s=/admin/meet_member/index.html
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `onethink_MeetMember`
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SELECT COUNT(*) AS tp_count FROM onethink_MeetMember m INNER JOIN onethink_meet me ON me.id=m.meet_id INNER JOIN onethink_classes c ON c.id=m.classes_id  WHERE ( m.status >= 0 ) ORDER BY m.id DESC LIMIT 1  
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `onethink_MeetMember`
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SELECT m.id,m.user_no,m.realname,m.phone,m.sex,m.idcard,m.position,m.status,m.create_time,me.meet_name,me.begin_time,me.end_time,c.classes_name FROM onethink_MeetMember m INNER JOIN onethink_meet me ON me.id=m.meet_id INNER JOIN onethink_classes c ON c.id=m.classes_id  WHERE ( m.status >= 0 ) ORDER BY m.id DESC LIMIT 0,10  
+
+[ 2017-04-16T21:11:39+08:00 ] ::1 /onethink/index.php?s=/admin/meet_member/index.html
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `onethink_MeetMember`
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SELECT COUNT(*) AS tp_count FROM onethink_MeetMember m INNER JOIN onethink_meet me ON me.id=m.meet_id INNER JOIN onethink_classes c ON c.id=m.classes_id  WHERE ( m.status >= 0 ) ORDER BY m.id DESC LIMIT 1  
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `onethink_MeetMember`
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SELECT m.id,m.user_no,m.realname,m.phone,m.sex,m.idcard,m.position,m.status,m.create_time,me.meet_name,me.begin_time,me.end_time,c.classes_name FROM onethink_MeetMember m INNER JOIN onethink_meet me ON me.id=m.meet_id INNER JOIN onethink_classes c ON c.id=m.classes_id  WHERE ( m.status >= 0 ) ORDER BY m.id DESC LIMIT 0,10  
+
+[ 2017-04-16T21:11:58+08:00 ] ::1 /onethink/index.php?s=/admin/meet_member/index.html
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `onethink_MeetMember`
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SELECT COUNT(*) AS tp_count FROM onethink_MeetMember m INNER JOIN onethink_meet me ON me.id=m.meet_id INNER JOIN onethink_classes c ON c.id=m.classes_id  WHERE ( m.status >= 0 ) ORDER BY m.id DESC LIMIT 1  
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `onethink_MeetMember`
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SELECT m.id,m.user_no,m.realname,m.phone,m.sex,m.idcard,m.position,m.status,m.create_time,me.meet_name,me.begin_time,me.end_time,c.classes_name FROM onethink_MeetMember m INNER JOIN onethink_meet me ON me.id=m.meet_id INNER JOIN onethink_classes c ON c.id=m.classes_id  WHERE ( m.status >= 0 ) ORDER BY m.id DESC LIMIT 0,10  
+
+[ 2017-04-16T21:12:21+08:00 ] ::1 /onethink/index.php?s=/admin/meet_member/index.html
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `onethink_MeetMember`
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SELECT COUNT(*) AS tp_count FROM onethink_MeetMember m  left join onethink_meet me ON me.id=m.meet_id  left join onethink_classes c ON c.id=m.classes_id  WHERE ( m.status >= 0 ) ORDER BY m.id DESC LIMIT 1  
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `onethink_MeetMember`
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SELECT m.id,m.user_no,m.realname,m.phone,m.sex,m.idcard,m.position,m.status,m.create_time,me.meet_name,me.begin_time,me.end_time,c.classes_name FROM onethink_MeetMember m  left join onethink_meet me ON me.id=m.meet_id  left join onethink_classes c ON c.id=m.classes_id  WHERE ( m.status >= 0 ) ORDER BY m.id DESC LIMIT 0,10  
+
+[ 2017-04-16T21:12:22+08:00 ] ::1 /onethink/index.php?s=/admin/meet_member/index.html
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `onethink_MeetMember`
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SELECT COUNT(*) AS tp_count FROM onethink_MeetMember m  left join onethink_meet me ON me.id=m.meet_id  left join onethink_classes c ON c.id=m.classes_id  WHERE ( m.status >= 0 ) ORDER BY m.id DESC LIMIT 1  
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `onethink_MeetMember`
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SELECT m.id,m.user_no,m.realname,m.phone,m.sex,m.idcard,m.position,m.status,m.create_time,me.meet_name,me.begin_time,me.end_time,c.classes_name FROM onethink_MeetMember m  left join onethink_meet me ON me.id=m.meet_id  left join onethink_classes c ON c.id=m.classes_id  WHERE ( m.status >= 0 ) ORDER BY m.id DESC LIMIT 0,10  
+
+[ 2017-04-16T21:12:23+08:00 ] ::1 /onethink/index.php?s=/admin/meet_member/index.html
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `onethink_MeetMember`
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SELECT COUNT(*) AS tp_count FROM onethink_MeetMember m  left join onethink_meet me ON me.id=m.meet_id  left join onethink_classes c ON c.id=m.classes_id  WHERE ( m.status >= 0 ) ORDER BY m.id DESC LIMIT 1  
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `onethink_MeetMember`
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SELECT m.id,m.user_no,m.realname,m.phone,m.sex,m.idcard,m.position,m.status,m.create_time,me.meet_name,me.begin_time,me.end_time,c.classes_name FROM onethink_MeetMember m  left join onethink_meet me ON me.id=m.meet_id  left join onethink_classes c ON c.id=m.classes_id  WHERE ( m.status >= 0 ) ORDER BY m.id DESC LIMIT 0,10  
+
+[ 2017-04-16T21:12:23+08:00 ] ::1 /onethink/index.php?s=/admin/meet_member/index.html
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `onethink_MeetMember`
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SELECT COUNT(*) AS tp_count FROM onethink_MeetMember m  left join onethink_meet me ON me.id=m.meet_id  left join onethink_classes c ON c.id=m.classes_id  WHERE ( m.status >= 0 ) ORDER BY m.id DESC LIMIT 1  
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `onethink_MeetMember`
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SELECT m.id,m.user_no,m.realname,m.phone,m.sex,m.idcard,m.position,m.status,m.create_time,me.meet_name,me.begin_time,me.end_time,c.classes_name FROM onethink_MeetMember m  left join onethink_meet me ON me.id=m.meet_id  left join onethink_classes c ON c.id=m.classes_id  WHERE ( m.status >= 0 ) ORDER BY m.id DESC LIMIT 0,10  
+
+[ 2017-04-16T21:12:24+08:00 ] ::1 /onethink/index.php?s=/admin/meet_member/index.html
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `onethink_MeetMember`
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SELECT COUNT(*) AS tp_count FROM onethink_MeetMember m  left join onethink_meet me ON me.id=m.meet_id  left join onethink_classes c ON c.id=m.classes_id  WHERE ( m.status >= 0 ) ORDER BY m.id DESC LIMIT 1  
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `onethink_MeetMember`
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SELECT m.id,m.user_no,m.realname,m.phone,m.sex,m.idcard,m.position,m.status,m.create_time,me.meet_name,me.begin_time,me.end_time,c.classes_name FROM onethink_MeetMember m  left join onethink_meet me ON me.id=m.meet_id  left join onethink_classes c ON c.id=m.classes_id  WHERE ( m.status >= 0 ) ORDER BY m.id DESC LIMIT 0,10  
+
+[ 2017-04-16T21:12:24+08:00 ] ::1 /onethink/index.php?s=/admin/meet_member/index.html
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `onethink_MeetMember`
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SELECT COUNT(*) AS tp_count FROM onethink_MeetMember m  left join onethink_meet me ON me.id=m.meet_id  left join onethink_classes c ON c.id=m.classes_id  WHERE ( m.status >= 0 ) ORDER BY m.id DESC LIMIT 1  
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `onethink_MeetMember`
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SELECT m.id,m.user_no,m.realname,m.phone,m.sex,m.idcard,m.position,m.status,m.create_time,me.meet_name,me.begin_time,me.end_time,c.classes_name FROM onethink_MeetMember m  left join onethink_meet me ON me.id=m.meet_id  left join onethink_classes c ON c.id=m.classes_id  WHERE ( m.status >= 0 ) ORDER BY m.id DESC LIMIT 0,10  
+
+[ 2017-04-16T21:12:25+08:00 ] ::1 /onethink/index.php?s=/admin/meet_member/index.html
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `onethink_MeetMember`
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SELECT COUNT(*) AS tp_count FROM onethink_MeetMember m  left join onethink_meet me ON me.id=m.meet_id  left join onethink_classes c ON c.id=m.classes_id  WHERE ( m.status >= 0 ) ORDER BY m.id DESC LIMIT 1  
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `onethink_MeetMember`
+ERR: 1146:Table 'onethink.onethink_meetmember' doesn't exist
+ [ SQL语句 ] : SELECT m.id,m.user_no,m.realname,m.phone,m.sex,m.idcard,m.position,m.status,m.create_time,me.meet_name,me.begin_time,me.end_time,c.classes_name FROM onethink_MeetMember m  left join onethink_meet me ON me.id=m.meet_id  left join onethink_classes c ON c.id=m.classes_id  WHERE ( m.status >= 0 ) ORDER BY m.id DESC LIMIT 0,10  
+
+[ 2017-04-16T21:16:38+08:00 ] ::1 /onethink/index.php?s=/admin/meet_member/edit/id/1.html
+ERR: 1146:Table 'onethink.onethink_meet__member' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `onethink_meet__member`
+ERR: 1146:Table 'onethink.onethink_meet__member' doesn't exist
+ [ SQL语句 ] : SELECT * FROM `onethink_meet__member` WHERE ( id=1 ) LIMIT 1  
+
+[ 2017-04-16T21:18:13+08:00 ] ::1 /onethink/index.php?s=/admin/meet_member/edit/id/1.html
+ERR: 1146:Table 'onethink.onethink_meet__member' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `onethink_meet__member`
+ERR: 1146:Table 'onethink.onethink_meet__member' doesn't exist
+ [ SQL语句 ] : SELECT * FROM `onethink_meet__member` WHERE ( id=1 ) LIMIT 1  
+
+[ 2017-04-16T21:18:20+08:00 ] ::1 /onethink/index.php?s=/admin/meet_member/edit/id/1.html
+ERR: 1146:Table 'onethink.onethink_meet__member' doesn't exist
+ [ SQL语句 ] : SHOW COLUMNS FROM `onethink_meet__member`
+ERR: 1146:Table 'onethink.onethink_meet__member' doesn't exist
+ [ SQL语句 ] : SELECT * FROM `onethink_meet__member` WHERE ( id=1 ) LIMIT 1  
+
