@@ -65,11 +65,15 @@
 			<td>{$vo.phone}</td>
 			<td>{$vo.idcard}</td>
 			<td><if condition="$vo.sex eq 1">男<else/>女</if></td>
-			<td><div class="upload-img-box">
+			<td>
+				<if condition="$vo.headimg eq null">
+				<else/>
+					<div class="upload-img-box">
 						<div class="upload-pre-item">
 							<img src="__ROOT__{$vo.headimg|get_cover='path'}">
 						</div>
-				</div>
+					</div>
+				</if>
 			</td>
 			<td><div class="upload-img-box">
 						<div class="upload-pre-item">

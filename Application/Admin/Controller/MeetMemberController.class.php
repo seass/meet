@@ -134,6 +134,15 @@ class MeetMemberController extends AdminController {
         if(IS_POST){
             //获取保存数据
             $save_data=$this->getSaveData();
+            /*
+             * 检查用户的手机号 是否已经存在次会议的班级下
+             */
+            $check_res=M($this->_model)->where([
+                                'meet_id'=>$save_data['meet_id'],
+                                'phone'=>$save_data['phone']])->getField("id");
+            if(!empty($check_res)){
+                $this->error('此用户已经存在本次会议班级,请重新输入新用户！');
+            }
             //添加数据
             $add_res=M($this->_model)->add($save_data);
             if($add_res==false){
