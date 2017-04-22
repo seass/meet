@@ -29,6 +29,19 @@ function is_login(){
         return session('user_auth_sign') == data_auth_sign($user) ? $user['uid'] : 0;
     }
 }
+/**
+ * 检测用户是否登录
+ * @return integer 0-未登录，大于0-当前登录用户ID
+ * @author sea <919873148.qq.com>
+ */
+function is_muser_login(){
+    $user = session('muser_auth');
+    if (empty($user)) {
+        return 0;
+    } else {
+        return session('muser_auth_sign') == data_auth_sign($user) ? $user['id'] : 0;
+    }
+}
 
 /**
  * 检测当前用户是否为管理员
