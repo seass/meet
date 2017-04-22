@@ -23,7 +23,7 @@ class QiniuController extends AdminController {
             'bucket'=>'blackwhite',
             'domain'=>'blackwhite.u.qiniudn.com'
         );
-        $this->qiniu = new QiNiuStorage($config);
+        $this->qiniu = new \Think\Upload\Driver\Qiniu\QiniuStorage($config);
         parent:: _initialize();
     }
 

@@ -1,0 +1,145 @@
+<extend name="Public/base" />
+
+<block name="body">
+	<!-- 标题栏 -->
+	<div class="main-title">
+		<h2>会议资料列表</h2>
+	</div>
+	<div class="cf">
+		<div class="fl">
+			<input type="file" name="file" id="upload-file">
+            <button class="btn ajax-post" url="{:U('MeetAttchment/changeStatus',array('method'=>'resumemeetattchment'))}" target-form="ids">启 用</button>
+            <button class="btn ajax-post" url="{:U('MeetAttchment/changeStatus',array('method'=>'forbidmeetattchment'))}" target-form="ids">禁 用</button>
+            <button class="btn ajax-post confirm" url="{:U('MeetAttchment/changeStatus',array('method'=>'deletemeetattchment'))}" target-form="ids">删 除</button>
+        </div>
+        <!-- 高级搜索 -->
+		<div class="search-form fr cf">
+			<div class="sleft">
+				<input type="text" name="_key" class="search-input" value="{:I('_key')}" placeholder="请输入资料名称/文件类型">
+				<a class="sch-btn" href="javascript:;" id="search" url="{:U('index')}"><i class="btn-search"></i></a>
+			</div>
+		</div>
+    </div>
+    <!-- 数据列表 -->
+    <div class="data-table">
+	<table class="">
+    <thead>
+        <tr>
+			<th class="row-selected"><input class="check-all" type="checkbox"/></th>
+			<th class="">文件名</th>
+			<th class="">文件类型</th>
+			<th class="">文件大小</th>
+			<th class="">上传时间</th>
+			<th class="">状态</th>
+			<th class="">操作</th>
+		</tr>
+    </thead>
+    <tbody>
+		<notempty name="_list">
+		<volist name="_list" id="vo">
+		<tr>
+            <td><input class="ids" type="checkbox" name="id[]" value="{$vo.id}" /></td>
+			<td>{$vo.name}</td>
+			<td>{$vo.mime}</td>
+			<td>{$vo.size}</td>
+			<td>{$vo.create_time}</td>
+			<td>{$vo.status_text}</td>
+			<td>
+				<a href="__ROOT__{:C('DOWNLOAD_UPLOAD.rootDPath')}{$vo.savepath}{$vo.savename}" target="_blank">下载</a>
+				<if condition="$vo.status eq 1">
+				<a href="{:U('MeetAttchment/changeStatus?method=forbidmeetattchment&id='.$vo['id'])}" class="ajax-get">禁用</a>
+				<else/>
+				<a href="{:U('MeetAttchment/changeStatus?method=resumemeetattchment&id='.$vo['id'])}" class="ajax-get">启用</a>
+				</if>
+				<a href="{:U('MeetAttchment/changeStatus?method=deletemeetattchment&id='.$vo['id'])}" class="confirm ajax-get">删除</a>
+                </td>
+		</tr>
+		</volist>
+		<else/>
+		<td colspan="6" class="text-center"> Oh! 暂时还没有内容! </td>
+		</notempty>
+	</tbody>
+    </table>
+	</div>
+    <div class="page">
+        {$_page}
+    </div>
+    <input  type="hidden" id="meet_id" value="{$meet_id}" />
+</block>
+
+<block name="script">
+	<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+	<script src="__STATIC__/thinkbox/jquery.thinkbox.js"></script>
+
+	<script type="text/javascript">
+	(function($){
+		//上传文件
+		/* 初始化上传插件 */
+		$("#upload-file").uploadify({
+			"height"          : 30,
+			"swf"             : "__STATIC__/uploadify/uploadify.swf",
+			"fileObjName"     : "download",
+			"buttonText"      : "上传文件",
+			"uploader"        : "{:U('File/upload',array('session_id'=>session_id(),'ajax'=>1))}",
+			"width"           : 120,
+			'removeTimeout'   : 1,
+			'onInit'		  : init,
+			'multi'			  : false,
+			'fileTypeExts'	  : '*.csv; *.xlsx; *.pdf; *.xls;',
+			"onUploadSuccess" : uploadSuccess,
+			'onFallback' : function() {
+	            alert('未检测到兼容版本的Flash.');
+	        }
+		});
+		function init(){
+			$('#upload-file, #upload-file-queue').css('display','inline-block');
+		}
+
+		/* 文件上传成功回调函数 */
+		function uploadSuccess(file, data){
+			console.log(data);
+			var data = $.parseJSON(data);
+			if(data.status){
+				//保存file_id
+				$.post("{:U('saveFileId')}",{'meet_id':$("#meet_id").val(),'file_id':data.info.id},
+						function(result){
+							if(result.status){
+								updateAlert('上传成功', 'alert-success');
+								setTimeout(function(){
+									location.reload(true);
+								},1500);
+							}else{
+								updateAlert('上传失败');
+							}
+		  				},'json');
+			} else {
+				console.log(data.data);
+				updateAlert('上传失败');
+			}
+		}
+	})(jQuery);
+
+	//搜索功能
+	$("#search").click(function(){
+		var url = $(this).attr('url');
+        var query  = $('.search-form').find('input').serialize();
+        query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g,'');
+        query = query.replace(/^&/g,'');
+        if( url.indexOf('?')>0 ){
+            url += '&' + query;
+        }else{
+            url += '?' + query;
+        }
+		window.location.href = url;
+	});
+	//回车搜索
+	$(".search-input").keyup(function(e){
+		if(e.keyCode === 13){
+			$("#search").click();
+			return false;
+		}
+	});
+    //导航高亮
+    highlight_subnav('{:U('Meet/index')}');
+	</script>
+</block>

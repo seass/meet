@@ -39,7 +39,7 @@ class RegionController extends AdminController {
      * @author sea
      */
     public function changeStatus($method=null){
-        $id = array_unique((array)I('id',0));
+        $id = array_unique((array)I('id',null));
         if (empty($id)) {
             $this->error('请选择要操作的数据!');
         }
@@ -50,13 +50,13 @@ class RegionController extends AdminController {
         //var_dump($id);
         //var_dump($method);exit;
         switch (strtolower($method)){
-            case 'forbidRegion':
+            case 'forbidregion':
                 $this->forbid($this->_model, $map );
                 break;
-            case 'resumeRegion':
+            case 'resumeregion':
                 $this->resume($this->_model, $map );
                 break;
-            case 'deleteRegion':
+            case 'deleteregion':
                 $this->delete($this->_model, $map );
                 break;
             default:

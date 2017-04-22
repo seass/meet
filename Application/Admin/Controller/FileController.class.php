@@ -25,16 +25,14 @@ class FileController extends AdminController {
 			C('DOWNLOAD_UPLOAD_DRIVER'),
 			C("UPLOAD_{$file_driver}_CONFIG")
 		);
-
         /* 记录附件信息 */
         if($info){
             $return['data'] = think_encrypt(json_encode($info['download']));
-            $return['info'] = $info['download']['name'];
+            $return['info'] = array_merge($info['download'], $return);//$info['download']['name'];
         } else {
             $return['status'] = 0;
             $return['info']   = $File->getError();
         }
-
         /* 返回JSON数据 */
         $this->ajaxReturn($return);
     }

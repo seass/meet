@@ -39,7 +39,7 @@ class meetController extends AdminController {
      * @author sea
      */
     public function changeStatus($method=null){
-        $id = array_unique((array)I('id',0));
+        $id = array_unique((array)I('id',null));
         if (empty($id)) {
             $this->error('请选择要操作的数据!');
         }
@@ -153,4 +153,5 @@ class meetController extends AdminController {
             $this->display('edit');
         }
     }
+    
 }

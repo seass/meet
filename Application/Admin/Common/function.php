@@ -419,4 +419,19 @@ function  get_user_no($meet_id){
     }
     return $count;
 }
+/**
+ * 获取WEB资源基础链接 末尾不带斜线
+ *
+ * @staticvar string $domain 域名静态缓存
+ * @return string
+ * @author zoujingli <zoujingli@qq.com>
+ */
+function get_domain() {
+    static $domain = null;
+    if (is_null($domain)) {
+        $port = is_ssl() ? 'https://' : 'http://';
+        $domain = $port . trim(I('server.HTTP_HOST'), ' /');
+    }
+    return $domain;
+}
 
