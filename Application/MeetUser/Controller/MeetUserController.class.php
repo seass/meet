@@ -26,7 +26,7 @@ class MeetUserController extends Controller {
             $this->redirect('Index/error');
         }
         //获取当前会议用户ID
-        define('MUID',is_muser_login());
+        define('MUID',is_muser_login($_GET["Mid"]));
         if( !MUID ){// 还没登录 跳转到登录页面
             $this->redirect('Index/login');
         }

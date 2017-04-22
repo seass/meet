@@ -34,12 +34,12 @@ function is_login(){
  * @return integer 0-未登录，大于0-当前登录用户ID
  * @author sea <919873148.qq.com>
  */
-function is_muser_login(){
-    $user = session('muser_auth');
+function is_muser_login($mid){
+    $user = session('muser_auth_'.$mid);
     if (empty($user)) {
         return 0;
     } else {
-        return session('muser_auth_sign') == data_auth_sign($user) ? $user['id'] : 0;
+        return session('muser_auth_sign_'.$mid) == data_auth_sign($user) ? $user['id'] : 0;
     }
 }
 
