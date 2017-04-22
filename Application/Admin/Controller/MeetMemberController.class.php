@@ -34,7 +34,7 @@ class MeetMemberController extends AdminController {
                        ->join (' left join '.C('DB_PREFIX').('classes').' c ON c.id=m.classes_id' )
                        ->join (' left join '.C('DB_PREFIX').('region').' r ON r.id=m.region_id' )
                        ->join (' left join '.C('DB_PREFIX').('store').' s ON s.id=m.store_id' );
-        $field='m.id,m.user_no,m.realname,m.phone,m.sex,m.idcard,m.headimg,m.position,m.status,m.create_time,me.meet_name,me.begin_time,me.end_time,c.classes_name,r.region_name,s.store_name';
+        $field='m.id,m.user_no,m.realname,m.phone,m.sex,m.idcard,m.headimg,m.position,m.qrcode,m.status,m.create_time,me.meet_name,me.begin_time,me.end_time,c.classes_name,r.region_name,s.store_name';
         $list = $this->lists($list,null,null,null,$field);
         int_to_string($list);
         
@@ -123,7 +123,7 @@ class MeetMemberController extends AdminController {
         //新增时初始密码
         if(empty(I('post.id'))){
             $data['password']=md5(substr($phone, -6));
-        }
+         }
         return $data;
     }
     /**
@@ -139,11 +139,16 @@ class MeetMemberController extends AdminController {
             if($add_res==false){
                 $this->error('新增失败！');
             }
+            //生成二维码
+            $qrcode=createQrcode($add_res);
+            M($this->_model)->where(['id'=>$add_res])->save(['qrcode'=>$qrcode]);
+            
             //记录行为(需要提前创建add_meetmember行为标记)
             action_log('add_meetmember',$this->_model, $add_res, UID);
             $this->success('新增成功！',U('index'));
            
         } else {
+            
             $this->meta_title = '新增会议人员';
             $this->display('edit');
         }

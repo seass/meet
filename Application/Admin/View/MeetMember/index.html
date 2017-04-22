@@ -31,8 +31,8 @@
 			<th class="">大区</th>
 			<th class="">门店</th>
 			<th class="">会议名称</th>
-			<th class="">会议报名开始时间</th>
-			<th class="">会议报名结束时间</th>
+			<!--<th class="">会议报名开始时间</th>
+			<th class="">会议报名结束时间</th>-->
 			<th class="">班级</th>
 			<th class="">参会编号</th>
 			<th class="">职务</th>
@@ -41,6 +41,7 @@
 			<th class="">证件号</th>
 			<th class="">性别</th>
 			<th class="">头像</th>
+			<th class="">二维码</th>
 			<th class="">状态</th>
 			<th class="">创建时间</th>
 			<th class="">操作</th>
@@ -55,8 +56,8 @@
 			<td>{$vo.region_name}</td>
 			<td>{$vo.store_name}</td>
 			<td>{$vo.meet_name}</td>
-			<td>{$vo.begin_time}</td>
-			<td>{$vo.end_time}</td>
+			<!--  <td>{$vo.begin_time}</td>
+			<td>{$vo.end_time}</td>-->
 			<td>{$vo.classes_name}</td>
 			<td>{$vo.user_no}</td>
 			<td>{$vo.position}</td>
@@ -67,6 +68,12 @@
 			<td><div class="upload-img-box">
 						<div class="upload-pre-item">
 							<img src="__ROOT__{$vo.headimg|get_cover='path'}">
+						</div>
+				</div>
+			</td>
+			<td><div class="upload-img-box">
+						<div class="upload-pre-item">
+							<img src="__ROOT__{$vo.qrcode}">
 						</div>
 				</div>
 			</td>

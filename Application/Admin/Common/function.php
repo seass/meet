@@ -420,18 +420,16 @@ function  get_user_no($meet_id){
     return $count;
 }
 /**
- * 获取WEB资源基础链接 末尾不带斜线
- *
- * @staticvar string $domain 域名静态缓存
- * @return string
- * @author zoujingli <zoujingli@qq.com>
+ * 生成二维码
+ * @author sea 
  */
-function get_domain() {
-    static $domain = null;
-    if (is_null($domain)) {
-        $port = is_ssl() ? 'https://' : 'http://';
-        $domain = $port . trim(I('server.HTTP_HOST'), ' /');
-    }
-    return $domain;
+function  createQrcode($meet_member_id){
+    $qr_text="http://www.baidu.com?uid=".$meet_member_id;
+    // 文件名称
+    $file_name = date('YmdHis') . rand(100, 999)."_".$meet_member_id . '.png';
+    $QrObj = new \Util\Qrcode\QR($qr_text, array(
+        'QrName' => $file_name,
+        'matrixPointSize' => 8
+    ));
+    return substr($QrObj->QR,1);
 }
-
