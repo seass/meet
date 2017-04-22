@@ -27,7 +27,7 @@ class ClassesController extends AdminController {
         if(!empty($_key)){
             $map['c.classes_name|m.meet_name']    =   array('like', '%'.(string)$_key.'%');
         }
-        $list=M()->table(C('DB_PREFIX').($this->_model).' c' )
+        $list=M()->table(C('DB_PREFIX').strtolower($this->_model).' c' )
                        ->where($map)
                        ->order('c.id DESC')
                        ->join (C('DB_PREFIX').('meet').' m ON m.id=c.meet_id' );
@@ -87,6 +87,7 @@ class ClassesController extends AdminController {
             $add_res=M($this->_model)->add([
                 'classes_name'=>$classes_name,
                 'meet_id' =>$meet_id,
+                'seat_img'=>I('post.seat_img'),//存储的onethink_picture表的ID
                 'status'=>I('post.status')
             ]);
             if($add_res==false){
@@ -124,6 +125,7 @@ class ClassesController extends AdminController {
             M($this->_model)->where(['id'=>$id])->save([
                 'classes_name'=>$classes_name,
                 'meet_id' =>$meet_id,
+                'seat_img'=>I('post.seat_img'),//存储的onethink_picture表的ID
                 'status'=>I('post.status')
             ]);
             //记录行为(需要提前创建edit_classes行为标记)

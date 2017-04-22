@@ -23,6 +23,20 @@
             </div>
         </div>
         <div class="form-item">
+            <label class="item-label"> 班级座位图<span class="check-tips"></span></label>
+            <div class="controls">
+               <div class="controls">
+					<input type="file" id="upload_picture_seat_img">
+					<input type="hidden" name="seat_img" id="cover_id_seat_img" value="{$info.seat_img}"/>
+					<div class="upload-img-box">
+						<notempty name="info.seat_img">
+							<div class="upload-pre-item"><img src="__ROOT__{$info.seat_img|get_cover='path'}"/></div>
+						</notempty>
+					</div>
+			   </div>
+            </div>
+        </div>           
+        <div class="form-item">
             <label class="item-label">状态<span class="check-tips"></span></label>
             <div class="controls">
                 <label class="radio"><input type="radio" name="status" value="1">启用</label>
@@ -37,10 +51,47 @@
     </form>
 </block>
 <block name="script">
+<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
 <script type="text/javascript" charset="utf-8">
+	//上传图片
+	/* 初始化上传插件 */
+	$("#upload_picture_seat_img").uploadify({
+	    "height"          : 30,
+	    "swf"             : "__STATIC__/uploadify/uploadify.swf",
+	    "fileObjName"     : "download",
+	    "buttonText"      : "上传图片",
+	    "uploader"        : "{:U('File/uploadPicture',array('session_id'=>session_id()))}",
+	    "width"           : 120,
+	    'removeTimeout'	  : 1,
+	    'fileTypeExts'	  : '*.jpg; *.png; *.gif;',
+	    "onUploadSuccess" : uploadPictureSeat_img,
+	    'onFallback' : function() {
+	        alert('未检测到兼容版本的Flash.');
+	    }
+	});
+	function uploadPictureSeat_img(file, data){
+		var data = $.parseJSON(data);
+		var src = '';
+	    if(data.status){
+	    	$("#cover_id_seat_img").val(data.id);
+	    	src = data.url || '__ROOT__' + data.path
+	    	$("#cover_id_seat_img").parent().find('.upload-img-box').html(
+	    		'<div class="upload-pre-item"><img src="' + src + '"/></div>'
+	    	);
+	    } else {
+	    	updateAlert(data.info);
+	    	setTimeout(function(){
+	            $('#top-alert').find('button').click();
+	            $(that).removeClass('disabled').prop('disabled',false);
+	        },1500);
+	    }
+	}
+	
+	
+	//设置回显值
 	Think.setValue("status", {$info.status|default = 0});
-	Think.setValue('region_id',{$info.region_id|default=0});
-	console.log({$info.region_id|default=0});
+	Think.setValue('meet_id',{$info.meet_id|default=0});
+	console.log({$info.meet_id|default=0});
 	
 	//导航高亮
 	highlight_subnav('{:U('index')}');

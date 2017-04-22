@@ -25,16 +25,16 @@ class MeetMemberController extends AdminController {
         $map['m.status']    =   array('egt',0);
         //模糊搜索
         if(!empty($_key)){
-            $map['m.realname|me.meet_name']    =   array('like', '%'.(string)$_key.'%');
+            $map['m.realname|me.meet_name|m.phone|user_no']    =   array('like', '%'.(string)$_key.'%');
         }
-        $list=M()->table(C('DB_PREFIX').('meet_member').' m' )
+        $list=M()->table(C('DB_PREFIX').strtolower('meet_member').' m' )
                        ->where($map)
                        ->order('m.id DESC')
                        ->join (' left join '.C('DB_PREFIX').('meet').' me ON me.id=m.meet_id' )
                        ->join (' left join '.C('DB_PREFIX').('classes').' c ON c.id=m.classes_id' )
                        ->join (' left join '.C('DB_PREFIX').('region').' r ON r.id=m.region_id' )
                        ->join (' left join '.C('DB_PREFIX').('store').' s ON s.id=m.store_id' );
-        $field='m.id,m.user_no,m.realname,m.phone,m.sex,m.idcard,m.position,m.status,m.create_time,me.meet_name,me.begin_time,me.end_time,c.classes_name,r.region_name,s.store_name';
+        $field='m.id,m.user_no,m.realname,m.phone,m.sex,m.idcard,m.headimg,m.position,m.status,m.create_time,me.meet_name,me.begin_time,me.end_time,c.classes_name,r.region_name,s.store_name';
         $list = $this->lists($list,null,null,null,$field);
         int_to_string($list);
         
@@ -116,6 +116,7 @@ class MeetMemberController extends AdminController {
             'sex'=>I('post.sex'),
             'phone'=>$phone,
             'idcard'=>$idcard,
+            'headimg'=>I('post.headimg'),//存储的onethink_picture表的ID
             'position'=>$position,
             'score'=>I('post.score'),
             'is_share'=>I('post.is_share'),

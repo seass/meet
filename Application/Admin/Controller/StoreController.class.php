@@ -27,7 +27,7 @@ class StoreController extends AdminController {
         if(!empty($_key)){
             $map['s.store_name|r.region_name']    =   array('like', '%'.(string)$_key.'%');
         }
-        $list=M()->table(C('DB_PREFIX').($this->_model).' s' )
+        $list=M()->table(C('DB_PREFIX').strtolower($this->_model).' s' )
                        ->where($map)
                        ->order('s.id DESC')
                        ->join (C('DB_PREFIX').('region').' r ON r.id=s.region_id' );

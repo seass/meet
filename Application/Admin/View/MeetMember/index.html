@@ -16,7 +16,7 @@
         <!-- 高级搜索 -->
 		<div class="search-form fr cf">
 			<div class="sleft">
-				<input type="text" name="_key" class="search-input" value="{:I('_key')}" placeholder="请输入会议人员名称/大区名称">
+				<input type="text" name="_key" class="search-input" value="{:I('_key')}" placeholder="支持会议名称/人员名称／手机号">
 				<a class="sch-btn" href="javascript:;" id="search" url="{:U('index')}"><i class="btn-search"></i></a>
 			</div>
 		</div>
@@ -28,18 +28,19 @@
         <tr>
 			<th class="row-selected"><input class="check-all" type="checkbox"/></th>
 			<th class="">ID</th>
-			<th class="">所属大区</th>
-			<th class="">所属门店</th>
+			<th class="">大区</th>
+			<th class="">门店</th>
 			<th class="">会议名称</th>
 			<th class="">会议开始时间</th>
 			<th class="">会议结束时间</th>
-			<th class="">班级名称</th>
+			<th class="">班级</th>
 			<th class="">参会编号</th>
-			<th class="">人员姓名</th>
-			<th class="">人员手机号</th>
-			<th class="">人员证件号</th>
-			<th class="">性别</th>
 			<th class="">职务</th>
+			<th class="">姓名</th>
+			<th class="">手机号</th>
+			<th class="">证件号</th>
+			<th class="">性别</th>
+			<th class="">头像</th>
 			<th class="">状态</th>
 			<th class="">创建时间</th>
 			<th class="">操作</th>
@@ -58,11 +59,17 @@
 			<td>{$vo.end_time}</td>
 			<td>{$vo.classes_name}</td>
 			<td>{$vo.user_no}</td>
+			<td>{$vo.position}</td>
 			<td>{$vo.realname}</td>
 			<td>{$vo.phone}</td>
 			<td>{$vo.idcard}</td>
-			<td>{$vo.sex}</td>
-			<td>{$vo.position}</td>
+			<td><if condition="$vo.sex eq 1">男<else/>女</if></td>
+			<td><div class="upload-img-box">
+						<div class="upload-pre-item">
+							<img src="__ROOT__{$vo.headimg|get_cover='path'}">
+						</div>
+				</div>
+			</td>
 			<td>{$vo.status_text}</td>
 			<td>{$vo.create_time}</td>
 			<td>

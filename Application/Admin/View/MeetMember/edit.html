@@ -53,15 +53,23 @@
             </div>
         </div>
         <div class="form-item">
-            <label class="item-label"><span style="color:red;">*</span> 职务<span class="check-tips">（必填）</span></label>
+            <label class="item-label"> 头像照片<span class="check-tips"></span></label>
             <div class="controls">
-                <input type="text" class="text input-large" name="position" value="{$info.position|default=''}">
+               <div class="controls">
+					<input type="file" id="upload_picture_headimg">
+					<input type="hidden" name="headimg" id="cover_id_headimg" value="{$info.headimg}"/>
+					<div class="upload-img-box">
+						<notempty name="info.headimg">
+							<div class="upload-pre-item"><img src="__ROOT__{$info.headimg|get_cover='path'}"/></div>
+						</notempty>
+					</div>
+			   </div>
             </div>
         </div>
         <div class="form-item">
-            <label class="item-label"> 头像照片<span class="check-tips"></span></label>
+            <label class="item-label"><span style="color:red;">*</span> 职务<span class="check-tips">（必填）</span></label>
             <div class="controls">
-                <input type="file" class="text " name="headimg" >
+                <input type="text" class="text input-large" name="position" value="{$info.position|default=''}">
             </div>
         </div>
         <div class="form-item">
@@ -98,7 +106,41 @@
     </form>
 </block>
 <block name="script">
+<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
 <script type="text/javascript" charset="utf-8">
+	//上传图片
+	/* 初始化上传插件 */
+	$("#upload_picture_headimg").uploadify({
+	    "height"          : 30,
+	    "swf"             : "__STATIC__/uploadify/uploadify.swf",
+	    "fileObjName"     : "download",
+	    "buttonText"      : "上传图片",
+	    "uploader"        : "{:U('File/uploadPicture',array('session_id'=>session_id()))}",
+	    "width"           : 120,
+	    'removeTimeout'	  : 1,
+	    'fileTypeExts'	  : '*.jpg; *.png; *.gif;',
+	    "onUploadSuccess" : uploadPictureHeadimg,
+	    'onFallback' : function() {
+	        alert('未检测到兼容版本的Flash.');
+	    }
+	});
+	function uploadPictureHeadimg(file, data){
+		var data = $.parseJSON(data);
+		var src = '';
+	    if(data.status){
+	    	$("#cover_id_headimg").val(data.id);
+	    	src = data.url || '__ROOT__' + data.path
+	    	$("#cover_id_headimg").parent().find('.upload-img-box').html(
+	    		'<div class="upload-pre-item"><img src="' + src + '"/></div>'
+	    	);
+	    } else {
+	    	updateAlert(data.info);
+	    	setTimeout(function(){
+	            $('#top-alert').find('button').click();
+	            $(that).removeClass('disabled').prop('disabled',false);
+	        },1500);
+	    }
+	}
 	Think.setValue("status", {$info.status|default = 0});
 	Think.setValue('store_id',{$info.store_id|default=0});
 	Think.setValue('classes_id',{$info.classes_id|default=0});
