@@ -101,9 +101,6 @@ class MeetMemberController extends AdminController {
         if(empty($position)){
             $this->error('会议人员职务必填！');
         }
-        //上传头像 $_FILES['headimg'];????????
-        
-        
         $region_id=M('Store')->where(['id'=>$store_id])->getField('region_id');
         $meet_id=M('Classes')->where(['id'=>$classes_id])->getField('meet_id');
         $data=[

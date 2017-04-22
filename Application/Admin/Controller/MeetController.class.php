@@ -27,7 +27,7 @@ class meetController extends AdminController {
         if(!empty($_key)){
             $map['meet_name']    =   array('like', '%'.(string)$_key.'%');
         }
-        $field='id,meet_name,status,create_time';
+        $field='id,meet_name,status,create_time,begin_time,end_time';
         $list   = $this->lists($this->_model, $map,null,null,$field);
         int_to_string($list);
         $this->assign('_list', $list);
@@ -64,6 +64,41 @@ class meetController extends AdminController {
         }
     }
     /**
+     * 获取保存数据并验证
+     * @author sea 
+     */
+    public function getSaveData(){
+        $meet_name=I('post.meet_name');
+        if(empty($meet_name)){
+            $this->error('会议名称必填！');
+        }
+        $begin_time=I('post.begin_time');
+        if(empty($begin_time)){
+            $this->error('报名开始时间必填！');
+        }
+        $end_time=I('post.end_time');
+        if(empty($end_time)){
+            $this->error('报名结束时间必填！');
+        }
+        if(strtotime($begin_time)>strtotime($end_time)){
+            $this->error('报名开始时间不能大于报名结束时间！');
+        }
+        $data=[
+            'meet_name'=>$meet_name,
+            'begin_time'=>$begin_time,
+            'end_time'=>$end_time,
+            'hyxz'=>I('post.hyxz'),
+            'rcap'=>I('post.rcap'),
+            'gzry'=>I('post.gzry'),
+            'zsap'=>I('post.zsap'),
+            'car'=>I('post.car'),
+            'food'=>I('post.food'),
+            'status'=>I('post.status')
+        ];
+        return $data;
+    }
+    
+    /**
      * 新增会议
      * @author sea
      */
@@ -73,17 +108,9 @@ class meetController extends AdminController {
             if(empty($meet_name)){
                 $this->error('会议名称必填！');
             }
+            $saveData=$this->getSaveData();
             //添加数据
-            $add_res=M($this->_model)->add([
-                'meet_name'=>$meet_name,
-                'hyxz'=>I('post.hyxz'),
-                'rcap'=>I('post.rcap'),
-                'gzry'=>I('post.gzry'),
-                'zsap'=>I('post.zsap'),
-                'car'=>I('post.car'),
-                'food'=>I('post.food'),
-                'status'=>I('post.status')
-            ]);
+            $add_res=M($this->_model)->add($saveData);
             if($add_res==false){
                 $this->error('新增失败！');
             }
@@ -96,6 +123,7 @@ class meetController extends AdminController {
             $this->display('edit');
         }
     }
+    
     /**
      * 编辑会议
      * @author sea
@@ -106,21 +134,9 @@ class meetController extends AdminController {
             if(empty($id)){
                 $this->error('参数异常！');
             }
-            $meet_name=I('post.meet_name');
-            if(empty($meet_name)){
-                $this->error('会议名称必填！');
-            }
+            $saveData=$this->getSaveData();
             //编辑数据
-            M($this->_model)->where(['id'=>$id])->save([
-                'meet_name'=>$meet_name,
-                'hyxz'=>I('post.hyxz'),
-                'rcap'=>I('post.rcap'),
-                'gzry'=>I('post.gzry'),
-                'zsap'=>I('post.zsap'),
-                'car'=>I('post.car'),
-                'food'=>I('post.food'),
-                'status'=>I('post.status')
-            ]);
+            M($this->_model)->where(['id'=>$id])->save($saveData);
           
             //记录行为(需要提前创建edit_meet行为标记)
             action_log('edit_meet',$this->_model, $id, UID);

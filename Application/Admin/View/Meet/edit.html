@@ -11,6 +11,18 @@
                 <input type="text" class="text input-large" name="meet_name" value="{$info.meet_name|default=''}">
             </div>
         </div>
+        <div class="form-item">
+            <label class="item-label"><span style="color:red;">*</span> 报名开始时间<span class="check-tips">（必填）</span></label>
+            <div class="controls">
+                <input type="text" class="text input-large time" name="begin_time" value="{$info.begin_time|default=''}">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label"><span style="color:red;">*</span> 报名结束时间<span class="check-tips">（必填）</span></label>
+            <div class="controls">
+                <input type="text" class="text input-large time" name="end_time" value="{$info.end_time|default=''}">
+            </div>
+        </div>
         <div class="form-item cf">
 			<label class="item-label">会议须知<span class="check-tips">（输入会议须知）</span></label>
 			<div class="controls">
@@ -62,7 +74,19 @@
     </form>
 </block>
 <block name="script">
+<link href="__STATIC__/datetimepicker/css/datetimepicker.css" rel="stylesheet" type="text/css">
+<php>if(C('COLOR_STYLE')=='blue_color') echo '<link href="__STATIC__/datetimepicker/css/datetimepicker_blue.css" rel="stylesheet" type="text/css">';</php>
+<link href="__STATIC__/datetimepicker/css/dropdown.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="__STATIC__/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="__STATIC__/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 <script type="text/javascript" charset="utf-8">
+	$('.time').datetimepicker({
+	    format: 'yyyy-mm-dd hh:ii:ss',
+	    language:"zh-CN",
+	    startDate:'2017-01-01 00:00:00',
+	    minView:2,
+	    autoclose:true
+	});
 	Think.setValue("status", {$info.status|default = 0});
 	//导航高亮
 	highlight_subnav('{:U('index')}');
