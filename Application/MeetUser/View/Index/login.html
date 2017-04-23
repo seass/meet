@@ -18,15 +18,22 @@
             </div>
             <div class="line1">
                 <img src="__IMG__/user.png">
-                <input type="text" class="user" value="手机号" onfocus="if(value=='手机号') {value=''}" onblur="if (value=='') {value='手机号'}" data-role="none">
+                <input type="text" class="user" name='realname' value="姓名" onfocus="if(value=='姓名') {value=''}" onblur="if (value=='') {value='姓名'}" data-role="none">
             </div>
-            <div class="line2">
+            <div class="line1">
+                <img src="__IMG__/user.png">
+                <input type="text" class="user" name='idcard' value="身份证号" onfocus="if(value=='身份证号') {value=''}" onblur="if (value=='') {value='身份证号'}" data-role="none">
+            </div>
+            <div class="line1">
+                <img src="__IMG__/user.png">
+                <input type="text" class="user" name='phone' value="手机号" onfocus="if(value=='手机号') {value=''}" onblur="if (value=='') {value='手机号'}" data-role="none">
+            </div>
+            <!--  <div class="line2">
                 <img src="__IMG__/lock.png">
                 <input type="text" class="lock" value="密码" onfocus="if(value=='密码') {value=''}" onblur="if (value=='') {value='密码'}" data-role="none">
-            </div>
+            </div> -->
             <div class="chose">
             		<input type="hidden" name="Mid" value="{:I('Mid')}">
-                <a href="forget.html"data-ajax="false"  class="forgive" data-role="none">忘记密码</a>
                 <a class="login" href="#" onclick="document.getElementById('loginform').submit();return false" data-ajax="true" data-role="none" data-transition="slide">登陆</a>
             </div>
         </div>

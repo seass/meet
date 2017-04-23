@@ -38,8 +38,9 @@ class IndexController extends \Think\Controller{
      */
     public function login(){
         if(IS_POST){
+            $this->error('站点已经关闭，请稍后访问~');
             $MUser=M("MeetMember")->where(['id'=>$_POST['Mid']])->find();
-            self::autoLogin($MUser);
+            //self::autoLogin($MUser);
             
             $this->redirect('Index/index',['Mid'=>$_POST['Mid']]);
         }else{
