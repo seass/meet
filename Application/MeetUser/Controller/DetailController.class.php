@@ -22,8 +22,6 @@ class DetailController extends MeetUserController{
         4=>'zsap',//住宿安排
         5=>'car',//车辆安排
         6=>'food',//用餐安排
-        
-        6=>'food',//班级座位图片
     ];
     
     /**

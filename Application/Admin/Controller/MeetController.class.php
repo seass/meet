@@ -68,34 +68,59 @@ class meetController extends AdminController {
      * @author sea 
      */
     public function getSaveData(){
-        $meet_name=I('post.meet_name');
-        if(empty($meet_name)){
-            $this->error('会议名称必填！');
+        if(I('post.curr_type')==0){//检查基本信息
+            $meet_name=I('post.meet_name');
+            if(empty($meet_name)){
+                $this->error('会议名称必填！');
+            }
+            $begin_time=I('post.begin_time');
+            if(empty($begin_time)){
+                $this->error('报名开始时间必填！');
+            }
+            $end_time=I('post.end_time');
+            if(empty($end_time)){
+                $this->error('报名结束时间必填！');
+            }
+            if(strtotime($begin_time)>strtotime($end_time)){
+                $this->error('报名开始时间不能大于报名结束时间！');
+            }
+            $data=[
+                'meet_name'=>$meet_name,
+                'begin_time'=>$begin_time,
+                'end_time'=>$end_time,
+                'status'=>I('post.status')
+            ];
         }
-        $begin_time=I('post.begin_time');
-        if(empty($begin_time)){
-            $this->error('报名开始时间必填！');
+        if(!empty(I('post.hyxz'))){
+            $data=[
+                'hyxz'=>I('post.hyxz'),
+             ];
         }
-        $end_time=I('post.end_time');
-        if(empty($end_time)){
-            $this->error('报名结束时间必填！');
+        if(!empty(I('post.rcap'))){
+            $data=[
+                'rcap'=>I('post.rcap'),
+            ];
         }
-        if(strtotime($begin_time)>strtotime($end_time)){
-            $this->error('报名开始时间不能大于报名结束时间！');
+        if(!empty(I('post.gzry'))){
+            $data=[
+                'gzry'=>I('post.gzry'),
+            ];
         }
-        //var_dump($_POST['hyxz']);exit;
-        $data=[
-            'meet_name'=>$meet_name,
-            'begin_time'=>$begin_time,
-            'end_time'=>$end_time,
-            'hyxz'=>I('post.hyxz'),
-            'rcap'=>I('post.rcap'),
-            'gzry'=>I('post.gzry'),
-            'zsap'=>I('post.zsap'),
-            'car'=>I('post.car'),
-            'food'=>I('post.food'),
-            'status'=>I('post.status')
-        ];
+        if(!empty(I('post.zsap'))){
+            $data=[
+                'zsap'=>I('post.zsap'),
+            ];
+        }
+        if(!empty(I('post.car'))){
+            $data=[
+                'car'=>I('post.car'),
+            ];
+        }
+        if(!empty(I('post.food'))){
+            $data=[
+                'food'=>I('post.food'),
+            ];
+        }
         return $data;
     }
     
@@ -120,9 +145,25 @@ class meetController extends AdminController {
             $this->success('新增成功！',U('index'));
            
         } else {
+            $this->form();
+            
             $this->meta_title = '新增会议';
             $this->display('edit');
         }
+    }
+    public function form(){
+        $tablist=[
+            0=>'基本信息',
+            1=>'会议须知',
+            2=>'日程安排',
+            3=>'工作人员信息',
+            4=>'住宿安排',
+            5=>'车辆安排',
+            6=>'用餐安排',
+        ];
+        $curr_type = I('curr_type',0);//默认0 显示基本信息
+        $this->assign('tablist', $tablist);
+        $this->assign('curr_type', $curr_type);
     }
     
     /**
@@ -148,6 +189,9 @@ class meetController extends AdminController {
             if(empty($id)){
                 $this->error('参数异常！');
             }
+            
+            $this->form();
+            
             $_info=M($this->_model)->where('id='.$id)->find();
             $this->assign('info', $_info);
             $this->meta_title = '编辑会议';

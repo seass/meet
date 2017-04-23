@@ -1,89 +1,115 @@
 <extend name="Public/base" />
 
 <block name="body">
-	<div class="main-title cf">
+	<div class="main-title">
 		<h2>{:isset($info['id'])?'编辑':'新增'}会议</h2>
 	</div>
-<form action="{:U()}" method="post" class="form-horizontal">
-        <div class="form-item">
-            <label class="item-label"><span style="color:red;">*</span> 会议名称<span class="check-tips">（必填）</span></label>
-            <div class="controls">
-                <input type="text" class="text input-large" name="meet_name" value="{$info.meet_name|default=''}">
-            </div>
-        </div>
-        <div class="form-item">
-            <label class="item-label"><span style="color:red;">*</span> 报名开始时间<span class="check-tips">（必填）</span></label>
-            <div class="controls">
-                <input type="text" class="text input-large time" name="begin_time" value="{$info.begin_time|default=''}">
-            </div>
-        </div>
-        <div class="form-item">
-            <label class="item-label"><span style="color:red;">*</span> 报名结束时间<span class="check-tips">（必填）</span></label>
-            <div class="controls">
-                <input type="text" class="text input-large time" name="end_time" value="{$info.end_time|default=''}">
-            </div>
-        </div>
-        <div class="form-item cf">
-			<label class="item-label">会议须知<span class="check-tips">（输入会议须知）</span></label>
-			<div class="controls">
-				<label class="textarea input-large"><textarea name="hyxz">{$info.hyxz}</textarea>
-				 {:hook('adminArticleEdit', array('name'=>'hyxz','value'=>$info.hyxz))}
-				 </label>
-			</div>
+	<div class="tab-wrap">
+		<ul class="tab-nav nav">
+			<volist name="tablist" id="group">		
+				<li <eq name="curr_type" value="$key">class="current"</eq>><a href="{:U('?curr_type='.$key.'&id='.$info['id'])}">{$group}</a></li>
+			</volist>
+		</ul>
+		<div class="tab-content">
+			<form action="{:U()}" method="post" class="form-horizontal">
+				<switch name="curr_type">
+					<case value="0">
+							<div class="form-item">
+				            		<label class="item-label"><span style="color:red;">*</span> 会议名称<span class="check-tips">（必填）</span></label>
+				            		<div class="controls">
+				                		<input type="text" class="text input-large" name="meet_name" value="{$info.meet_name|default=''}">
+				            		</div>
+		        				</div>
+					        <div class="form-item">
+					            <label class="item-label"><span style="color:red;">*</span> 报名开始时间<span class="check-tips">（必填）</span></label>
+					            <div class="controls">
+					                <input type="text" class="text input-large time" name="begin_time" value="{$info.begin_time|default=''}">
+					            </div>
+					        </div>
+					        <div class="form-item">
+					            <label class="item-label"><span style="color:red;">*</span> 报名结束时间<span class="check-tips">（必填）</span></label>
+					            <div class="controls">
+					                <input type="text" class="text input-large time" name="end_time" value="{$info.end_time|default=''}">
+					            </div>
+					        </div>
+					        <div class="form-item">
+					            <label class="item-label">状态<span class="check-tips"></span></label>
+					            <div class="controls">
+					                <label class="radio"><input type="radio" name="status" value="1">启用</label>
+					                <label class="radio"><input type="radio" name="status" value="0">禁用</label>
+					            </div>
+					        </div>
+					</case>
+					<case value="1">
+							<div class="form-item cf">
+								<label class="item-label">会议须知<span class="check-tips">（输入会议须知）</span></label>
+								<div class="controls">
+									<label class="textarea input-large"><textarea name="hyxz">{$info.hyxz}</textarea>
+									 {:hook('adminArticleEdit', array('name'=>'hyxz','value'=>$info.hyxz))}
+									 </label>
+								</div>
+							</div>
+					</case>
+					<case value="2">
+							<div class="form-item cf">
+								<label class="item-label">日程安排<span class="check-tips">（输入日程安排）</span></label>
+								<div class="controls">
+									<label class="textarea input-large"><textarea name="rcap">{$info.rcap}</textarea>
+									 {:hook('adminArticleEdit', array('name'=>rcap,'value'=>$info.rcap))}
+									</label>
+								</div>
+							</div>
+					</case>
+					<case value="3">
+							<div class="form-item cf">
+								<label class="item-label">工作人员信息<span class="check-tips">（输入工作人员信息）</span></label>
+								<div class="controls">
+									<label class="textarea input-large"><textarea name="gzry">{$info.gzry}</textarea>
+										{:hook('adminArticleEdit', array('name'=>gzry,'value'=>$info.gzry))}
+									</label>
+								</div>
+							</div>
+					</case>
+					<case value="4">
+							<div class="form-item cf">
+								<label class="item-label">住宿安排<span class="check-tips">（输入住宿安排）</span></label>
+								<div class="controls">
+									<label class="textarea input-large"><textarea name="zsap">{$info.zsap}</textarea>
+										{:hook('adminArticleEdit', array('name'=>zsap,'value'=>$info.zsap))}
+									</label>
+								</div>
+							</div>
+					</case>
+					<case value="5">
+							<div class="form-item cf">
+								<label class="item-label">车辆安排<span class="check-tips">（输入车辆安排）</span></label>
+								<div class="controls">
+									<label class="textarea input-large"><textarea name="car">{$info.car}</textarea>
+									 {:hook('adminArticleEdit', array('name'=>car,'value'=>$info.car))}
+									</label>
+								</div>
+							</div>
+					</case>
+					<case value="6">
+							<div class="form-item cf">
+								<label class="item-label">用餐安排<span class="check-tips">（输入用餐安排）</span></label>
+								<div class="controls">
+									<label class="textarea input-large"><textarea name="food">{$info.food}</textarea>
+									 {:hook('adminArticleEdit', array('name'=>food,'value'=>$info.food))}
+									</label>
+								</div>
+							</div>
+					</case>
+				</switch>
+		        <div class="form-item">
+		       		<input type="hidden" name="curr_type" value="{$curr_type}">
+		        		<input type="hidden" name="id" value="{$info.id|default=''}">
+		            <button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+		            <button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+		        </div>
+		    </form>
 		</div>
-		<div class="form-item cf">
-			<label class="item-label">日程安排<span class="check-tips">（输入日程安排）</span></label>
-			<div class="controls">
-				<label class="textarea input-large"><textarea name="rcap">{$info.rcap}</textarea>
-				 <!--{:hook('adminArticleEdit', array('name'=>rcap,'value'=>$info.rcap))}
-			--></label>
-			</div>
-		</div>
-		<div class="form-item cf">
-			<label class="item-label">工作人员信息<span class="check-tips">（输入工作人员信息）</span></label>
-			<div class="controls">
-				<label class="textarea input-large"><textarea name="gzry">{$info.gzry}</textarea>
-				<!--{:hook('adminArticleEdit', array('name'=>gzry,'value'=>$info.gzry))}
-				--></label>
-			</div>
-		</div>
-		<div class="form-item cf">
-			<label class="item-label">住宿安排<span class="check-tips">（输入住宿安排）</span></label>
-			<div class="controls">
-				<label class="textarea input-large"><textarea name="zsap">{$info.zsap}</textarea>
-				<!--{:hook('adminArticleEdit', array('name'=>zsap,'value'=>$info.zsap))}
-				--></label>
-			</div>
-		</div>
-		<div class="form-item cf">
-			<label class="item-label">车辆安排<span class="check-tips">（输入车辆安排）</span></label>
-			<div class="controls">
-				<label class="textarea input-large"><textarea name="car">{$info.car}</textarea>
-				<!-- {:hook('adminArticleEdit', array('name'=>car,'value'=>$info.car))}
-				--></label>
-			</div>
-		</div>
-		<div class="form-item cf">
-			<label class="item-label">用餐安排<span class="check-tips">（输入用餐安排）</span></label>
-			<div class="controls">
-				<label class="textarea input-large"><textarea name="food">{$info.food}</textarea>
-				<!-- {:hook('adminArticleEdit', array('name'=>food,'value'=>$info.food))}
-				--></label>
-			</div>
-		</div>
-        <div class="form-item">
-            <label class="item-label">状态<span class="check-tips"></span></label>
-            <div class="controls">
-                <label class="radio"><input type="radio" name="status" value="1">启用</label>
-                <label class="radio"><input type="radio" name="status" value="0">禁用</label>
-            </div>
-        </div>
-        <div class="form-item">
-        		<input type="hidden" name="id" value="{$info.id|default=''}">
-            <button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
-            <button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
-        </div>
-    </form>
+	 </div>
 </block>
 <block name="script">
 <link href="__STATIC__/datetimepicker/css/datetimepicker.css" rel="stylesheet" type="text/css">
