@@ -24,7 +24,7 @@
                 <input type="text" class="user" name='idcard'  placeholder="请输入身份证号" data-role="none">
             </div>
             <div class="line1">
-                <img src="__IMG__/user.png">
+                <img src="__IMG__/phone.png">
                 <input type="text" class="user" name='phone' placeholder="请输入手机号"  data-role="none">
             </div>
             <!--  <div class="line2">
@@ -64,6 +64,7 @@
 					console.log(result);
 					if(result.status){
 						alert(result.msg);
+						console.log(result.success_url);
 						location.href=result.success_url;
 					}else{
 						alert(result.msg);
