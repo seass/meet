@@ -25,6 +25,8 @@ return array(
         '__CSS__'    => __ROOT__ . '/Public/' . MODULE_NAME . '/css',
         '__JS__'     => __ROOT__ . '/Public/' . MODULE_NAME . '/js',
     ),
+    
+    'RootDPath'=>'/Uploads/Download/',//下载文件地址
 
     /* SESSION 和 COOKIE 配置 */
     'SESSION_PREFIX' => 'onethink_meetuser', //session前缀

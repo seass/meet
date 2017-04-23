@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>首页|会议管理</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<meta charset="utf-8" />
+<style type="text/css">
+    html, body { color:#222; font-family:Microsoft YaHei, Helvitica, Verdana, Tohoma, Arial, san-serif; margin:0; padding: 0; text-decoration: none; }
+    body{
+        background-color:#eee; 
+    }
+    table td{
+		padding-left:30px;
+    }
+</style>
+</head>
+<body>
+	<table style="width:100%;">
+    <thead>
+        <tr>
+			<th class="">资料名称</th>
+		</tr>
+    </thead>
+    <tbody>
+		<notempty name="_list">
+		<volist name="_list" id="vo">
+		<tr>
+			<td>
+				<a href="__ROOT__{:C('RootDPath')}{$vo.savepath}{$vo.savename}" target="_blank">{$vo.name}</a>
+			</td>
+		</tr>
+		</volist>
+		<else/>
+		<td> 暂时还没有资料! </td>
+		</notempty>
+	</tbody>
+    </table>
+</body>
+</html>

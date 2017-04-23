@@ -21,9 +21,10 @@ class MeetUserController extends Controller {
 		$this->redirect('Index/index');
 	}
     protected function _initialize(){
-        //获取当前会议用户ID
-        if(!MUID){// 还没登录 跳转到登录页面
-            $this->redirect('Index/login');
+        // 获取当前用户ID
+        define('MUID',is_muser_login());
+        if( !MUID ){// 还没登录 跳转到登录页面
+            $this->redirect('Index/login',$_GET);
         }
         /* 读取站点配置 */
         $config = api('Config/lists');

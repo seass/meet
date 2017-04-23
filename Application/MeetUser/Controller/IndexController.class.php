@@ -19,8 +19,9 @@ class IndexController extends \Think\Controller{
         if(empty($_GET["Mid"])){
             $this->redirect('Index/error');
         }
-        
-        if(!MUID){// 还没登录 跳转到登录页面
+        // 获取当前用户ID
+        define('MUID',is_muser_login());
+        if( !MUID ){// 还没登录 跳转到登录页面
             $this->redirect('Index/login',$_GET);
         }
         /* 读取站点配置 */
@@ -76,7 +77,7 @@ class IndexController extends \Think\Controller{
             if(empty($_GET["Mid"])){
                 $this->redirect('Index/error');
             }
-            if(is_muser_login($_GET["Mid"])){
+            if(is_muser_login()){
                 $this->redirect('Index/index',$_GET);
             }else{
                 /* 读取数据库中的配置 */
@@ -110,9 +111,8 @@ class IndexController extends \Think\Controller{
             'phone'           => $user['phone'],
             'last_login_time' => $user['last_login_time'],
         );
-        session('muser_auth_'.$user['id'], $auth);
-        session('muser_auth_sign_'.$user['id'], data_auth_sign($auth));
-        define('MUID',$user['id']);
+        session('muser_auth', $auth);
+        session('muser_auth_sign', data_auth_sign($auth));
     }
     
 
