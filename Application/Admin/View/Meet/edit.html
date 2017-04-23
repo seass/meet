@@ -26,37 +26,49 @@
         <div class="form-item cf">
 			<label class="item-label">会议须知<span class="check-tips">（输入会议须知）</span></label>
 			<div class="controls">
-				<label class="textarea input-large"><textarea name="hyxz">{$info.hyxz}</textarea></label>
+				<label class="textarea input-large"><textarea name="hyxz">{$info.hyxz}</textarea>
+				 {:hook('adminArticleEdit', array('name'=>'hyxz','value'=>$info.hyxz))}
+				 </label>
 			</div>
 		</div>
 		<div class="form-item cf">
 			<label class="item-label">日程安排<span class="check-tips">（输入日程安排）</span></label>
 			<div class="controls">
-				<label class="textarea input-large"><textarea name="rcap">{$info.rcap}</textarea></label>
+				<label class="textarea input-large"><textarea name="rcap">{$info.rcap}</textarea>
+				 <!--{:hook('adminArticleEdit', array('name'=>rcap,'value'=>$info.rcap))}
+			--></label>
 			</div>
 		</div>
 		<div class="form-item cf">
 			<label class="item-label">工作人员信息<span class="check-tips">（输入工作人员信息）</span></label>
 			<div class="controls">
-				<label class="textarea input-large"><textarea name="gzry">{$info.gzry}</textarea></label>
+				<label class="textarea input-large"><textarea name="gzry">{$info.gzry}</textarea>
+				<!--{:hook('adminArticleEdit', array('name'=>gzry,'value'=>$info.gzry))}
+				--></label>
 			</div>
 		</div>
 		<div class="form-item cf">
 			<label class="item-label">住宿安排<span class="check-tips">（输入住宿安排）</span></label>
 			<div class="controls">
-				<label class="textarea input-large"><textarea name="zsap">{$info.zsap}</textarea></label>
+				<label class="textarea input-large"><textarea name="zsap">{$info.zsap}</textarea>
+				<!--{:hook('adminArticleEdit', array('name'=>zsap,'value'=>$info.zsap))}
+				--></label>
 			</div>
 		</div>
 		<div class="form-item cf">
 			<label class="item-label">车辆安排<span class="check-tips">（输入车辆安排）</span></label>
 			<div class="controls">
-				<label class="textarea input-large"><textarea name="car">{$info.car}</textarea></label>
+				<label class="textarea input-large"><textarea name="car">{$info.car}</textarea>
+				<!-- {:hook('adminArticleEdit', array('name'=>car,'value'=>$info.car))}
+				--></label>
 			</div>
 		</div>
 		<div class="form-item cf">
 			<label class="item-label">用餐安排<span class="check-tips">（输入用餐安排）</span></label>
 			<div class="controls">
-				<label class="textarea input-large"><textarea name="food">{$info.food}</textarea></label>
+				<label class="textarea input-large"><textarea name="food">{$info.food}</textarea>
+				<!-- {:hook('adminArticleEdit', array('name'=>food,'value'=>$info.food))}
+				--></label>
 			</div>
 		</div>
         <div class="form-item">

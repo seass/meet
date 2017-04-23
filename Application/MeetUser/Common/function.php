@@ -24,34 +24,6 @@ function check_verify($code, $id = 1){
 }
 
 /**
- * 获取列表总行数
- * @param  string  $category 分类ID
- * @param  integer $status   数据状态
- * @author 麦当苗儿 <zuojiazi@vip.qq.com>
- */
-function get_list_count($category, $status = 1){
-    static $count;
-    if(!isset($count[$category])){
-        $count[$category] = D('Document')->listCount($category, $status);
-    }
-    return $count[$category];
-}
-
-/**
- * 获取段落总数
- * @param  string $id 文档ID
- * @return integer    段落总数
- * @author 麦当苗儿 <zuojiazi@vip.qq.com>
- */
-function get_part_count($id){
-    static $count;
-    if(!isset($count[$id])){
-        $count[$id] = D('Document')->partCount($id);
-    }
-    return $count[$id];
-}
-
-/**
  * 获取导航URL
  * @param  string $url 导航URL
  * @return string      解析或的url
@@ -67,4 +39,26 @@ function get_nav_url($url){
             break;
     }
     return $url;
+}
+/**
+ * 检查手机号
+ * @author sea
+ */
+function checkRegPhone($phone){
+    if(!preg_match("/^1[34578]{1}\d{9}$/",$phone)){
+        return false;
+    }
+    return true;
+}
+/**
+ * 检查身份证
+ * @author sea
+ * //1、15位或18位，如果是15位，必需全是数字。
+ //2、如果是18位，最后一位可以是数字或字母Xx，其余必需是数字。
+ */
+function checkRegIdentity($identity){
+    if(!preg_match("/^(\d{15}$|^\d{18}$|^\d{17}(\d|X|x))$/",$identity)){
+        return false;
+    }
+    return true;
 }

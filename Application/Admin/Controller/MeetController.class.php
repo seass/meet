@@ -83,6 +83,7 @@ class meetController extends AdminController {
         if(strtotime($begin_time)>strtotime($end_time)){
             $this->error('报名开始时间不能大于报名结束时间！');
         }
+        //var_dump($_POST['hyxz']);exit;
         $data=[
             'meet_name'=>$meet_name,
             'begin_time'=>$begin_time,

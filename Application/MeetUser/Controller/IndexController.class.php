@@ -38,11 +38,40 @@ class IndexController extends \Think\Controller{
      */
     public function login(){
         if(IS_POST){
-            $this->error('站点已经关闭，请稍后访问~');
-            $MUser=M("MeetMember")->where(['id'=>$_POST['Mid']])->find();
-            //self::autoLogin($MUser);
-            
-            $this->redirect('Index/index',['Mid'=>$_POST['Mid']]);
+            $return = ['status'=>false,'msg'=>''];
+            //验证手机格式
+            $phone=$_POST['phone'];
+            if(!checkRegPhone($phone)){
+                $return['msg']='手机号格式验证失败，请重新输入！';
+                $this->ajaxReturn($return);
+            }
+            //验证身份证号格式
+            $idcard=$_POST['idcard'];
+            if(!checkRegIdentity($idcard)){
+                $return['msg']='身份证号格式验证失败，请重新输入！';
+                $this->ajaxReturn($return);
+            }
+            $MUser=M("MeetMember")->where([
+                'meet_id'=>$_POST['Mid'],
+                'realname'=>$_POST['realname'],
+                'idcard'=>$idcard,
+                'phone'=>$phone,
+            ])->find();
+            if(empty($MUser)){
+                $return['msg']='信息验证失败，请重新输入！';
+                $this->ajaxReturn($return);
+            }
+            if($MUser['status']!=1){
+                $return['msg']='用户不存在或被禁用，请联系管理员！';
+                $this->ajaxReturn($return);
+            }
+            //登录成功 存储登录信息
+            self::autoLogin($MUser);
+            $return['status']=true;
+            $return['msg']='登录成功！';
+            $return['success_url']=U("/MeetUser/Index/index/Mid/".$_POST['Mid']);
+            /* 返回JSON数据 */
+            $this->ajaxReturn($return);
         }else{
             //每次进入必须带会议id
             if(empty($_GET["Mid"])){
