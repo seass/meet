@@ -1,0 +1,46 @@
+<include file="Index/head"/>
+<style type="text/css">
+	.backBtn{
+		display:none;
+	}
+</style>
+	<div class="content">
+			<if condition="$info eq null">
+		
+			<else/>
+				<p class="content-img">
+		               <img src="__ROOT__{$info.headimg}">
+		        </p>
+			<table>
+			<tbody>
+				<tr>
+					<th>姓名：</th>
+					<td>{$info.realname}</td>
+				</tr>
+				<tr>
+					<th>性别：</th>
+					<td><if condition="$info.sex eq 1">男<else/>女</if></td>
+				</tr>
+				<tr>
+					<th>职务：</th>
+					<td>{$info.position}</td>
+				</tr>
+				<tr>
+					<th>手机号：</th>
+					<td>{$info.phone}</td>
+				</tr>
+				<tr>
+					<th>身份证号：</th>
+					<td>{$info.idcard}</td>
+				</tr>
+				<tr>
+					<th>餐饮要求：</th>
+					<td>{$info.food_req}</td>
+				</tr>
+				
+			</tbody>
+		</table>
+			</if>
+	</div>
+</body>
+</html>

@@ -424,7 +424,7 @@ function  get_user_no($meet_id){
  * @author sea 
  */
 function  createQrcode($meet_member_id){
-    $qr_text="http://www.baidu.com?uid=".$meet_member_id;
+    $qr_text='http://'.$_SERVER['HTTP_HOST'].U('/Meetuser/Info/index/MUid/'.$meet_member_id);
     // 文件名称
     $file_name = date('YmdHis') . rand(100, 999)."_".$meet_member_id . '.png';
     $QrObj = new \Util\Qrcode\QR($qr_text, array(
