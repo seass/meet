@@ -108,7 +108,7 @@
 		$("#region_id").change(function(){
 			var region_id=$("select[name='region_id']").val();
 			if(region_id!=''){
-				$.post("{:U('/MeetUser/Home/get_store_list')}",{'region_id':region_id},
+				$.post("{:U('/Meetuser/Home/get_store_list')}",{'region_id':region_id},
 						function(result){
 							var s_html="<option value=\"\">请选择经销店名</option>";
 							for(var i=0;i<result.data.length;i++){

@@ -1,5 +1,5 @@
 <?php
-namespace  MeetUser\Service;
+namespace  Meetuser\Service;
 /**
  * 会议服务Service
  */

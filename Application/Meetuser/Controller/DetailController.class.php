@@ -7,13 +7,13 @@
 // | Author: sea <919873148.qq.com>
 // +----------------------------------------------------------------------
 
-namespace MeetUser\Controller;
+namespace Meetuser\Controller;
 
-use MeetUser\Service\MeetService;
+use Meetuser\Service\MeetService;
 /**
  * 会议前台首页控制器
  */
-class DetailController extends MeetUserController{
+class DetailController extends MeetuserController{
     
     public static  $_field_config=[
         1=>'hyxz',//会议须知

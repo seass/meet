@@ -7,9 +7,8 @@
 // | Author: sea <919873148.qq.com>
 // +----------------------------------------------------------------------
 
-namespace MeetUser\Controller;
+namespace Meetuser\Controller;
 
-use MeetUser\Service\MeetService;
 /**
  * 用户入口控制器
  */
@@ -60,18 +59,18 @@ class HomeController extends \Think\Controller{
             if(strtotime($_info['begin_time'])>time()){
                 $this->assign('grade',1);
                 $this->assign('msg', '注册开始时间为'.$_info['begin_time'].'，请等候注册，或直接登录');
-                $this->assign('login_url',U('/MeetUser/Index/index/Mid/'.$_GET["Mid"]));
+                $this->assign('login_url',U('/Meetuser/Index/index/Mid/'.$_GET["Mid"]));
                 $this->display('Index/register');
                 exit;
             }
             if(strtotime($_info['end_time'])<time()){
                 $this->assign('grade',2);
                 $this->assign('msg', '已超过注册开发时间，请直接登录');
-                $this->assign('login_url',U('/MeetUser/Index/index/Mid/'.$_GET["Mid"]));
+                $this->assign('login_url',U('/Meetuser/Index/index/Mid/'.$_GET["Mid"]));
                 $this->display('Index/register');
                 exit;
             }
-            $this->assign('login_url',U('/MeetUser/Index/index/Mid/'.$_GET["Mid"]));
+            $this->assign('login_url',U('/Meetuser/Index/index/Mid/'.$_GET["Mid"]));
             $this->assign('region_list',$this->get_region_list());
             $this->display('Index/register');
         }else{

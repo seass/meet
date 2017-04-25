@@ -7,7 +7,7 @@
 // | Author: sea <919873148.qq.com>
 // +----------------------------------------------------------------------
 
-namespace MeetUser\Controller;
+namespace Meetuser\Controller;
 
 /**
  * 会议前台首页控制器
@@ -73,7 +73,7 @@ class IndexController extends \Think\Controller{
             self::autoLogin($MUser);
             $return['status']=true;
             $return['msg']='登录成功！';
-            $return['success_url']=U("/MeetUser/Index/index/Mid/".$_POST['Mid']);
+            $return['success_url']=U("/Meetuser/Index/index/Mid/".$_POST['Mid']);
             /* 返回JSON数据 */
             $this->ajaxReturn($return);
         }else{
@@ -189,7 +189,7 @@ class IndexController extends \Think\Controller{
 //                 self::autoLogin($MUser);
 //                 $return['status']=true;
 //                 $return['msg']='注册成功！';
-//                 $return['success_url']=U("/MeetUser/Index/index/Mid/".$_POST['Mid']);
+//                 $return['success_url']=U("/Meetuser/Index/index/Mid/".$_POST['Mid']);
 //                 /* 返回JSON数据 */
 //                 $this->ajaxReturn($return);
             }

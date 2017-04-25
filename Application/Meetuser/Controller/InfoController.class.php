@@ -7,9 +7,9 @@
 // | Author: sea <919873148.qq.com>
 // +----------------------------------------------------------------------
 
-namespace MeetUser\Controller;
+namespace Meetuser\Controller;
 
-use MeetUser\Service\MeetService;
+use Meetuser\Service\MeetService;
 /**
  * 用户扫码跳转控制器
  */
