@@ -118,8 +118,35 @@ class MeetMemberController extends AdminController {
             'score'=>I('post.score'),
             'is_share'=>I('post.is_share'),
             'food_req'=>I('post.food_req'),
-            'status'=>I('post.status')
+            'status'=>I('post.status'),
+            'is_audit'=>I('post.is_audit'),
+            'hotel_type'=>0,//不住宿,
+            'house_type'=>0,
+            'checkin_date'=>'',
+            'leave_date'=>''
         ];
+        //是否住宿
+        $hotel_type=$_POST['hotel_type'];
+        if(!empty($hotel_type)){
+            if(empty($_POST["house_type"])){
+                 $this->error('请选择房型！');
+            }
+            $checkin_date=$_POST['checkin_date'];
+            if(empty($checkin_date)){
+                $this->error('请选择入住时间！');
+            }
+            $leave_date=$_POST['leave_date'];
+            if(empty($leave_date)){
+                $this->error('请选择离店时间！');
+            }
+            if(strtotime($checkin_date)>strtotime($leave_date)){
+                $this->error('入住时间不能大于离店时间！');
+            }
+            $data['hotel_type']=$hotel_type;
+            $data['house_type']=$_POST["house_type"];
+            $data['checkin_date']=$checkin_date;
+            $data['leave_date']=$leave_date;
+        }
         //新增时初始密码
         if(empty(I('post.id'))){
             $data['password']=md5(substr($phone, -6));

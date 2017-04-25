@@ -79,6 +79,34 @@
             </div>
         </div>
         <div class="form-item">
+            <label class="item-label"> 住宿类型<span class="check-tips"></span></label>
+            <div class="controls">
+                <label class="radio"><input type="radio" name="hotel_type" value="0" checked>不住宿</label>
+                <label class="radio"><input type="radio" name="hotel_type" value="1">合住</label>
+                <label class="radio"><input type="radio" name="hotel_type" value="2">单住</label>
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label"> 房型<span class="check-tips"></span></label>
+            <div class="controls">
+                <label class="radio"><input type="radio" name="house_type" value="0" checked>无</label>
+                <label class="radio"><input type="radio" name="house_type" value="1">双床</label>
+                <label class="radio"><input type="radio" name="house_type" value="2">大床</label>
+            </div>
+        </div>
+        <div class="form-item">
+					            <label class="item-label">入住时间<span class="check-tips"></span></label>
+					            <div class="controls">
+					                <input type="text" class="text input-large time" name="checkin_date" value="{$info.checkin_date|default=''}">
+					            </div>
+					        </div>
+					        <div class="form-item">
+					            <label class="item-label">离店时间<span class="check-tips"></span></label>
+					            <div class="controls">
+					                <input type="text" class="text input-large time" name="leave_date" value="{$info.leave_date|default=''}">
+					            </div>
+					        </div>
+        <div class="form-item">
             <label class="item-label"> 是否可以其他人合住酒店<span class="check-tips"></span></label>
             <div class="controls">
                 <label class="radio"><input type="radio" name="is_share" value="0" checked>不可以</label>
@@ -91,6 +119,13 @@
 				<label class="textarea input-large"><textarea name="food_req">{$info.food_req}</textarea></label>
 			</div>
 		</div>
+		<div class="form-item">
+            <label class="item-label"><span style="color:red;">*</span> 审核状态<span class="check-tips"></span></label>
+            <div class="controls">
+                <label class="radio"><input type="radio" name="is_audit" value="1">通过</label>
+                <label class="radio"><input type="radio" name="is_audit" value="0">未通过</label>
+            </div>
+        </div>
         <div class="form-item">
             <label class="item-label"><span style="color:red;">*</span> 状态<span class="check-tips"></span></label>
             <div class="controls">
@@ -146,6 +181,16 @@
 	Think.setValue('classes_id',{$info.classes_id|default=0});
 	Think.setValue('sex',{$info.sex|default=0});
 	Think.setValue('is_share',{$info.is_share|default=0});
+	Think.setValue('hotel_type',{$info.hotel_type|default=0});
+	Think.setValue('house_type',{$info.house_type|default=0});
+	Think.setValue('is_audit',{$info.is_audit|default=0});
+	$('.time').datetimepicker({
+	    format: 'yyyy-mm-dd',
+	    language:"zh-CN",
+	    startDate:'2017-01-01 00:00:00',
+	    minView:2,
+	    autoclose:true
+	});
 	//导航高亮
 	highlight_subnav('{:U('index')}');
 </script>

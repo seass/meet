@@ -61,6 +61,10 @@ class IndexController extends \Think\Controller{
                 $return['msg']='信息验证失败，请重新输入！';
                 $this->ajaxReturn($return);
             }
+            if($MUser['is_audit']!=1){
+                $return['msg']='用户未审核通过，请等候审核！';
+                $this->ajaxReturn($return);
+            }
             if($MUser['status']!=1){
                 $return['msg']='用户不存在或被禁用，请联系管理员！';
                 $this->ajaxReturn($return);
@@ -91,6 +95,111 @@ class IndexController extends \Think\Controller{
             }
         }
     }
+    /**
+     * 注册
+     */
+    public function register(){
+        if(IS_POST){
+            $return = ['status'=>false,'msg'=>''];
+            if(empty($_POST["Mid"])){
+                 $return['msg']='异常，请重新进入！';
+                $this->ajaxReturn($return);
+            }
+            //验证手机格式
+            $phone=$_POST['phone'];
+            if(!checkRegPhone($phone)){
+                $return['msg']='手机号格式验证失败，请重新输入！';
+                $this->ajaxReturn($return);
+            }
+            //验证身份证号格式
+            $idcard=$_POST['idcard'];
+            if(!checkRegIdentity($idcard)){
+                $return['msg']='身份证号格式验证失败，请重新输入！';
+                $this->ajaxReturn($return);
+            }
+            $data=[
+                'realname'=>$_POST['realname'],
+                'sex'=>$_POST['sex'],
+                'phone'=>$_POST['phone'],
+                'idcard'=>$_POST['idcard'],
+                'position'=>$_POST['position'],
+                'region_id'=>$_POST['region_id'],
+                'store_id'=>$_POST['store_id'],
+                'food_req'=>$_POST['food_req'],
+                'meet_id'=>$_POST["Mid"],
+                'user_no'=>get_user_no($_POST["Mid"]),//生成会议编号
+                'password'=>md5(substr($_POST['phone'], -6)),
+                'is_user_register'=>1,
+            ];
+            //是否住宿
+            $hotel_type=$_POST['hotel_type'];
+            if(!empty($hotel_type)){
+                if(empty($_POST["house_type"])){
+                    $return['msg']='请选择房型！';
+                    $this->ajaxReturn($return);
+                }
+                $checkin_date=$_POST['checkin_date'];
+                if(empty($checkin_date)){
+                    $return['msg']='请选择入住时间！';
+                    $this->ajaxReturn($return);
+                }
+                $leave_date=$_POST['leave_date'];
+                if(empty($leave_date)){
+                    $return['msg']='请选择离店时间！';
+                    $this->ajaxReturn($return);
+                }
+                if(strtotime($checkin_date)>strtotime($leave_date)){
+                    $return['msg']='入住时间不能大于离店时间！';
+                    $this->ajaxReturn($return);
+                }
+                $data['hotel_type']=$hotel_type;
+                $data['house_type']=$_POST["house_type"];
+                $data['checkin_date']=$checkin_date;
+                $data['leave_date']=$leave_date;
+            }
+            /*
+             * 检查用户的手机号 是否已经存在次会议的班级下
+             */
+            $check_res=M("MeetMember")->where([
+                'meet_id'=>$data['meet_id'],
+                'phone'=>$data['phone']])->getField("id");
+            if(!empty($check_res)){
+                $return['msg']='此用户已经存在本次会议中,请重新输入新用户！';
+                $this->ajaxReturn($return);
+            }
+            M()->startTrans();
+            $add_res=M("MeetMember")->add($data);
+            if($add_res==false){
+                $return['msg']='注册失败，请稍后重试！';
+                $this->ajaxReturn($return);
+            }
+            //生成二维码
+            $qrcode=createQrcode($add_res);
+            $up_res=M('MeetMember')->where(['id'=>$add_res])->save(['qrcode'=>$qrcode]);
+            if($add_res!=false && $up_res!==false){
+                M()->commit();
+                
+                //注册成功 等待审核
+                $return['msg']='注册成功，等待审核！';
+                $this->ajaxReturn($return);
+//                 //注册成功 自动存储登录信息
+//                 $MUser=M("MeetMember")->where([
+//                     'id'=>$add_res
+//                 ])->find();
+//                 self::autoLogin($MUser);
+//                 $return['status']=true;
+//                 $return['msg']='注册成功！';
+//                 $return['success_url']=U("/MeetUser/Index/index/Mid/".$_POST['Mid']);
+//                 /* 返回JSON数据 */
+//                 $this->ajaxReturn($return);
+            }
+            M()->rollback();
+            $return['msg']='注册失败，请稍后重试！';
+            $this->ajaxReturn($return);
+        }
+    }
+    
+    
     /**
      * 自动登录用户
      * @param  integer $user 用户信息数组
