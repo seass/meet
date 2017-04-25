@@ -29,6 +29,7 @@
 		<th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
 		<th class="">ID</th>
 		<th class="">会议名称</th>
+		<th class="">是否开启注册</th>
 		<th class="">报名开始时间</th>
 		<th class="">报名结束时间</th>
 		<th class="">状态</th>
@@ -43,6 +44,7 @@
             <td><input class="ids" type="checkbox" name="id[]" value="{$vo.id}" /></td>
 			<td>{$vo.id} </td>
 			<td>{$vo.meet_name}</td>
+			<td><if condition="$vo.is_open_register eq 1">是<else/>否</if></td>
 			<td>{$vo.begin_time}</td>
 			<td>{$vo.end_time}</td>
 			<td>{$vo.status_text}</td>

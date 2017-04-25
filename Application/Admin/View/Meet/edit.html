@@ -20,14 +20,21 @@
 				                		<input type="text" class="text input-large" name="meet_name" value="{$info.meet_name|default=''}">
 				            		</div>
 		        				</div>
+		        				<div class="form-item">
+					            <label class="item-label"><span style="color:red;">*</span> 是否开启注册<span class="check-tips">开启注册时，报名时间必填</span></label>
+					            <div class="controls">
+					                <label class="radio"><input type="radio" name="is_open_register" value="1">是</label>
+					                <label class="radio"><input type="radio" name="is_open_register" value="0">否</label>
+					            </div>
+					        </div>
 					        <div class="form-item">
-					            <label class="item-label"><span style="color:red;">*</span> 报名开始时间<span class="check-tips">（必填）</span></label>
+					            <label class="item-label">报名开始时间<span class="check-tips"></span></label>
 					            <div class="controls">
 					                <input type="text" class="text input-large time" name="begin_time" value="{$info.begin_time|default=''}">
 					            </div>
 					        </div>
 					        <div class="form-item">
-					            <label class="item-label"><span style="color:red;">*</span> 报名结束时间<span class="check-tips">（必填）</span></label>
+					            <label class="item-label">报名结束时间<span class="check-tips"></span></label>
 					            <div class="controls">
 					                <input type="text" class="text input-large time" name="end_time" value="{$info.end_time|default=''}">
 					            </div>
@@ -126,6 +133,7 @@
 	    autoclose:true
 	});
 	Think.setValue("status", {$info.status|default = 0});
+	Think.setValue("is_open_register", {$info.is_open_register|default = 0});
 	//导航高亮
 	highlight_subnav('{:U('index')}');
 </script>
