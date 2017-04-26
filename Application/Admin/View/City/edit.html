@@ -2,7 +2,7 @@
 
 <block name="body">
 	<div class="main-title cf">
-		<h2>{:isset($info['id'])?'编辑':'新增'}大区</h2>
+		<h2>{:isset($info['id'])?'编辑':'新增'}城市</h2>
 	</div>
 <form action="{:U()}" method="post" class="form-horizontal">
 		<div class="form-item cf">
@@ -16,10 +16,25 @@
 				</select>
 			</div>
 		</div>
+		<div class="form-item cf">
+			<label class="item-label"><span style="color:red;">*</span> 绑定大区<span class="check-tips">（启用状态下的大区）</span></label>
+			<div class="controls">
+				<select name="region_id">
+					<option value="0">请选择大区</option>
+					<!-- 编辑时 选中当前大区 -->
+					<if condition="isset($info['id']) eq true">
+						<volist name=":get_region_list($info['brand_id'])" id="vo">
+							<option value="{$vo.id}">{$vo.region_name}</option>
+						</volist>
+					</if>
+				</select>
+				
+			</div>
+		</div>
         <div class="form-item">
-            <label class="item-label"><span style="color:red;">*</span> 大区名称<span class="check-tips">（必填）</span></label>
+            <label class="item-label"><span style="color:red;">*</span> 城市名称<span class="check-tips">（必填）</span></label>
             <div class="controls">
-                <input type="text" class="text input-large" name="region_name" value="{$info.region_name|default=''}">
+                <input type="text" class="text input-large" name="city_name" value="{$info.city_name|default=''}">
             </div>
         </div>
         <div class="form-item">
@@ -38,11 +53,31 @@
 </block>
 <block name="script">
 <script type="text/javascript" charset="utf-8">
+$(function(){
+	$("select[name='brand_id']").change(function(){
+		var brand_id=$("select[name='brand_id']").val();
+		if(brand_id!=''){
+			$.post("{:U('/Admin/Common/get_brand_json')}",{'brand_id':brand_id},
+					function(result){
+						var region_data=result.data.region_data;
+						var s_html="<option value=\"0\">请选择大区</option>";
+						if(region_data!=null){
+							 for(var i=0;i<region_data.length;i++){
+								s_html+="<option value=\""+region_data[i].id+"\">"+region_data[i].region_name+"</option>";
+							} 
+						}
+						$("select[name='region_id']").html(s_html);
+	  		},'json');
+		}
+	});
 	Think.setValue("status", {$info.status|default = 0});
-	Think.setValue("brand_id", {$info.brand_id|default = 0});
+	Think.setValue('brand_id',{$info.brand_id|default=0});
+	Think.setValue('region_id',{$info.region_id|default=0});
 	
 	//导航高亮
 	highlight_subnav('{:U('index')}');
+});
+	
 </script>
 </block>
 

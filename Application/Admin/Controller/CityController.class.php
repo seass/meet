@@ -8,37 +8,36 @@
 // +----------------------------------------------------------------------
 namespace Admin\Controller;
 /**
- * 门店管理控制器
+ * 城市管理控制器
  * @author sea <919873148.qq.com>
  */
-class StoreController extends AdminController {
+class CityController extends AdminController {
 
     //Model(表名)
-    public $_model="Store";
+    public $_model="City";
     
     /**
-     * 门店管理列表
+     * 城市管理列表
      * @author sea 
      */
     public function index(){
         $_key       =   I('_key');
-        $map['s.status']    =   array('egt',0);
+        $map['c.status']    =   array('egt',0);
         //模糊搜索
         if(!empty($_key)){
-            $map['s.store_name|r.region_name|c.city_name|b.brand_name']    =   array('like', '%'.(string)$_key.'%');
+            $map['c.city_name|r.region_name|b.brand_name']    =   array('like', '%'.(string)$_key.'%');
         }
-        $list=M()->table(C('DB_PREFIX').strtolower($this->_model).' s' )
+        $list=M()->table(C('DB_PREFIX').strtolower($this->_model).' c' )
                        ->where($map)
-                       ->order('s.id DESC')
-                       ->join (C('DB_PREFIX').('city').' c ON c.id=s.city_id' )
-                       ->join (C('DB_PREFIX').('region').' r ON r.id=s.region_id' )
-                       ->join (C('DB_PREFIX').('brand').' b ON b.id=s.brand_id' );
-        $field='s.id,s.store_name,s.store_code,s.status,s.create_time,c.city_name,r.region_name,b.brand_name';
+                       ->order('c.id DESC')
+                       ->join (C('DB_PREFIX').('region').' r ON r.id=c.region_id' )
+                       ->join (C('DB_PREFIX').('brand').' b ON b.id=c.brand_id' );
+        $field='c.id,c.city_name,c.status,c.create_time,r.region_name,b.brand_name';
         $list = $this->lists($list,null,null,null,$field);
         int_to_string($list);
         
         $this->assign('_list', $list);
-        $this->meta_title = '门店管理';
+        $this->meta_title = '城市管理';
         $this->display();
     }
     /**
@@ -57,13 +56,13 @@ class StoreController extends AdminController {
         //var_dump($id);
         //var_dump($method);exit;
         switch (strtolower($method)){
-            case 'forbidstore':
+            case 'forbidcity':
                 $this->forbid($this->_model, $map );
                 break;
-            case 'resumestore':
+            case 'resumecity':
                 $this->resume($this->_model, $map );
                 break;
-            case 'deletestore':
+            case 'deletecity':
                 $this->delete($this->_model, $map );
                 break;
             default:
@@ -71,7 +70,7 @@ class StoreController extends AdminController {
         }
     }
     /**
-     * 新增门店
+     * 新增城市
      * @author sea
      */
     public function add(){
@@ -86,38 +85,31 @@ class StoreController extends AdminController {
             if(empty($region_id)){
                 $this->error('请选择大区，若无选择项，请先去新增大区！');
             }
-            //绑定城市
-            $city_id=I('post.city_id',0);
-            if(empty($city_id)){
-                $this->error('请选择城市，若无选择项，请先去新增城市！');
-            }
-            $store_name=I('post.store_name');
-            if(empty($store_name)){
-                $this->error('门店名称必填！');
+            $city_name=I('post.city_name');
+            if(empty($city_name)){
+                $this->error('城市名称必填！');
             }
             //添加数据
             $add_res=M($this->_model)->add([
-                'store_name'=>$store_name,
-                'brand_id'=>$brand_id,
+                'city_name'=>$city_name,
                 'region_id' =>$region_id,
-                'city_id' =>$city_id,
-                'status'=>I('post.status'),
-                'store_code'=>I('post.store_code'),
+                'brand_id' =>$brand_id,
+                'status'=>I('post.status')
             ]);
             if($add_res==false){
                 $this->error('新增失败！');
             }
-            //记录行为(需要提前创建add_store行为标记)
-            action_log('add_store',$this->_model, $add_res, UID);
+            //记录行为(需要提前创建add_city行为标记)
+            action_log('add_city',$this->_model, $add_res, UID);
             $this->success('新增成功！',U('index'));
            
         } else {
-            $this->meta_title = '新增门店';
+            $this->meta_title = '新增城市';
             $this->display('edit');
         }
     }
     /**
-     * 编辑门店
+     * 编辑城市
      * @author sea
      */
     public function edit(){
@@ -136,27 +128,20 @@ class StoreController extends AdminController {
             if(empty($region_id)){
                 $this->error('请选择大区，若无选择项，请先去新增大区！');
             }
-            //绑定城市
-            $city_id=I('post.city_id',0);
-            if(empty($city_id)){
-                $this->error('请选择城市，若无选择项，请先去新增城市！');
-            }
-            $store_name=I('post.store_name');
-            if(empty($store_name)){
-                $this->error('门店名称必填！');
+            $city_name=I('post.city_name');
+            if(empty($city_name)){
+                $this->error('城市名称必填！');
             }
             //编辑数据
             M($this->_model)->where(['id'=>$id])->save([
-                'store_name'=>$store_name,
-                'brand_id'=>$brand_id,
+                'city_name'=>$city_name,
                 'region_id' =>$region_id,
-                'city_id' =>$city_id,
-                'status'=>I('post.status'),
-                'store_code'=>I('post.store_code'),
+                'brand_id' =>$brand_id,
+                'status'=>I('post.status')
             ]);
           
-            //记录行为(需要提前创建edit_store行为标记)
-            action_log('edit_store',$this->_model, $id, UID);
+            //记录行为(需要提前创建edit_city行为标记)
+            action_log('edit_city',$this->_model, $id, UID);
             $this->success('操作成功！',U('index'));
              
         } else {
@@ -166,7 +151,7 @@ class StoreController extends AdminController {
             }
             $_info=M($this->_model)->where('id='.$id)->find();
             $this->assign('info', $_info);
-            $this->meta_title = '编辑门店';
+            $this->meta_title = '编辑城市';
             $this->display('edit');
         }
     }

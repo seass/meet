@@ -6,12 +6,38 @@
 	</div>
 <form action="{:U()}" method="post" class="form-horizontal">
 		<div class="form-item cf">
+			<label class="item-label"><span style="color:red;">*</span> 选择品牌<span class="check-tips">（启用状态下的品牌）</span></label>
+			<div class="controls">
+				<select name="brand_id">
+					<option value="0">请选择品牌</option>
+					<volist name=":get_brand_list()" id="vo">
+						<option value="{$vo.id}">{$vo.brand_name}</option>
+					</volist>
+				</select>
+			</div>
+		</div>
+		<div class="form-item cf">
 			<label class="item-label"><span style="color:red;">*</span> 绑定大区<span class="check-tips">（启用状态下的大区）</span></label>
 			<div class="controls">
 				<select name="region_id">
 					<option value="0">请选择大区</option>
-					<volist name=":get_region_list()" id="vo">
-						<option value="{$vo.id}">{$vo.region_name}</option>
+					<!-- 编辑时 选中当前大区 -->
+					<if condition="isset($info['id']) eq true">
+						<volist name=":get_region_list($info['brand_id'])" id="vo">
+							<option value="{$vo.id}">{$vo.region_name}</option>
+						</volist>
+					</if>
+				</select>
+				
+			</div>
+		</div>
+		<div class="form-item cf">
+			<label class="item-label"><span style="color:red;">*</span> 绑定城市<span class="check-tips">（启用状态下的城市）</span></label>
+			<div class="controls">
+				<select name="city_id">
+					<option value="0">请选择城市</option>
+					<volist name=":get_city_list('region_id',$info['region_id'])" id="vo">
+						<option value="{$vo.id}">{$vo.city_name}</option>
 					</volist>
 				</select>
 			</div>
@@ -20,6 +46,12 @@
             <label class="item-label"><span style="color:red;">*</span> 门店名称<span class="check-tips">（必填）</span></label>
             <div class="controls">
                 <input type="text" class="text input-large" name="store_name" value="{$info.store_name|default=''}">
+            </div>
+        </div>
+        <div class="form-item">
+            <label class="item-label"> 门店代码<span class="check-tips">（注册时将展示给用户）</span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="store_code" value="{$info.store_code|default=''}">
             </div>
         </div>
         <div class="form-item">
@@ -38,12 +70,64 @@
 </block>
 <block name="script">
 <script type="text/javascript" charset="utf-8">
+$(function(){
+	//选择品牌
+	$("select[name='brand_id']").change(function(){
+		var brand_id=$("select[name='brand_id']").val();
+		if(brand_id!=''){
+			$.post("{:U('/Admin/Common/get_brand_json')}",{'brand_id':brand_id},
+					function(result){
+						//大区
+						var region_data=result.data.region_data;
+						var s_html="<option value=\"0\">请选择大区</option>";
+						if(region_data!=null){
+							 for(var i=0;i<region_data.length;i++){
+								s_html+="<option value=\""+region_data[i].id+"\">"+region_data[i].region_name+"</option>";
+							} 
+						}
+						$("select[name='region_id']").html(s_html);
+						
+						//城市
+						var city_data=result.data.city_data;
+						var c_html="<option value=\"0\">请选择城市</option>";
+						if(city_data!=null){
+							 for(var i=0;i<city_data.length;i++){
+								 c_html+="<option value=\""+city_data[i].id+"\">"+city_data[i].city_name+"</option>";
+							} 
+						}
+						$("select[name='city_id']").html(c_html);
+						
+						
+	  		},'json');
+		}
+	});
+	//选择大区
+	$("select[name='region_id']").change(function(){
+		var region_id=$("select[name='region_id']").val();
+		if(region_id!=''){
+			$.post("{:U('/Admin/Common/get_region_json')}",{'region_id':region_id},
+					function(result){
+						//城市
+						var city_data=result.data.city_data;
+						var c_html="<option value=\"0\">请选择城市</option>";
+						if(city_data!=null){
+							 for(var i=0;i<city_data.length;i++){
+								 c_html+="<option value=\""+city_data[i].id+"\">"+city_data[i].city_name+"</option>";
+							} 
+						}
+						$("select[name='city_id']").html(c_html);
+						
+						
+	  		},'json');
+		}
+	});
 	Think.setValue("status", {$info.status|default = 0});
+	Think.setValue('brand_id',{$info.brand_id|default=0});
 	Think.setValue('region_id',{$info.region_id|default=0});
-	console.log({$info.region_id|default=0});
-	
+	Think.setValue('city_id',{$info.city_id|default=0});
 	//导航高亮
 	highlight_subnav('{:U('index')}');
+});
 </script>
 </block>
 
