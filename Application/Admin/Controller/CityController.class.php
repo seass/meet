@@ -132,14 +132,34 @@ class CityController extends AdminController {
             if(empty($city_name)){
                 $this->error('城市名称必填！');
             }
+            //原数据
+            $old_info= M($this->_model)->where(['id'=>$id])->find();
+            
+            
             //编辑数据
-            M($this->_model)->where(['id'=>$id])->save([
+            $up_res=M($this->_model)->where(['id'=>$id])->save([
                 'city_name'=>$city_name,
                 'region_id' =>$region_id,
                 'brand_id' =>$brand_id,
                 'status'=>I('post.status')
             ]);
-          
+            if($up_res!==false){
+                //若绑定的品牌发生变更 同步冗余数据
+                $up_old_data=[];
+                if($old_info['brand_id']!=$brand_id){
+                    $up_old_data['brand_id']=$brand_id;
+                }
+                if($old_info['region_id']!=$region_id){
+                    $up_old_data['region_id']=$region_id;
+                }
+                if (!empty($up_old_data)){
+                    //更新表
+                    M('Store')->where(['city_id'=>$id])->save($up_old_data);
+                    M('MeetMember')->where(['city_id'=>$id])->save($up_old_data);
+                }
+            }
+            
+            
             //记录行为(需要提前创建edit_city行为标记)
             action_log('edit_city',$this->_model, $id, UID);
             $this->success('操作成功！',U('index'));

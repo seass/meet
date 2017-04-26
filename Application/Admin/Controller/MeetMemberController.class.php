@@ -25,7 +25,7 @@ class MeetMemberController extends AdminController {
         $map['m.status']    =   array('egt',0);
         //模糊搜索
         if(!empty($_key)){
-            $map['m.realname|me.meet_name|m.phone|user_no']    =   array('like', '%'.(string)$_key.'%');
+            $map['m.realname|me.meet_name|m.phone|m.user_no|s.store_name|s.store_code']    =   array('like', '%'.(string)$_key.'%');
         }
         $list=M()->table(C('DB_PREFIX').strtolower('meet_member').' m' )
                        ->where($map)
@@ -33,8 +33,9 @@ class MeetMemberController extends AdminController {
                        ->join (' left join '.C('DB_PREFIX').('meet').' me ON me.id=m.meet_id' )
                        ->join (' left join '.C('DB_PREFIX').('classes').' c ON c.id=m.classes_id' )
                        ->join (' left join '.C('DB_PREFIX').('region').' r ON r.id=m.region_id' )
+                       ->join (' left join '.C('DB_PREFIX').('city').' ci ON ci.id=m.city_id' )
                        ->join (' left join '.C('DB_PREFIX').('store').' s ON s.id=m.store_id' );
-        $field='m.id,m.user_no,m.realname,m.phone,m.sex,m.idcard,m.headimg,m.position,m.qrcode,m.status,m.create_time,me.meet_name,me.begin_time,me.end_time,c.classes_name,r.region_name,s.store_name';
+        $field='m.id,m.user_no,m.realname,m.phone,m.sex,m.idcard,m.headimg,m.position,m.qrcode,m.status,m.create_time,me.meet_name,me.begin_time,me.end_time,c.classes_name,r.region_name,s.store_name,s.store_code,ci.city_name';
         $list = $this->lists($list,null,null,null,$field);
         int_to_string($list);
         
@@ -101,11 +102,14 @@ class MeetMemberController extends AdminController {
         if(empty($position)){
             $this->error('会议人员职务必填！');
         }
-        $region_id=M('Store')->where(['id'=>$store_id])->getField('region_id');
+        $store_info=M('Store')->where(['id'=>$store_id])->field('id,brand_id,region_id,city_id')->find();
         $meet_id=M('Classes')->where(['id'=>$classes_id])->getField('meet_id');
         $data=[
-            'region_id'=>$region_id,//大区id
-            'store_id'=>$store_id,
+            'brand_id'=>$store_info['brand_id'],//品牌id
+            'region_id'=>$store_info['region_id'],//大区id
+            'city_id'=>$store_info['city_id'],//城市ID
+            'store_id'=>$store_info['id'],//门店ID
+            
             'meet_id'=>$meet_id,//会议id
             'classes_id'=>$classes_id,
             'realname'=>$realname,

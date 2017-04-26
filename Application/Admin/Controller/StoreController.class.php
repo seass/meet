@@ -145,8 +145,11 @@ class StoreController extends AdminController {
             if(empty($store_name)){
                 $this->error('门店名称必填！');
             }
+            //原数据
+            $old_info= M($this->_model)->where(['id'=>$id])->find();
+            
             //编辑数据
-            M($this->_model)->where(['id'=>$id])->save([
+            $up_res=M($this->_model)->where(['id'=>$id])->save([
                 'store_name'=>$store_name,
                 'brand_id'=>$brand_id,
                 'region_id' =>$region_id,
@@ -154,7 +157,23 @@ class StoreController extends AdminController {
                 'status'=>I('post.status'),
                 'store_code'=>I('post.store_code'),
             ]);
-          
+            if($up_res!==false){
+                //若绑定的数据发生变更 同步冗余数据
+                $up_old_data=[];
+                if($old_info['brand_id']!=$brand_id){
+                    $up_old_data['brand_id']=$brand_id;
+                }
+                if($old_info['region_id']!=$region_id){
+                    $up_old_data['region_id']=$region_id;
+                }
+                if($old_info['city_id']!=$city_id){
+                    $up_old_data['city_id']=$city_id;
+                }
+                if (!empty($up_old_data)){
+                    //更新表
+                    M('MeetMember')->where(['store_id'=>$id])->save($up_old_data);
+                }
+            }
             //记录行为(需要提前创建edit_store行为标记)
             action_log('edit_store',$this->_model, $id, UID);
             $this->success('操作成功！',U('index'));

@@ -120,12 +120,23 @@ class RegionController extends AdminController {
             if(empty($region_name)){
                 $this->error('大区名称必填！');
             }
+            //原数据
+            $old_info= M($this->_model)->where(['id'=>$id])->find();
+            
             //编辑数据
-            M($this->_model)->where(['id'=>$id])->save([
+            $up_res=M($this->_model)->where(['id'=>$id])->save([
                 'brand_id'=>$brand_id,
                 'region_name'=>$region_name,
                 'status'=>I('post.status')]);
-          
+            if($up_res!==false){
+                //若绑定的品牌发生变更 同步冗余数据
+                if($old_info['brand_id']!=$brand_id){
+                    //更新表
+                    M('City')->where(['region_id'=>$id])->setField(['brand_id'=>$brand_id]);
+                    M('Store')->where(['region_id'=>$id])->setField(['brand_id'=>$brand_id]);
+                    M('MeetMember')->where(['region_id'=>$id])->setField(['brand_id'=>$brand_id]);
+                }
+            }
             //记录行为(需要提前创建edit_region行为标记)
             action_log('edit_region',$this->_model, $id, UID);
             $this->success('操作成功！',U('index'));
