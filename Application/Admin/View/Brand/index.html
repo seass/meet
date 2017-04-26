@@ -3,20 +3,20 @@
 <block name="body">
 	<!-- 标题栏 -->
 	<div class="main-title">
-		<h2>大区列表</h2>
+		<h2>品牌列表</h2>
 	</div>
 	<div class="cf">
 		<div class="fl">
-            <a class="btn" href="{:U('Region/add')}">新 增</a>
-            <button class="btn ajax-post" url="{:U('Region/changeStatus',array('method'=>'resumeRegion'))}" target-form="ids">启 用</button>
-            <button class="btn ajax-post" url="{:U('Region/changeStatus',array('method'=>'forbidRegion'))}" target-form="ids">禁 用</button>
-            <button class="btn ajax-post confirm" url="{:U('Region/changeStatus',array('method'=>'deleteRegion'))}" target-form="ids">删 除</button>
+            <a class="btn" href="{:U('Brand/add')}">新 增</a>
+            <button class="btn ajax-post" url="{:U('Brand/changeStatus',array('method'=>'resumebrand'))}" target-form="ids">启 用</button>
+            <button class="btn ajax-post" url="{:U('Brand/changeStatus',array('method'=>'forbidbrand'))}" target-form="ids">禁 用</button>
+            <button class="btn ajax-post confirm" url="{:U('Brand/changeStatus',array('method'=>'deletebrand'))}" target-form="ids">删 除</button>
         </div>
 
         <!-- 高级搜索 -->
 		<div class="search-form fr cf">
 			<div class="sleft">
-				<input type="text" name="_key" class="search-input" value="{:I('_key')}" placeholder="请输入品牌名称/大区名称">
+				<input type="text" name="brand_name" class="search-input" value="{:I('brand_name')}" placeholder="请输入品牌名称">
 				<a class="sch-btn" href="javascript:;" id="search" url="{:U('index')}"><i class="btn-search"></i></a>
 			</div>
 		</div>
@@ -28,8 +28,7 @@
         <tr>
 		<th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
 		<th class="">ID</th>
-		<th class="">所属品牌</th>
-		<th class="">大区名称</th>
+		<th class="">品牌名称</th>
 		<th class="">状态</th>
 		<th class="">创建时间</th>
 		<th class="">操作</th>
@@ -42,17 +41,16 @@
             <td><input class="ids" type="checkbox" name="id[]" value="{$vo.id}" /></td>
 			<td>{$vo.id} </td>
 			<td>{$vo.brand_name}</td>
-			<td>{$vo.region_name}</td>
 			<td>{$vo.status_text}</td>
 			<td>{$vo.create_time}</td>
 			<td>
-				<a href="{:U('Region/edit?id='.$vo['id'])}">编辑</a>
+				<a href="{:U('Brand/edit?id='.$vo['id'])}">编辑</a>
 				<if condition="$vo.status eq 1">
-				<a href="{:U('Region/changeStatus?method=forbidRegion&id='.$vo['id'])}" class="ajax-get">禁用</a>
+				<a href="{:U('Brand/changeStatus?method=forbidbrand&id='.$vo['id'])}" class="ajax-get">禁用</a>
 				<else/>
-				<a href="{:U('Region/changeStatus?method=resumeRegion&id='.$vo['id'])}" class="ajax-get">启用</a>
+				<a href="{:U('Brand/changeStatus?method=resumebrand&id='.$vo['id'])}" class="ajax-get">启用</a>
 				</if>
-				<a href="{:U('Region/changeStatus?method=deleteRegion&id='.$vo['id'])}" class="confirm ajax-get">删除</a>
+				<a href="{:U('Brand/changeStatus?method=deletebrand&id='.$vo['id'])}" class="confirm ajax-get">删除</a>
                 </td>
 		</tr>
 		</volist>
@@ -92,6 +90,6 @@
 		}
 	});
     //导航高亮
-    highlight_subnav('{:U('Region/index')}');
+    highlight_subnav('{:U('Brand/index')}');
 	</script>
 </block>

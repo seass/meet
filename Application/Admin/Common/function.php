@@ -372,6 +372,14 @@ function get_action_type($type, $all = false){
 	return $list[$type];
 }
 /**
+ * 获取启用的品牌列表
+ * @author sea
+ */
+function get_brand_list(){
+    $list = M('Brand')->field("id,brand_name")->where(['status'=>1])->select();
+    return $list;
+}
+/**
  * 获取启用的大区列表
  * @author sea 
  */

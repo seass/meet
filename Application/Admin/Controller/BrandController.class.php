@@ -8,35 +8,30 @@
 // +----------------------------------------------------------------------
 namespace Admin\Controller;
 /**
- * 大区管理控制器
+ * 品牌管理控制器
  * @author sea <919873148.qq.com>
  */
-class RegionController extends AdminController {
+class BrandController extends AdminController {
 
     //Model(表名)
-    public $_model="Region";
+    public $_model="Brand";
     
     /**
-     * 大区管理列表
+     * 品牌管理列表
      * @author sea 
      */
     public function index(){
-        $_key       =   I('_key');
-        $map['r.status']    =   array('egt',0);
+        $brand_name      =   I('brand_name');
+        $map['status']  =   array('egt',0);
         //模糊搜索
-        if(!empty($_key)){
-            $map['b.brand_name|r.region_name']    =   array('like', '%'.(string)$_key.'%');
+        if(!empty($brand_name)){
+            $map['brand_name']    =   array('like', '%'.(string)$brand_name.'%');
         }
-        $list=M()->table(C('DB_PREFIX').strtolower($this->_model).' r' )
-        ->where($map)
-        ->order('r.id DESC')
-        ->join (C('DB_PREFIX').('brand').' b ON b.id=r.brand_id' );
-        $field='r.id,r.region_name,b.brand_name,r.status,r.create_time';
-        $list = $this->lists($list,null,null,null,$field);
+        $field='id,brand_name,status,create_time';
+        $list   = $this->lists($this->_model, $map,null,null,$field);
         int_to_string($list);
-        
         $this->assign('_list', $list);
-        $this->meta_title = '大区管理';
+        $this->meta_title = '品牌管理';
         $this->display();
     }
     /**
@@ -55,13 +50,13 @@ class RegionController extends AdminController {
         //var_dump($id);
         //var_dump($method);exit;
         switch (strtolower($method)){
-            case 'forbidregion':
+            case 'forbidbrand':
                 $this->forbid($this->_model, $map );
                 break;
-            case 'resumeregion':
+            case 'resumebrand':
                 $this->resume($this->_model, $map );
                 break;
-            case 'deleteregion':
+            case 'deletebrand':
                 $this->delete($this->_model, $map );
                 break;
             default:
@@ -69,40 +64,31 @@ class RegionController extends AdminController {
         }
     }
     /**
-     * 新增大区
+     * 新增品牌
      * @author sea
      */
     public function add(){
         if(IS_POST){
-            //绑定品牌
-            $brand_id=I('post.brand_id',0);
-            if(empty($brand_id)){
-                $this->error('请选择品牌，若无选择项，请先去新增品牌！');
+            $brand_name=I('post.brand_name');
+            if(empty($brand_name)){
+                $this->error('品牌名称必填！');
             }
-            $region_name=I('post.region_name');
-            if(empty($region_name)){
-                $this->error('大区名称必填！');
-            }
-            
             //添加数据
-            $add_res=M($this->_model)->add([
-                'brand_id'=>$brand_id,
-                'region_name'=>$region_name,
-                'status'=>I('post.status')]);
+            $add_res=M($this->_model)->add(['brand_name'=>$brand_name,'status'=>I('post.status')]);
             if($add_res==false){
                 $this->error('新增失败！');
             }
-            //记录行为(需要提前创建add_region行为标记)
-            action_log('add_region',$this->_model, $add_res, UID);
+            //记录行为(需要提前创建add_brand行为标记)
+            action_log('add_brand',$this->_model, $add_res, UID);
             $this->success('新增成功！',U('index'));
            
         } else {
-            $this->meta_title = '新增大区';
+            $this->meta_title = '新增品牌';
             $this->display('edit');
         }
     }
     /**
-     * 编辑大区
+     * 编辑品牌
      * @author sea
      */
     public function edit(){
@@ -111,23 +97,15 @@ class RegionController extends AdminController {
             if(empty($id)){
                 $this->error('参数异常！');
             }
-            //绑定品牌
-            $brand_id=I('post.brand_id',0);
-            if(empty($brand_id)){
-                $this->error('请选择品牌，若无选择项，请先去新增品牌！');
-            }
-            $region_name=I('post.region_name');
-            if(empty($region_name)){
-                $this->error('大区名称必填！');
+            $brand_name=I('post.brand_name');
+            if(empty($brand_name)){
+                $this->error('品牌名称必填！');
             }
             //编辑数据
-            M($this->_model)->where(['id'=>$id])->save([
-                'brand_id'=>$brand_id,
-                'region_name'=>$region_name,
-                'status'=>I('post.status')]);
+            M($this->_model)->where(['id'=>$id])->save(['brand_name'=>$brand_name,'status'=>I('post.status')]);
           
-            //记录行为(需要提前创建edit_region行为标记)
-            action_log('edit_region',$this->_model, $id, UID);
+            //记录行为(需要提前创建edit_brand行为标记)
+            action_log('edit_brand',$this->_model, $id, UID);
             $this->success('操作成功！',U('index'));
              
         } else {
@@ -137,7 +115,7 @@ class RegionController extends AdminController {
             }
             $_info=M($this->_model)->where('id='.$id)->find();
             $this->assign('info', $_info);
-            $this->meta_title = '编辑大区';
+            $this->meta_title = '编辑品牌';
             $this->display('edit');
         }
     }
