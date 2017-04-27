@@ -26,7 +26,7 @@ class MeetMemberController extends AdminController {
         $map['m.status']    =   array('egt',0);
         //模糊搜索
         if(!empty($_key)){
-            $map['m.realname|me.meet_name|m.phone|m.user_no|s.store_name|s.store_code']    =   array('like', '%'.(string)$_key.'%');
+            $map['m.realname|me.meet_name|m.phone|m.user_no|s.store_name|s.store_code|m1.realname']    =   array('like', '%'.(string)$_key.'%');
         }
         if(!empty($_meet_id)){
             $map['me.id']=$_meet_id;
@@ -38,8 +38,11 @@ class MeetMemberController extends AdminController {
                        ->join (' left join '.C('DB_PREFIX').('classes').' c ON c.id=m.classes_id' )
                        ->join (' left join '.C('DB_PREFIX').('region').' r ON r.id=m.region_id' )
                        ->join (' left join '.C('DB_PREFIX').('city').' ci ON ci.id=m.city_id' )
-                       ->join (' left join '.C('DB_PREFIX').('store').' s ON s.id=m.store_id' );
-        $field='m.id,m.user_no,m.realname,m.phone,m.sex,m.idcard,m.headimg,m.position,m.qrcode,m.status,m.create_time,me.meet_name,me.begin_time,me.end_time,c.classes_name,r.region_name,s.store_name,s.store_code,ci.city_name';
+                       ->join (' left join '.C('DB_PREFIX').('store').' s ON s.id=m.store_id' )
+                        ->join (' left join '.C('DB_PREFIX').('meet_member').' m1 ON m1.id=m.room_meet_member_id' );
+        $field='m.id,m.user_no,m.realname,m.phone,m.sex,m.idcard,m.headimg,m.position,m.qrcode,'.
+            'm.status,m.create_time,me.meet_name,me.begin_time,me.end_time,c.classes_name,r.region_name,'.
+            's.store_name,s.store_code,ci.city_name,m.hotel_type,m1.realname as roommate_name';
         $list = $this->lists($list,null,null,null,$field);
         int_to_string($list);
         
@@ -125,7 +128,6 @@ class MeetMemberController extends AdminController {
             'headimg'=>I('post.headimg'),//存储的onethink_picture表的ID
             'position'=>$position,
             'score'=>I('post.score'),
-            'is_share'=>I('post.is_share'),
             'food_req'=>I('post.food_req'),
             'status'=>I('post.status'),
             'is_audit'=>I('post.is_audit'),
@@ -175,7 +177,9 @@ class MeetMemberController extends AdminController {
              */
             $check_res=M($this->_model)->where([
                                 'meet_id'=>$save_data['meet_id'],
-                                'phone'=>$save_data['phone']])->getField("id");
+                                'phone'=>$save_data['phone'],
+                                'status'=>array('neq',-1)
+            ])->getField("id");
             if(!empty($check_res)){
                 $this->error('此用户已经存在本次会议班级,请重新输入新用户！');
             }
@@ -226,5 +230,53 @@ class MeetMemberController extends AdminController {
             $this->meta_title = '编辑会议人员';
             $this->display('edit');
         }
+    }
+    /**
+     * 分配班级
+     * @author sea 
+     */
+    public function allotClasses(){
+        $id = array_unique((array)I('id',null));
+        if (empty($id)) {
+            $this->error('请选择要操作的数据!');
+        }
+        $classes_id = I('classes_id',null);
+        if (empty($classes_id)) {
+            $this->error('请选择要分配的班级!');
+        }
+        //分配班级
+        $up_res=M($this->_model)->where(['id'=>['in',$id]])->save(['classes_id'=>$classes_id]);
+        if($up_res!==false){
+            $this->success("分配成功");
+        }
+        $this->error('操作失败!');
+    }
+    /**
+     * 设置酒店同住室友
+     * @author sea 
+     */
+    public function setRoommate(){
+        $ids = array_unique((array)I('id',null));
+        if (empty($ids)) {
+            $this->error('请选择要操作的数据!');
+        }
+        if (count($ids)>2){
+            $this->error('选择的同住室友，最多不能超过两个！');
+        }
+        //检查两个人是否都是合住 
+        $checkData=M($this->_model)->where([
+                            'id'=>array('in',$ids)
+                        ])->field("hotel_type")->select();
+        $hotel_type_arr=array_unique(array_column($checkData, 'hotel_type'));
+        if(count($hotel_type_arr)>1){
+            $this->error('选择的用户中包含不住宿或者单住的，不能进行设置同住室友！');
+        }
+        //设置同住室友
+        $up_res1=M($this->_model)->where(['id'=>$ids[0]])->save(['room_meet_member_id'=>$ids[1]]);
+        $up_res2=M($this->_model)->where(['id'=>$ids[1]])->save(['room_meet_member_id'=>$ids[0]]);
+        if($up_res1!==false && $up_res2!==false){
+            $this->success("设置成功");
+        }
+        $this->error('操作失败!');
     }
 }
