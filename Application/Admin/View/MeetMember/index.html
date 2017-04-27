@@ -16,7 +16,13 @@
         <!-- 高级搜索 -->
 		<div class="search-form fr cf">
 			<div class="sleft">
-				<input type="text" name="_key" class="search-input" value="{:I('_key')}" placeholder="支持会议名称/人员名称／手机号">
+				<select name="_meet_id" style="float:left;margin-right:10px;" class="search_field" >
+					<option value="0">请选择会议名称</option>
+					<volist name=":get_meet_list()" id="vo">
+						<option value="{$vo.id}" >{$vo.meet_name}</option>
+					</volist>
+				</select>
+				<input type="text" name="_key" class="search-input search_field" value="{:I('_key')}" placeholder="支持会议名称/人员名称／手机号">
 				<a class="sch-btn" href="javascript:;" id="search" url="{:U('index')}"><i class="btn-search"></i></a>
 			</div>
 		</div>
@@ -99,7 +105,7 @@
 		</tr>
 		</volist>
 		<else/>
-		<td colspan="17" class="text-center"> Oh! 暂时还没有内容! </td>
+		<td colspan="19" class="text-center"> Oh! 暂时还没有内容! </td>
 		</notempty>
 	</tbody>
     </table>
@@ -116,7 +122,7 @@
 	//搜索功能
 	$("#search").click(function(){
 		var url = $(this).attr('url');
-        var query  = $('.search-form').find('input').serialize();
+        var query  = $('.search-form').find('.search_field').serialize();
         query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g,'');
         query = query.replace(/^&/g,'');
         if( url.indexOf('?')>0 ){
@@ -133,6 +139,7 @@
 			return false;
 		}
 	});
+	Think.setValue('_meet_id',{$_meet_id|default=0});
     //导航高亮
     highlight_subnav('{:U('MeetMember/index')}');
 	</script>

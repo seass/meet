@@ -22,11 +22,16 @@ class ClassesController extends AdminController {
      */
     public function index(){
         $_key       =   I('_key');
+        $_meet_id   =   I('_meet_id');
         $map['c.status']    =   array('egt',0);
         //模糊搜索
         if(!empty($_key)){
             $map['c.classes_name|m.meet_name']    =   array('like', '%'.(string)$_key.'%');
         }
+        if(!empty($_meet_id)){
+            $map['m.id']=$_meet_id;
+        }
+        
         $list=M()->table(C('DB_PREFIX').strtolower($this->_model).' c' )
                        ->where($map)
                        ->order('c.id DESC')
@@ -36,6 +41,7 @@ class ClassesController extends AdminController {
         int_to_string($list);
         
         $this->assign('_list', $list);
+        $this->assign('_meet_id', $_meet_id);
         $this->meta_title = '班级管理';
         $this->display();
     }

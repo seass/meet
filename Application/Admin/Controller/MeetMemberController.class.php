@@ -22,10 +22,14 @@ class MeetMemberController extends AdminController {
      */
     public function index(){
         $_key       =   I('_key');
+        $_meet_id   =   I('_meet_id');
         $map['m.status']    =   array('egt',0);
         //模糊搜索
         if(!empty($_key)){
             $map['m.realname|me.meet_name|m.phone|m.user_no|s.store_name|s.store_code']    =   array('like', '%'.(string)$_key.'%');
+        }
+        if(!empty($_meet_id)){
+            $map['me.id']=$_meet_id;
         }
         $list=M()->table(C('DB_PREFIX').strtolower('meet_member').' m' )
                        ->where($map)
@@ -40,6 +44,7 @@ class MeetMemberController extends AdminController {
         int_to_string($list);
         
         $this->assign('_list', $list);
+        $this->assign('_meet_id', $_meet_id);
         $this->meta_title = '会议人员管理';
         $this->display();
     }
