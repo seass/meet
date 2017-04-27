@@ -415,8 +415,12 @@ function  get_meet_list(){
  * 获取启用的门店列表
  * @author sea
  */
-function  get_store_list(){
-    $list = M('Store')->field("id,store_name")->where(['status'=>1])->select();
+function  get_store_list($field='',$field_val=''){
+    $s_where=['status'=>1];
+    if(!empty($field)){
+        $s_where[$field]=$field_val;
+    }
+    $list = M('Store')->field("id,store_name,store_code")->where($s_where)->select();
     return $list;
 }
 /**

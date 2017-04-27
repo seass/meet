@@ -45,6 +45,8 @@ class DetailController extends MeetuserController{
         $img_path=MeetService::getImgUrlByid($seat_img);
         //var_dump($img_path);exit;
         $this->assign('img_path', $img_path);
+        $classes_name=MeetService::getMeeetFieldByMUid(MUID,'classes_name');
+        $this->assign('classes_name', $classes_name);
         $this->display();
     }
     /**

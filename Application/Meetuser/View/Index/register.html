@@ -51,18 +51,30 @@
 		            <input type="text" name='position'  placeholder="请输入所在职位" >
 		            
 		            <fieldset data-role="fieldcontain">
-				    		<label for="region_id">所在大区</label>
-					    <select name="region_id" id="region_id">
-					    		<option value="">请选择所在大区</option>
-					    		<volist name="region_list" id="vo">
-					      		<option value="{$vo.id}">{$vo.region_name}</option>
-					        </volist>
+				    		<label for="brand_id">选择品牌</label>
+					    <select name="brand_id" id="brand_id">
+					    		<option value="">请选择品牌</option>
+					    		<volist name=":get_brand_list()" id="vo">
+								<option value="{$vo.id}">{$vo.brand_name}</option>
+							</volist>
 					    </select>  
 		            </fieldset>
 		            <fieldset data-role="fieldcontain">
-				    		<label for="store_id">经销店名</label>
+				    		<label for="region_id">选择大区</label>
+					    <select name="region_id" id="region_id">
+					    		<option value="">请选择大区</option>
+					    </select>  
+		            </fieldset>
+		            <fieldset data-role="fieldcontain">
+				    		<label for="city_id">选择城市</label>
+					    <select name="city_id" id="city_id">
+					    		<option value="">请选择城市</option>
+					    </select>  
+		            </fieldset>
+		            <fieldset data-role="fieldcontain">
+				    		<label for="store_id">选择经销门店</label>
 					    <select name="store_id" id="store_id">
-					    		<option value="">请选择经销店名</option>
+					    		<option value="">请选择经销门店</option>
 					    </select>  
 		            </fieldset>
 		            <fieldset data-role="controlgroup" data-type="horizontal">
@@ -103,80 +115,16 @@
     </div>
 <script src="__JS__/jquery-1.8.3.min.js"></script>
 <script src="__JS__/jquery.mobile-1.3.2.min.js"></script>
+
 <script type="text/javascript">
-	$(function(){
-		$("#region_id").change(function(){
-			var region_id=$("select[name='region_id']").val();
-			if(region_id!=''){
-				$.post("{:U('/Meetuser/Home/get_store_list')}",{'region_id':region_id},
-						function(result){
-							var s_html="<option value=\"\">请选择经销店名</option>";
-							for(var i=0;i<result.data.length;i++){
-								s_html+="<option value=\""+result.data[i].id+"\">"+result.data[i].store_name+"</option>";
-							}
-							$("select[name='store_id']").html(s_html);
-		  		},'json');
-			}
-		});
-	});
-	function submit(){
-		var realname=$("input[name='realname']").val().trim();
-		if(realname==''){
-			$("input[name='realname']").focus();
-			return false;
-		}
-		
-		var phone=$("input[name='phone']").val().trim();
-		if(phone==''){
-			$("input[name='phone']").focus();
-			return false;
-		}
-		var idcard=$("input[name='idcard']").val().trim();
-		if(idcard==''){
-			$("input[name='idcard']").focus();
-			return false;
-		}
-		var position=$("input[name='position']").val();
-		if(position==''){
-			$("input[name='position']").focus();
-			return false;
-		}
-		var region_id=$("select[name='region_id']").val();
-		if(region_id==''){
-			alert("请选择所在大区");
-			return false;
-		}
-		var store_id=$("select[name='store_id']").val();
-		if(store_id==''){
-			alert("请选择经销店名");
-			return false;
-		}
-		var p_data={'Mid':$("input[name='Mid']").val(),
-				'realname':realname,
-				'sex':$("input[name='sex']:checked").val(),
-				'phone':phone,
-				'idcard':idcard,
-				'position':position,
-				'region_id':region_id,
-				'store_id':store_id,
-				'hotel_type':$("input[name='hotel_type']:checked").val(),
-				'house_type':$("input[name='house_type']:checked").val(),
-				'checkin_date':$("input[name='checkin_date']").val(),
-				'leave_date':$("input[name='leave_date']").val(),
-				'food_req':$("input[name='food_req']").val()
-				};
-		$.post("{:U('/MeetUser/Index/register')}",p_data,
-				function(result){
-					console.log(result);
-					if(result.status){
-						alert(result.msg);
-						console.log(result.success_url);
-						location.href=result.success_url;
-					}else{
-						alert(result.msg);
-					}
-  		},'json');
-	}
+	var register_config={
+			'submit_url':"{:U('/MeetUser/Index/register')}",
+			'get_brand_json':"{:U('/Admin/Common/get_brand_json')}",
+			'get_region_json':"{:U('/Admin/Common/get_region_json')}",
+			'get_city_json':"{:U('/Admin/Common/get_city_json')}",
+	};
+	
 </script>
+<script src="__JS__/register.js"></script>
 </body>
 </html>

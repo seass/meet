@@ -42,7 +42,7 @@ class MeetMemberController extends AdminController {
                         ->join (' left join '.C('DB_PREFIX').('meet_member').' m1 ON m1.id=m.room_meet_member_id' );
         $field='m.id,m.user_no,m.realname,m.phone,m.sex,m.idcard,m.headimg,m.position,m.qrcode,'.
             'm.status,m.create_time,me.meet_name,me.begin_time,me.end_time,c.classes_name,r.region_name,'.
-            's.store_name,s.store_code,ci.city_name,m.hotel_type,m1.realname as roommate_name';
+            's.store_name,s.store_code,ci.city_name,m.hotel_type,m1.realname as roommate_name,m.is_audit';
         $list = $this->lists($list,null,null,null,$field);
         int_to_string($list);
         

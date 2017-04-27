@@ -123,7 +123,9 @@ class IndexController extends \Think\Controller{
                 'phone'=>$_POST['phone'],
                 'idcard'=>$_POST['idcard'],
                 'position'=>$_POST['position'],
+                'brand_id'=>$_POST['brand_id'],
                 'region_id'=>$_POST['region_id'],
+                'city_id'=>$_POST['city_id'],
                 'store_id'=>$_POST['store_id'],
                 'food_req'=>$_POST['food_req'],
                 'meet_id'=>$_POST["Mid"],
@@ -162,7 +164,9 @@ class IndexController extends \Think\Controller{
              */
             $check_res=M("MeetMember")->where([
                 'meet_id'=>$data['meet_id'],
-                'phone'=>$data['phone']])->getField("id");
+                'phone'=>$data['phone'],
+                'status'=>array('neq',-1)]
+                )->getField("id");
             if(!empty($check_res)){
                 $return['msg']='此用户已经存在本次会议中,请重新输入新用户！';
                 $this->ajaxReturn($return);

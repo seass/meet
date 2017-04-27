@@ -92,3 +92,35 @@ function  createQrcode($meet_member_id){
     ));
     return substr($QrObj->QR,1);
 }
+/**
+ * 获取启用的品牌列表
+ * @author sea
+ */
+function get_brand_list(){
+    $list = M('Brand')->field("id,brand_name")->where(['status'=>1])->select();
+    return $list;
+}
+/**
+ * 获取启用的大区列表
+ * @author sea
+ */
+function get_region_list($brand_id=''){
+    $r_where=['status'=>1];
+    if(!empty($brand_id)){
+        $r_where['brand_id']=$brand_id;
+    }
+    $list = M('Region')->field("id,region_name")->where($r_where)->select();
+    return $list;
+}
+/**
+ * 获取启用的城市列表
+ * @author sea
+ */
+function get_city_list($field='',$field_val=''){
+    $c_where=['status'=>1];
+    if(!empty($field)){
+        $c_where[$field]=$field_val;
+    }
+    $list = M('City')->field("id,city_name")->where($c_where)->select();
+    return $list;
+}

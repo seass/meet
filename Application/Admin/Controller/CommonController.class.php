@@ -29,6 +29,9 @@ class CommonController extends \Think\Controller {
         //城市
         $city_data=get_city_list('brand_id',$brand_id);
         $data['city_data']=$city_data;
+        //门店
+        $store_data=get_store_list('brand_id',$brand_id);
+        $data['store_data']=$store_data;
         
         $this->ajaxReturn(['data'=>$data]);
     }
@@ -40,7 +43,19 @@ class CommonController extends \Think\Controller {
         //城市
         $city_data=get_city_list('region_id',$region_id);
         $data['city_data']=$city_data;
-    
+        //门店
+        $store_data=get_store_list('region_id',$region_id);
+        $data['store_data']=$store_data;
+        $this->ajaxReturn(['data'=>$data]);
+    }
+    /**
+     * 获取城市下json数据
+     */
+    public function get_city_json(){
+        $city_id=I('post.city_id','');
+        //门店
+        $store_data=get_store_list('city_id',$city_id);
+        $data['store_data']=$store_data;
         $this->ajaxReturn(['data'=>$data]);
     }
 }
