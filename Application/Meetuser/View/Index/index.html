@@ -56,11 +56,36 @@
     body .mainmenu li:nth-child(8n+7) {background-color:#FFF}
     body .mainmenu li:nth-child(8n+8) {background-color:#FFF}
      
-   
+.top{
+			height:35px;
+			position: fixed;
+		    top: 0;
+		    left: 0;
+		    right: 0;
+		    z-index: 10;
+		    font-size: 0;
+		    background-color: #fa5800;
+		    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+	}
+	.top .slogan-title{
+			font-size: 20px;
+		    color: #333;
+			display: inline-block;
+			color: white;
+			width:100%;
+			text-align:center;
+			float: left;
+			line-height:35px;
+	}
 </style>
 </head>
 <body>
-    <ul class="mainmenu">
+	<div class="top">
+    		<div>
+    			<div class="slogan-title">首页</div>
+    		</div>
+	</div>
+    <ul class="mainmenu" style="margin-top:40px;">
         <li><a href="{:U('/Meetuser/Detail/graph_text/type/1')}" ><b><img src="__IMG__/hyxz.png" />
         	</b><span>会议须知</span></a></li>
         <li><a href="{:U('/Meetuser/Detail/graph_text/type/2')}"><b><img src="__IMG__/hyrc.png" />
