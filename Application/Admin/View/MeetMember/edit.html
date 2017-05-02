@@ -17,13 +17,27 @@
 			</div>
 		</div>
 		<div class="form-item cf">
+			<label class="item-label"><span style="color:red;">*</span> 选择会议<span class="check-tips">（启用状态下的会议）</span></label>
+			<div class="controls">
+				<select name="meet_id">
+					<option value="0">请择会议</option>
+					<volist name=":get_meet_list()" id="vo">
+						<option value="{$vo.id}" >{$vo.meet_name}</option>
+					</volist>
+				</select>
+			</div>
+		</div>
+		<div class="form-item cf">
 			<label class="item-label"><span style="color:red;">*</span> 分配班级<span class="check-tips">（启用状态下的班级）</span></label>
 			<div class="controls">
 				<select name="classes_id">
 					<option value="0">请选择所属班级</option>
-					<volist name=":get_classes_list()" id="vo">
-						<option value="{$vo.id}">{$vo.classes_name}</option>
-					</volist>
+					<!-- 编辑时 选中当前班级 -->
+					<if condition="isset($info['id']) eq true">
+						<volist name=":get_classes_list('meet_id',$info['meet_id'])" id="vo">
+							<option value="{$vo.id}">{$vo.classes_name}</option>
+						</volist>
+					</if>
 				</select>
 			</div>
 		</div>
@@ -135,7 +149,37 @@
 </block>
 <block name="script">
 <script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+<link href="__STATIC__/datetimepicker/css/datetimepicker.css" rel="stylesheet" type="text/css">
+<php>if(C('COLOR_STYLE')=='blue_color') echo '<link href="__STATIC__/datetimepicker/css/datetimepicker_blue.css" rel="stylesheet" type="text/css">';</php>
+<link href="__STATIC__/datetimepicker/css/dropdown.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="__STATIC__/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="__STATIC__/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 <script type="text/javascript" charset="utf-8">
+$(function(){
+	
+	//选择会议
+	$("select[name='meet_id']").change(function(){
+		var meet_id=$("select[name='meet_id']").val();
+		if(meet_id!=''){
+			$.post("{:U('/Admin/Common/get_meet_json')}",{'meet_id':meet_id},
+					function(result){
+						//班级
+						var classes_data=result.data.classes_data;
+						var c_html="<option value=\"0\">请选择班级</option>";
+						if(classes_data!=null){
+							 for(var i=0;i<classes_data.length;i++){
+								 c_html+="<option value=\""+classes_data[i].id+"\">"+classes_data[i].classes_name+"</option>";
+							} 
+						}
+						$("select[name='classes_id']").html(c_html);
+						
+						
+	  		},'json');
+		}
+	});
+	
+});
+	
 	//上传图片
 	/* 初始化上传插件 */
 	$("#upload_picture_headimg").uploadify({
@@ -171,6 +215,7 @@
 	}
 	Think.setValue("status", {$info.status|default = 1});
 	Think.setValue('store_id',{$info.store_id|default=0});
+	Think.setValue('meet_id',{$info.meet_id|default=0});
 	Think.setValue('classes_id',{$info.classes_id|default=0});
 	Think.setValue('sex',{$info.sex|default=0});
 	Think.setValue('is_share',{$info.is_share|default=0});

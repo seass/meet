@@ -58,4 +58,14 @@ class CommonController extends \Think\Controller {
         $data['store_data']=$store_data;
         $this->ajaxReturn(['data'=>$data]);
     }
+    /**
+     * 获取会议下json数据
+     */
+    public function get_meet_json(){
+        $meet_id=I('post.meet_id','');
+        //班级
+        $classes_data=get_classes_list('meet_id',$meet_id);
+        $data['classes_data']=$classes_data;
+        $this->ajaxReturn(['data'=>$data]);
+    }
 }

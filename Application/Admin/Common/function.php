@@ -427,8 +427,12 @@ function  get_store_list($field='',$field_val=''){
  * 获取启用的班级列表
  * @author sea
  */
-function  get_classes_list(){
-    $list = M('Classes')->field("id,classes_name")->where(['status'=>1])->select();
+function  get_classes_list($field='',$field_val=''){
+    $c_where=['status'=>1];
+    if(!empty($field)){
+        $c_where[$field]=$field_val;
+    }
+    $list = M('Classes')->field("id,classes_name")->where($c_where)->select();
     return $list;
 }
 /**

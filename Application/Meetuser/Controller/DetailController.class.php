@@ -34,6 +34,15 @@ class DetailController extends MeetuserController{
         $html_text=MeetService::getMeeetFieldByMUid(MUID,self::$_field_config[$type]['key']);
         $this->assign('html_text', $html_text);
         $this->assign('slogan_title',self::$_field_config[$type]['name']);
+        $this->assign('type', $type);
+        if($type==4){
+            //住宿安排 显示用户的住宿信息
+            $stay_info=M('MeetMember mm')->where(['mm.id'=>MUID])
+                ->field("mm.hotel_type,mm.house_type,mm.checkin_date,mm.leave_date,m1.realname,m1.phone")
+                ->join (' left join '.C('DB_PREFIX').('meet_member').' m1 ON m1.id=mm.room_meet_member_id')
+                ->find();
+            $this->assign('stay_info', $stay_info);
+        }
         $this->display();
     }
     /**

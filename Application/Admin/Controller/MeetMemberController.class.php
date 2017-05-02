@@ -86,6 +86,11 @@ class MeetMemberController extends AdminController {
         if(empty($store_id)){
             $this->error('请选择门店，若无选择项，请先去新增门店！');
         }
+        //所属会议
+        $meet_id=I('post.meet_id',0);
+        if(empty($meet_id)){
+            $this->error('请选择会议，若无选择项，请先去新增会议！');
+        }
         //所属班级
         $classes_id=I('post.classes_id',0);
         if(empty($classes_id)){
@@ -111,7 +116,7 @@ class MeetMemberController extends AdminController {
             $this->error('会议人员职务必填！');
         }
         $store_info=M('Store')->where(['id'=>$store_id])->field('id,brand_id,region_id,city_id')->find();
-        $meet_id=M('Classes')->where(['id'=>$classes_id])->getField('meet_id');
+        //$meet_id=M('Classes')->where(['id'=>$classes_id])->getField('meet_id');
         $data=[
             'brand_id'=>$store_info['brand_id'],//品牌id
             'region_id'=>$store_info['region_id'],//大区id

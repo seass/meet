@@ -1,6 +1,38 @@
 <include file="Index/head"/>
  <div class="content">
     {:$html_text}
+    <if condition="$type eq 4">
+			<table style="width:100%;">
+		    <tbody>
+		    		<tr>
+					<th style="text-align:right;">住宿类型：</th>
+					<td><if condition="$stay_info.hotel_type eq 0">不住宿<elseif condition="$stay_info.hotel_type eq 1"/>合住 <else/>单住 </if></td>
+				</tr>
+				<tr>
+					<th style="text-align:right;">房型：</th>
+					<td><if condition="$stay_info.house_type eq 0">无<elseif condition="$stay_info.house_type eq 1"/>双床 <else/>大床 </if></td>
+				</tr>
+				<if condition="$stay_info.hotel_type neq 0">
+					<tr>
+						<th style="text-align:right;">入住时间：</th>
+						<td>{$stay_info.checkin_date}</td>
+					</tr>
+					<tr>
+						<th style="text-align:right;">离店时间：</th>
+						<td>{$stay_info.leave_date}</td>
+					</tr>
+						<tr>
+							<th style="text-align:right;">合住人姓名：</th>
+							<td>{$stay_info.realname}</td>
+						</tr>
+						<tr>
+							<th style="text-align:right;">合住人电话：</th>
+							<td>{$stay_info.phone}</td>
+						</tr>
+				</if>
+		    </tbody>
+		    </table>
+		</if>
   </div>
 </body>
 </html>
