@@ -103,9 +103,9 @@ class MeetMemberController extends AdminController {
             $this->error('会议人员手机号格式错误！');
         }
         $idcard=I('post.idcard');
-        if(empty($idcard)){
-            $this->error('会议人员证件号必填！');
-        }
+//         if(empty($idcard)){
+//             $this->error('会议人员证件号必填！');
+//         }
         $position=I('post.position');
         if(empty($position)){
             $this->error('会议人员职务必填！');

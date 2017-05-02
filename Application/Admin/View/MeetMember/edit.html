@@ -47,7 +47,7 @@
             </div>
         </div>
         <div class="form-item">
-            <label class="item-label"><span style="color:red;">*</span> 人员证件号<span class="check-tips">（必填）</span></label>
+            <label class="item-label"> 人员证件号<span class="check-tips"></span></label>
             <div class="controls">
                 <input type="text" class="text input-large" name="idcard" value="{$info.idcard|default=''}">
             </div>
@@ -169,14 +169,14 @@
 	        },1500);
 	    }
 	}
-	Think.setValue("status", {$info.status|default = 0});
+	Think.setValue("status", {$info.status|default = 1});
 	Think.setValue('store_id',{$info.store_id|default=0});
 	Think.setValue('classes_id',{$info.classes_id|default=0});
 	Think.setValue('sex',{$info.sex|default=0});
 	Think.setValue('is_share',{$info.is_share|default=0});
 	Think.setValue('hotel_type',{$info.hotel_type|default=0});
 	Think.setValue('house_type',{$info.house_type|default=0});
-	Think.setValue('is_audit',{$info.is_audit|default=0});
+	Think.setValue('is_audit',{$info.is_audit|default=1});
 	$('.time').datetimepicker({
 	    format: 'yyyy-mm-dd',
 	    language:"zh-CN",
