@@ -284,4 +284,16 @@ class MeetMemberController extends AdminController {
         }
         $this->error('操作失败!');
     }
+    /**
+     * 签到
+     */
+    public function sign(){
+        $meet_member_id=I('post.meet_member_id','');
+        $add_res=M('MeetMemberSign')->add(['meet_member_id'=>$meet_member_id]);
+        $return['status']=false;
+        if($add_res!==false){
+            $return['status']=true;
+        }
+        $this->ajaxReturn($return);
+    }
 }

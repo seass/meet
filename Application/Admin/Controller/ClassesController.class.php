@@ -94,7 +94,8 @@ class ClassesController extends AdminController {
                 'classes_name'=>$classes_name,
                 'meet_id' =>$meet_id,
                 'seat_img'=>I('post.seat_img'),//存储的onethink_picture表的ID
-                'status'=>I('post.status')
+                'status'=>I('post.status'),
+                'imgs_text'=>I('post.imgs_text'),
             ]);
             if($add_res==false){
                 $this->error('新增失败！');
@@ -132,7 +133,8 @@ class ClassesController extends AdminController {
                 'classes_name'=>$classes_name,
                 'meet_id' =>$meet_id,
                 'seat_img'=>I('post.seat_img'),//存储的onethink_picture表的ID
-                'status'=>I('post.status')
+                'status'=>I('post.status'),
+                'imgs_text'=>I('post.imgs_text'),
             ]);
             //记录行为(需要提前创建edit_classes行为标记)
             action_log('edit_classes',$this->_model, $id, UID);

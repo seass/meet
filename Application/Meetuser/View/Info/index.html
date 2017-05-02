@@ -9,35 +9,76 @@
 		
 			<else/>
 				<p class="content-img">
-		               <img src="__ROOT__{$info.headimg}">
+					无头像
+					<if condition="$info.headimg neq null">
+			               <img src="__ROOT__{$info.headimg}">
+			        </if>
 		        </p>
 			<table>
 			<tbody>
 				<tr>
-					<th>姓名：</th>
+					<th style="text-align:right;">姓名：</th>
 					<td>{$info.realname}</td>
 				</tr>
 				<tr>
-					<th>性别：</th>
+					<th style="text-align:right;">性别：</th>
 					<td><if condition="$info.sex eq 1">男<else/>女</if></td>
 				</tr>
+				
 				<tr>
-					<th>职务：</th>
-					<td>{$info.position}</td>
-				</tr>
-				<tr>
-					<th>手机号：</th>
+					<th style="text-align:right;">手机号：</th>
 					<td>{$info.phone}</td>
 				</tr>
 				<tr>
-					<th>身份证号：</th>
+					<th style="text-align:right;">身份证号：</th>
 					<td>{$info.idcard}</td>
 				</tr>
 				<tr>
-					<th>餐饮要求：</th>
+					<th style="text-align:right;">所在职位：</th>
+					<td>{$info.position}</td>
+				</tr>
+				<tr>
+					<th style="text-align:right;">所属大区：</th>
+					<td>{$info.region_name}</td>
+				</tr>
+				<tr>
+					<th style="text-align:right;">所属城市：</th>
+					<td>{$info.city_name}</td>
+				</tr>
+				<tr>
+					<th style="text-align:right;">所属门店：</th>
+					<td>{$info.store_name}－{$info.store_code}</td>
+				</tr>
+				<tr>
+					<th style="text-align:right;">住宿类型：</th>
+					<td><if condition="$info.hotel_type eq 0">不住宿<elseif condition="$info.hotel_type eq 1"/>合住 <else/>单住 </if></td>
+				</tr>
+				<tr>
+					<th style="text-align:right;">房型：</th>
+					<td><if condition="$info.house_type eq 0">无<elseif condition="$info.house_type eq 1"/>双床 <else/>大床 </if></td>
+				</tr>
+				<if condition="$info.hotel_type neq 0">
+					<tr>
+						<th style="text-align:right;">入住时间：</th>
+						<td>{$info.checkin_date}</td>
+					</tr>
+					<tr>
+						<th style="text-align:right;">离店时间：</th>
+						<td>{$info.leave_date}</td>
+					</tr>
+						<tr>
+							<th style="text-align:right;">合住人姓名：</th>
+							<td>{$info.roommate_name}</td>
+						</tr>
+						<tr>
+							<th style="text-align:right;">合住人电话：</th>
+							<td>{$info.roommate_phone}</td>
+						</tr>
+				</if>
+				<tr>
+					<th style="text-align:right;">餐饮习惯：</th>
 					<td>{$info.food_req}</td>
 				</tr>
-				
 			</tbody>
 		</table>
 			</if>

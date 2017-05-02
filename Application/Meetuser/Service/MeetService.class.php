@@ -12,7 +12,7 @@ class MeetService {
      */
     public static function getMeeetFieldByMUid($muid,$field){
         $info=M('MeetMember mm')->where(['mm.id'=>$muid])
-                ->field("mm.meet_id,mm.classes_id,m.hyxz,m.rcap,m.gzry,m.zsap,m.car,m.food,c.seat_img,c.classes_name")
+                ->field("mm.meet_id,mm.classes_id,m.hyxz,m.rcap,m.gzry,m.zsap,m.car,m.food,c.seat_img,c.classes_name,c.imgs_text")
                 ->join (' left join '.C('DB_PREFIX').('meet').' m ON m.id=mm.meet_id')
                 ->join (' left join '.C('DB_PREFIX').('classes').' c ON c.id=mm.classes_id')
                 ->find();

@@ -110,6 +110,7 @@
 			<td>{$vo.status_text}</td>
 			<td>{$vo.create_time}</td>
 			<td>
+				<a href="javascript:signIn({:$vo['id']})">签到</a>
 				<a href="{:U('MeetMember/edit?id='.$vo['id'])}">编辑</a>
 				<if condition="$vo.status eq 1">
 				<a href="{:U('MeetMember/changeStatus?method=forbidMeetMember&id='.$vo['id'])}" class="ajax-get">禁用</a>
@@ -135,6 +136,25 @@
 	<script src="__STATIC__/thinkbox/jquery.thinkbox.js"></script>
 
 	<script type="text/javascript">
+		function signIn(id){
+			if(!confirm("确定进行签到吗？")){
+				return false;
+			}
+			$.post("{:U('Sign')}",{'meet_member_id':id},
+					function(result){
+				if(result.status){
+					alert('签到成功');
+				}else{
+					alert('签到失败');
+				}
+	  		},'json');
+		}
+	
+	
+	
+	
+	
+	
 	//搜索功能
 	$("#search").click(function(){
 		var url = $(this).attr('url');

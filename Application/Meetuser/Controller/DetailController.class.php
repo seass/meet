@@ -22,6 +22,7 @@ class DetailController extends MeetuserController{
         4=>['key'=>'zsap','name'=>'住宿安排'],
         5=>['key'=>'car','name'=>'车辆安排'],
         6=>['key'=>'food','name'=>'用餐安排'],
+        7=>['key'=>'imgs_text','name'=>'班级照片']
     ];
     
     /**
