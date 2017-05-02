@@ -46,15 +46,15 @@ class IndexController extends \Think\Controller{
                 $this->ajaxReturn($return);
             }
             //验证身份证号格式
-            $idcard=$_POST['idcard'];
-            if(!checkRegIdentity($idcard)){
-                $return['msg']='身份证号格式验证失败，请重新输入！';
-                $this->ajaxReturn($return);
-            }
+//             $idcard=$_POST['idcard'];
+//             if(!checkRegIdentity($idcard)){
+//                 $return['msg']='身份证号格式验证失败，请重新输入！';
+//                 $this->ajaxReturn($return);
+//             }
             $MUser=M("MeetMember")->where([
                 'meet_id'=>$_POST['Mid'],
                 'realname'=>$_POST['realname'],
-                'idcard'=>$idcard,
+                //'idcard'=>$idcard,
                 'phone'=>$phone,
             ])->find();
             if(empty($MUser)){

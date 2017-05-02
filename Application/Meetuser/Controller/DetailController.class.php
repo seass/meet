@@ -16,12 +16,12 @@ use Meetuser\Service\MeetService;
 class DetailController extends MeetuserController{
     
     public static  $_field_config=[
-        1=>'hyxz',//会议须知
-        2=>'rcap',//日程安排
-        3=>'gzry',//工作人员信息
-        4=>'zsap',//住宿安排
-        5=>'car',//车辆安排
-        6=>'food',//用餐安排
+        1=>['key'=>'hyxz','name'=>'会议须知'],
+        2=>['key'=>'rcap','name'=>'会议日程'],
+        3=>['key'=>'gzry','name'=>'工作人员'],
+        4=>['key'=>'zsap','name'=>'住宿安排'],
+        5=>['key'=>'car','name'=>'车辆安排'],
+        6=>['key'=>'food','name'=>'用餐安排'],
     ];
     
     /**
@@ -31,8 +31,9 @@ class DetailController extends MeetuserController{
     public function graph_text(){
         $type=I("get.type");
         //获取信息
-        $html_text=MeetService::getMeeetFieldByMUid(MUID,self::$_field_config[$type]);
+        $html_text=MeetService::getMeeetFieldByMUid(MUID,self::$_field_config[$type]['key']);
         $this->assign('html_text', $html_text);
+        $this->assign('slogan_title',self::$_field_config[$type]['name']);
         $this->display();
     }
     /**
@@ -47,6 +48,7 @@ class DetailController extends MeetuserController{
         $this->assign('img_path', $img_path);
         $classes_name=MeetService::getMeeetFieldByMUid(MUID,'classes_name');
         $this->assign('classes_name', $classes_name);
+        $this->assign('slogan_title','班级信息');
         $this->display();
     }
     /**
@@ -58,6 +60,7 @@ class DetailController extends MeetuserController{
         $meet_id=MeetService::getMeeetFieldByMUid(MUID,'meet_id');
         $_list=MeetService::getMeetAttchmentList($meet_id);
         $this->assign('_list', $_list);
+        $this->assign('slogan_title','会议资料');
         $this->display();
     }
     
