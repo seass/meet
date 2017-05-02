@@ -23,6 +23,7 @@ class MeetMemberController extends AdminController {
     public function index(){
         $_key       =   I('_key');
         $_meet_id   =   I('_meet_id');
+        $_sign   =   I('_sign');
         $map['m.status']    =   array('egt',0);
         //模糊搜索
         if(!empty($_key)){
@@ -31,23 +32,34 @@ class MeetMemberController extends AdminController {
         if(!empty($_meet_id)){
             $map['me.id']=$_meet_id;
         }
+        if(!empty($_sign)){
+            if($_sign==1){
+                $map['_string']=' mms.id is not null';
+            }else{
+                $map['_string']=' mms.id is  null';
+            }
+            
+        }
         $list=M()->table(C('DB_PREFIX').strtolower('meet_member').' m' )
                        ->where($map)
                        ->order('m.id DESC')
+                       ->group('m.id')
                        ->join (' left join '.C('DB_PREFIX').('meet').' me ON me.id=m.meet_id' )
                        ->join (' left join '.C('DB_PREFIX').('classes').' c ON c.id=m.classes_id' )
                        ->join (' left join '.C('DB_PREFIX').('region').' r ON r.id=m.region_id' )
                        ->join (' left join '.C('DB_PREFIX').('city').' ci ON ci.id=m.city_id' )
                        ->join (' left join '.C('DB_PREFIX').('store').' s ON s.id=m.store_id' )
+                       ->join (' left join '.C('DB_PREFIX').('meet_member_sign').' mms ON mms.meet_member_id=m.id' )
                         ->join (' left join '.C('DB_PREFIX').('meet_member').' m1 ON m1.id=m.room_meet_member_id' );
         $field='m.id,m.user_no,m.realname,m.phone,m.sex,m.idcard,m.headimg,m.position,m.qrcode,'.
             'm.status,m.create_time,me.meet_name,me.begin_time,me.end_time,c.classes_name,r.region_name,'.
-            's.store_name,s.store_code,ci.city_name,m.hotel_type,m1.realname as roommate_name,m.is_audit';
+            's.store_name,s.store_code,ci.city_name,m.hotel_type,m1.realname as roommate_name,m.is_audit,mms.id as mms_id';
         $list = $this->lists($list,null,null,null,$field);
         int_to_string($list);
         
         $this->assign('_list', $list);
         $this->assign('_meet_id', $_meet_id);
+        $this->assign('_sign', $_sign);
         $this->meta_title = '会议人员管理';
         $this->display();
     }
