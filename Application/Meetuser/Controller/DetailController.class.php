@@ -22,7 +22,8 @@ class DetailController extends MeetuserController{
         4=>['key'=>'zsap','name'=>'住宿安排'],
         5=>['key'=>'car','name'=>'车辆安排'],
         6=>['key'=>'food','name'=>'用餐安排'],
-        7=>['key'=>'imgs_text','name'=>'班级照片']
+        7=>['key'=>'imgs_text','name'=>'班级照片'],
+        8=>['key'=>'qrcode','name'=>'我的二维码'],
     ];
     
     /**
@@ -58,6 +59,8 @@ class DetailController extends MeetuserController{
         $this->assign('img_path', $img_path);
         $classes_name=MeetService::getMeeetFieldByMUid(MUID,'classes_name');
         $this->assign('classes_name', $classes_name);
+        $realname=MeetService::getMeeetFieldByMUid(MUID,'realname');
+        $this->assign('realname', $realname);
         $this->assign('slogan_title','班级信息');
         $this->display();
     }
@@ -71,6 +74,18 @@ class DetailController extends MeetuserController{
         $_list=MeetService::getMeetAttchmentList($meet_id);
         $this->assign('_list', $_list);
         $this->assign('slogan_title','会议资料');
+        $this->display();
+    }
+    /**
+     * 我的二维码
+     * @author sea 
+     */
+    public function qrcode(){
+        $type=I("get.type");
+        //获取信息
+        $qrcode_url=MeetService::getMeeetFieldByMUid(MUID,self::$_field_config[$type]['key']);
+        $this->assign('qrcode_url', $qrcode_url);
+        $this->assign('slogan_title',self::$_field_config[$type]['name']);
         $this->display();
     }
     

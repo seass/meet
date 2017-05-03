@@ -202,7 +202,18 @@ class IndexController extends \Think\Controller{
             $this->ajaxReturn($return);
         }
     }
-    
+    /* 退出登录 */
+    public function logout(){
+        if(is_muser_login()){
+            session('muser_auth', null);
+            session('muser_auth_sign', null);
+            session('[destroy]');
+            $this->redirect('login',$_GET);
+            //$this->success('退出成功！', U('login',$_GET));
+        } else {
+            $this->redirect('login',$_GET);
+        }
+    }
     
     /**
      * 自动登录用户

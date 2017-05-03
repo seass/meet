@@ -95,10 +95,10 @@ class MeetMemberController extends AdminController {
     }
     public function getSaveData(){
         //绑定门店
-        $store_id=I('post.store_id',0);
-        if(empty($store_id)){
-            $this->error('请选择门店，若无选择项，请先去新增门店！');
-        }
+//         $store_id=I('post.store_id',0);
+//         if(empty($store_id)){
+//             $this->error('请选择门店，若无选择项，请先去新增门店！');
+//         }
         //所属会议
         $meet_id=I('post.meet_id',0);
         if(empty($meet_id)){
@@ -128,13 +128,17 @@ class MeetMemberController extends AdminController {
         if(empty($position)){
             $this->error('会议人员职务必填！');
         }
-        $store_info=M('Store')->where(['id'=>$store_id])->field('id,brand_id,region_id,city_id')->find();
+        $brand_id=I('post.brand_id',0);
+        $region_id=I('post.region_id',0);
+        $city_id=I('post.city_id',0);
+        $store_id=I('post.store_id',0);
+        //$store_info=M('Store')->where(['id'=>$store_id])->field('id,brand_id,region_id,city_id')->find();
         //$meet_id=M('Classes')->where(['id'=>$classes_id])->getField('meet_id');
         $data=[
-            'brand_id'=>$store_info['brand_id'],//品牌id
-            'region_id'=>$store_info['region_id'],//大区id
-            'city_id'=>$store_info['city_id'],//城市ID
-            'store_id'=>$store_info['id'],//门店ID
+            'brand_id'=>$brand_id,//品牌id
+            'region_id'=>$region_id,//大区id
+            'city_id'=>$city_id,//城市ID
+            'store_id'=>$store_id,//门店ID
             
             'meet_id'=>$meet_id,//会议id
             'classes_id'=>$classes_id,

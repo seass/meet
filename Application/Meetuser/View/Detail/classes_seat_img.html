@@ -1,14 +1,15 @@
 <include file="Index/head"/>
 	<div class="content">
-		<if condition="$img_path eq null">
-		<else/>
-			<table style="width:100%;">
+		<table style="width:100%;">
 		    <thead>
 		        <tr>
-					<th class="">您所在的班级为:{$classes_name}</th>
+					<th class="">{$realname}您好，您所在的班级为:{$classes_name}</th>
 				</tr>
+				
 		    </thead>
-		    </table>
+		 </table>
+		<if condition="$img_path eq null">
+		<else/>
 			<img src="__ROOT__{$img_path}" style="padding-top:20px;">
 		</if>
 	</div>

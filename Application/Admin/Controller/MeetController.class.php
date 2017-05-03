@@ -11,7 +11,7 @@ namespace Admin\Controller;
  * 会议管理控制器
  * @author sea <919873148.qq.com>
  */
-class meetController extends AdminController {
+class MeetController extends AdminController {
 
     //Model(表名)
     public $_model="Meet";
@@ -139,10 +139,6 @@ class meetController extends AdminController {
      */
     public function add(){
         if(IS_POST){
-            $meet_name=I('post.meet_name');
-            if(empty($meet_name)){
-                $this->error('会议名称必填！');
-            }
             $saveData=$this->getSaveData();
             //添加数据
             $add_res=M($this->_model)->add($saveData);
@@ -190,7 +186,7 @@ class meetController extends AdminController {
           
             //记录行为(需要提前创建edit_meet行为标记)
             action_log('edit_meet',$this->_model, $id, UID);
-            $this->success('操作成功！',U('index'));
+            $this->success('操作成功！',$_SERVER['HTTP_REFERER']);
              
         } else {
             $id=I('get.id');
