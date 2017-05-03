@@ -8,6 +8,7 @@
 	<div class="cf">
 		<div class="fl">
             <a class="btn" href="{:U('MeetMember/add')}">新 增人员</a>
+            <a class="btn" href="{:U('MeetMember/import')}">导入学员</a>
             <button class="btn ajax-post" url="{:U('MeetMember/changeStatus',array('method'=>'resumeMeetMember'))}" target-form="ids">启 用</button>
             <button class="btn ajax-post" url="{:U('MeetMember/changeStatus',array('method'=>'forbidMeetMember'))}" target-form="ids">禁 用</button>
             <!--  <button class="btn ajax-post confirm" url="{:U('MeetMember/changeStatus',array('method'=>'deleteMeetMember'))}" target-form="ids">删 除</button>-->

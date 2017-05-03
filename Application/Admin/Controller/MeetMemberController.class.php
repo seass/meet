@@ -7,6 +7,7 @@
 // | Author: sea <919873148.qq.com>
 // +----------------------------------------------------------------------
 namespace Admin\Controller;
+use Util\Excel;
 /**
  * 会议人员管理控制器
  * @author sea <919873148.qq.com>
@@ -308,4 +309,209 @@ class MeetMemberController extends AdminController {
         }
         $this->ajaxReturn($return);
     }
+    /**
+     * 导入人员信息
+     * @author sea 
+     */
+   public function import(){
+       if(!IS_POST){
+           $this->meta_title = '导入人员信息';
+           $this->display('import');
+       }else{
+           $meet_id=$_POST['meet_id'];
+           $excel = new Excel();
+           $file_data = $excel->readerExcel($_FILES['import']['tmp_name'],0,14);
+           $result_data=[];
+           foreach ($file_data as $_info){
+               $brand_name=$_info[0];
+               $region_name=$_info[1];
+               $city_name=$_info[2];
+               $store_name=$_info[3];
+               $store_code=$_info[4];
+               $realname=$_info[5];
+               $phone=$_info[6];
+               $sex=$_info[7];
+               $idcard=$_info[8];
+               $position=$_info[9];
+               
+               
+               if(empty($brand_name) || empty($region_name) || empty($city_name) || empty($store_name) || 
+                   empty($store_code) || empty($realname) || empty($phone)){
+                   $_info[15]='数据项为空,导入失败！';
+                   $result_data[] = $_info;
+                   continue;
+               }
+               
+               //住宿类型
+               $hotel_type_val=$_info[10];
+               if(!empty($hotel_type_val) && !in_array($hotel_type_val,['','不住宿','合住','单住'])){
+                   $_info[15]='住宿类型有误，请按照模板选项值填写,导入失败！';
+                   $result_data[] = $_info;
+                   continue;
+               }
+               //房型
+               $house_type_val=$_info[11];
+               if(!empty($house_type_val) && !in_array($house_type_val,['','无','双床','大床'])){
+                   $_info[15]='房型有误，请按照模板选项值填写,导入失败！';
+                   $result_data[] = $_info;
+                   continue;
+               }
+               if($hotel_type_val=='不住宿' || $hotel_type_val==''){
+                   $hotel_type=0;
+               }else if($hotel_type_val=='合住'){
+                   $hotel_type=1;
+               }else{
+                   $hotel_type=2;
+               }
+               
+               if($house_type_val=='无' || $house_type_val==''){
+                   $house_type=0;
+               }else if($house_type_val=='双床'){
+                   $house_type=1;
+               }else{
+                   $house_type=2;
+               }
+               
+               $checkin_date=$_info[12];
+               $leave_date=$_info[13];
+               $is_stay=false;
+               if(!empty($hotel_type)){
+                   if(!empty($checkin_date) && !empty($leave_date)){
+                       if(strtotime($checkin_date)>strtotime($leave_date)){
+                           $_info[15]='入住时间不能大于离店时间,导入失败！';
+                           $result_data[] = $_info;
+                           continue;
+                       }
+                   }
+                   $is_stay=true;
+               }
+               /*
+                * 检查用户的手机号 是否已经存在次会议的班级下
+                */
+               $check_res=M($this->_model)->where([
+                   'meet_id'=>$meet_id,
+                   'phone'=>$phone,
+                   'status'=>array('neq',-1)
+               ])->getField("id");
+               if(!empty($check_res)){
+                   $_info[15]='此用户已经存在,导入失败！';
+                   $result_data[] = $_info;
+                   continue;
+               }
+               
+               
+               
+               //检查品牌是否存在
+               $brand_id=M("Brand")->where(['brand_name'=>$brand_name])->getField('id');
+               if(empty($brand_id)){
+                   $brand_id=M("Brand")->add(['brand_name'=>$brand_name]);
+               }
+               //检查大区是否存在
+               $region_id=M("Region")->where(['region_name'=>$region_name])->getField('id');
+               if(empty($region_id)){
+                   $region_id=M("Region")->add(['region_name'=>$region_name,'brand_id'=>$brand_id]);
+               }
+               //检查城市是否存在
+               $city_id=M("City")->where(['city_name'=>$city_name])->getField('id');
+               if(empty($city_id)){
+                   $city_id=M("City")->add(['city_name'=>$city_name,'brand_id'=>$brand_id,'region_id'=>$region_id]);
+               }
+               //检查门店是否存在
+               $store_id=M("Store")->where(['store_name'=>$store_name])->getField('id');
+               if(empty($store_id)){
+                   $store_id=M("Store")->add(['store_name'=>$store_name,
+                       'brand_id'=>$brand_id,'region_id'=>$region_id,
+                       'city_id'=>$city_id,'store_code'=>$store_code]);
+               }
+               $save_data=[
+                   'brand_id'=>$brand_id,//品牌id
+                   'region_id'=>$region_id,//大区id
+                   'city_id'=>$city_id,//城市ID
+                   'store_id'=>$store_id,//门店ID
+                   'meet_id'=>$meet_id,//会议id
+                   'realname'=>$realname,
+                   'user_no'=>get_user_no($meet_id),//生成会议编号
+                   'sex'=>(empty($sex) || $sex=='男')?1:2,
+                   'phone'=>$phone,
+                   'idcard'=>$idcard,
+                   'position'=>$position,
+                   'is_audit'=>1,
+                   'password'=>md5(substr($phone, -6)),
+               ];
+               if($is_stay){
+                   $save_data['hotel_type']=$hotel_type;
+                   $save_data['house_type']=$house_type;
+                   $save_data['checkin_date']=$checkin_date;
+                   $save_data['leave_date']=$leave_date;
+               }
+               $add_res=M($this->_model)->add($save_data);
+               if($add_res==false){
+                   $_info[15]='导入失败！';
+                   $result_data[] = $_info;
+                   continue;
+               }
+               //生成二维码
+               $qrcode=createQrcode($add_res);
+               M($this->_model)->where(['id'=>$add_res])->save(['qrcode'=>$qrcode]);
+               
+               $_info[15]='导入成功！';
+               $result_data[] = $_info;
+           }
+           //下载结果集
+           $this->import_result_download($result_data);
+       }
+   }
+   /**
+    * 导入结果下载
+    * @author sea 
+    */
+   public function import_result_download($data){
+       set_time_limit(0);
+       $style = 'size:12;width:25;font:宋体;color:ffffff;text-align:center;font-weight:bold;height:25;vertical-align:center;type:string;full:0070C0';
+       $style2 = 'size:12;width:45;font:宋体;color:ffffff;text-align:center;font-weight:bold;height:25;vertical-align:center;type:string;full:0070C0';
+       $body_style = 'size:12;width:25;font:宋体;text-align:center;type:string;height:15;vertical-align:center';
+       $title = "导入人员结果" . date("Y-m-d H:i:s");
+       $header_data = array(
+           array('品牌*', $style),
+           array('大区*', $style),
+           array('城市*', $style),
+           array('经销店名称*', $style),
+           array('经销店代码*', $style),
+           array('姓名*', $style),
+           array('电话号码*', $style),
+           array('性别', $style),
+           array('身份证信息', $style),
+           array('职位', $style),
+           array('住宿类型', $style),
+           array('房型', $style),
+           array('入住时间', $style),
+           array('离店时间', $style),
+           array('导入结果', $style),
+       );
+       $body_data = array();
+       foreach ($data as $key=>&$row) {
+           $body_data[] = array(
+               array($row[0], $body_style),
+               array($row[1], $body_style),
+               array($row[2], $body_style),
+               array($row[3], $body_style),
+               array($row[4], $body_style),
+               array($row[5], $body_style),
+               array($row[6], $body_style),
+               array($row[7], $body_style),
+               array($row[8], $body_style),
+               array($row[9], $body_style),
+               array($row[10], $body_style),
+               array($row[11], $body_style),
+               array($row[12], $body_style),
+               array($row[13], $body_style),
+               array($row[15], $body_style),
+           );
+       }
+       array_unshift($body_data, $header_data);
+       $excel = new Excel();
+       $excel->renderData($body_data)->download($title);
+       
+       
+   }
 }

@@ -1,0 +1,66 @@
+<extend name="Public/base" />
+
+<block name="body">
+	<div class="span{$addons_config.width}">
+    <div class="columns-mod">
+        <div class="hd cf">
+            <h5>人员Excel导入</h5>
+            <div class="title-opt">
+            </div>
+        </div>
+        <div class="bd">
+            <div class="sys-info">
+            <form action="{:U()}" method="post" enctype="multipart/form-data">
+                <table>
+                		<tr>
+                        <th>选择会议</th>
+                        <td>
+                        			<select name="meet_id">
+									<option value="0">请择会议</option>
+									<volist name=":get_meet_list()" id="vo">
+										<option value="{$vo.id}" >{$vo.meet_name}</option>
+									</volist>
+								</select>
+        					</td>
+                    </tr>
+                    <tr>
+                        <th>导入</th>
+                        <td>
+	            						<input type="file" name="import"/>
+	            						<input type="button" value="导入" onclick="import_data();"/>
+        					</td>
+                    </tr>
+                    <tr>
+                        <th>格式</th>
+                        <td><a href="__ROOT__{:C('DOWNLOAD_UPLOAD.rootDPath')}导入会议人员Excel模板.xlsx">导入会议人员Excel模板</a> </td>
+                    </tr>
+                </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</block>
+<block name="script">
+<script type="text/javascript" charset="utf-8">
+	//导航高亮
+	highlight_subnav('{:U('index')}');
+	function import_data(){
+		var meet_id=$("select[name='meet_id']").val();
+		if(meet_id==0){
+			alert("请选择会议");
+			return false;
+		}
+		var import_val=$("input[name='import']").val();
+		if(import_val==''){
+			alert("请选择导入文件");
+			return false;
+		}
+		$("form").submit();
+	}
+	
+	
+	
+</script>
+</block>
+
