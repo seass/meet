@@ -33,11 +33,11 @@
 						<option value="{$vo.id}" >{$vo.meet_name}</option>
 					</volist>
 				</select>
-				<select name="_sign" style="float:left;margin-right:10px;" class="search_field" >
+				<!--  <select name="_sign" style="float:left;margin-right:10px;" class="search_field" >
 					<option value="0">签到状态</option>
 					<option value="1" >已签到</option>
 					<option value="2" >未签到</option>
-				</select>
+				</select>-->
 				<input type="text" name="_key" class="search-input search_field" value="{:I('_key')}" placeholder="支持会议名称/人员名称／手机号">
 				<a class="sch-btn" href="javascript:;" id="search" url="{:U('index')}"><i class="btn-search"></i></a>
 			</div>
@@ -71,7 +71,6 @@
 			<th class="">审核状态</th>
 			<th class="">状态</th>
 			<th class="">创建时间</th>
-			<th class="">签到状态</th>
 			<th class="">操作</th>
 		</tr>
     </thead>
@@ -116,7 +115,6 @@
 			<td><if condition="$vo.is_audit eq 0">不通过<else/>通过</if></td>
 			<td>{$vo.status_text}</td>
 			<td>{$vo.create_time}</td>
-			<td><if condition="$vo.mms_id neq null"><label style="color:#4bbd00;">已签到</label><else/>未签到</if></td>
 			<td>
 				<a href="javascript:signIn({:$vo['id']})">签到</a>
 				<a href="{:U('MeetMember/edit?id='.$vo['id'])}">编辑</a>
