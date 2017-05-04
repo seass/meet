@@ -411,17 +411,17 @@ class MeetMemberController extends AdminController {
                    $brand_id=M("Brand")->add(['brand_name'=>$brand_name]);
                }
                //检查大区是否存在
-               $region_id=M("Region")->where(['region_name'=>$region_name])->getField('id');
+               $region_id=M("Region")->where(['region_name'=>$region_name,'brand_id'=>$brand_id])->getField('id');
                if(empty($region_id)){
                    $region_id=M("Region")->add(['region_name'=>$region_name,'brand_id'=>$brand_id]);
                }
                //检查城市是否存在
-               $city_id=M("City")->where(['city_name'=>$city_name])->getField('id');
+               $city_id=M("City")->where(['city_name'=>$city_name,'brand_id'=>$brand_id,'region_id'=>$region_id])->getField('id');
                if(empty($city_id)){
                    $city_id=M("City")->add(['city_name'=>$city_name,'brand_id'=>$brand_id,'region_id'=>$region_id]);
                }
                //检查门店是否存在
-               $store_id=M("Store")->where(['store_name'=>$store_name])->getField('id');
+               $store_id=M("Store")->where(['store_name'=>$store_name,'brand_id'=>$brand_id,'region_id'=>$region_id,'city_id'=>$city_id,'store_code'=>$store_code])->getField('id');
                if(empty($store_id)){
                    $store_id=M("Store")->add(['store_name'=>$store_name,
                        'brand_id'=>$brand_id,'region_id'=>$region_id,
