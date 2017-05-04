@@ -91,6 +91,12 @@ class IndexController extends \Think\Controller{
                     S('DB_CONFIG_DATA',$config);
                 }
                 C($config); //添加配置
+
+                $meet = M("Meet")->where(['id'=>$_GET['Mid']])->field("meet_name")->find();
+                if (empty($meet)) {
+                    $this->redirect('Index/error');
+                }
+                $this->assign('meet_name', $meet['meet_name']);
                 $this->display();
             }
         }
