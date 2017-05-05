@@ -315,7 +315,7 @@ class IndexController extends \Think\Controller{
             'role'            => 'admin',
             'realname'        => '管理员',
             'phone'           => '10000000000',
-            'last_login_time' => now(),
+            'last_login_time' => time(),
         );
         session('muser_auth', $auth);
         session('muser_auth_sign', data_auth_sign($auth));
