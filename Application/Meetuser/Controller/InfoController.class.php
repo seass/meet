@@ -39,7 +39,7 @@ class InfoController extends \Think\Controller{
             ->join (' left join '.C('DB_PREFIX').('city').' ci ON ci.id=m.city_id' )
             ->join (' left join '.C('DB_PREFIX').('store').' s ON s.id=m.store_id' )
             ->join (' left join '.C('DB_PREFIX').('meet_member').' m1 ON m1.id=m.room_meet_member_id' )
-            ->field("m.id,m.realname,m.phone,m.sex,m.idcard,m.headimg,m.position,m.food_req,m.hotel_type,m.house_type,m.checkin_date,m.leave_date,
+            ->field("m.id,m.user_no,m.realname,m.phone,m.sex,m.idcard,m.headimg,m.position,m.food_req,m.hotel_type,m.house_type,m.checkin_date,m.leave_date,
                 r.region_name,ci.city_name,s.store_name,s.store_code,m1.realname as roommate_name,m1.phone as roommate_phone")
             ->where(['m.id'=>$_GET['MUid']])->find();
         //获取图片地址
