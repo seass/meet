@@ -101,6 +101,64 @@ class IndexController extends \Think\Controller{
             }
         }
     }
+
+    public function adminlogin(){
+        if(IS_POST){
+            $return = ['status'=>false,'msg'=>''];
+            $passwd=$_POST['passwd'];
+            if(empty($passwd)){
+                $return['msg']='密码异常，请重新输入！';
+                $this->ajaxReturn($return);
+            }
+            $nickname=$_POST['nickname'];
+            if(empty($nickname)){
+                $return['msg']='用户名异常，请重新输入！';
+                $this->ajaxReturn($return);
+            }
+            $MUser=M("Member")->where([
+                'nickname'=>$nickname,
+            ])->find();
+            if(empty($MUser)){
+                $return['msg']='信息验证失败，请重新输入！';
+                $this->ajaxReturn($return);
+            }
+            if($MUser['status']!=1){
+                $return['msg']='用户不存在或被禁用，请联系管理员！';
+                $this->ajaxReturn($return);
+            }
+            //登录成功 存储登录信息
+            self::autoAdminLogin($MUser);
+            $return['status']=true;
+            $return['msg']='登录成功！';
+            $return['success_url']=U("/Meetuser/Index/index/Mid/".$_POST['Mid']);
+            /* 返回JSON数据 */
+            $this->ajaxReturn($return);
+        }else{
+            //每次进入必须带会议id
+            if(empty($_GET["Mid"])){
+                $this->redirect('Index/error');
+            }
+            if(is_muser_login()){
+                $this->redirect('Index/index',$_GET);
+            }else{
+                /* 读取数据库中的配置 */
+                $config =   S('DB_CONFIG_DATA');
+                if(!$config){
+                    $config =   D('Config')->lists();
+                    S('DB_CONFIG_DATA',$config);
+                }
+                C($config); //添加配置
+
+                $meet = M("Meet")->where(['id'=>$_GET['Mid']])->field("meet_name")->find();
+                if (empty($meet)) {
+                    $this->redirect('Index/error');
+                }
+                $this->assign('meet_name', $meet['meet_name']);
+                $this->display();
+            }
+        }
+    }
+
     /**
      * 注册
      */
@@ -245,5 +303,21 @@ class IndexController extends \Think\Controller{
         session('muser_auth_sign', data_auth_sign($auth));
     }
     
-
+    /**
+     * 自动登录admin
+     * @param  integer $user 用户信息数组
+     */
+    private function autoAdminLogin($user){
+       
+        /* 记录登录SESSION和COOKIES */
+        $auth = array(
+            'id'              => 0,
+            'role'            => 'admin',
+            'realname'        => '管理员',
+            'phone'           => '10000000000',
+            'last_login_time' => now(),
+        );
+        session('muser_auth', $auth);
+        session('muser_auth_sign', data_auth_sign($auth));
+    }
 }

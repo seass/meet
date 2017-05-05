@@ -43,6 +43,15 @@ function is_muser_login(){
     }
 }
 
+function is_admin_login(){
+    $user = session('muser_auth');
+    if (empty($user) || $user['role'] != 'admin') {
+        return 0;
+    } else {
+        return session('admin_auth_sign') == data_auth_sign($user) ? $user['id'] : 0;
+    }
+}
+
 /**
  * 检测当前用户是否为管理员
  * @return boolean true-管理员，false-非管理员

@@ -26,6 +26,7 @@ class MeetUserController extends Controller {
         if( !MUID ){// 还没登录 跳转到登录页面
             $this->redirect('Index/login',$_GET);
         }
+        define('IS_ADMIN',is_admin_login());
         /* 读取站点配置 */
         $config = api('Config/lists');
         C($config); //添加配置

@@ -13,7 +13,7 @@ use Meetuser\Service\MeetService;
 /**
  * 用户扫码跳转控制器
  */
-class InfoController extends \Think\Controller{
+class InfoController extends MeetuserController{
     
     protected function _initialize(){
         /* 读取数据库中的配置 */
@@ -47,6 +47,7 @@ class InfoController extends \Think\Controller{
         //var_dump($userInfo);exit;
         $this->assign('info', $userInfo);
         $this->assign('slogan_title','个人信息');
+        $this->assign('is_admin',IS_ADMIN);
         $this->display();
     }
     
