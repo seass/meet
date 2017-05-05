@@ -105,11 +105,11 @@ class IndexController extends \Think\Controller{
     public function adminlogin(){
         if(IS_POST){
             $return = ['status'=>false,'msg'=>''];
-            $passwd=$_POST['passwd'];
-            if(empty($passwd)){
-                $return['msg']='密码异常，请重新输入！';
-                $this->ajaxReturn($return);
-            }
+            // $passwd=$_POST['passwd'];
+            // if(empty($passwd)){
+            //     $return['msg']='密码异常，请重新输入！';
+            //     $this->ajaxReturn($return);
+            // }
             $nickname=$_POST['nickname'];
             if(empty($nickname)){
                 $return['msg']='用户名异常，请重新输入！';
