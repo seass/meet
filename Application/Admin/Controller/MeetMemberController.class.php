@@ -325,6 +325,7 @@ class MeetMemberController extends AdminController {
            $meet_id=$_POST['meet_id'];
            $excel = new Excel();
            $file_data = $excel->readerExcel($_FILES['import']['tmp_name'],0,14);
+           //var_dump($file_data);exit;
            $result_data=[];
            foreach ($file_data as $_info){
                $brand_name=$_info[0];
@@ -338,7 +339,18 @@ class MeetMemberController extends AdminController {
                $idcard=$_info[8];
                $position=$_info[9];
                
-               
+               //检查文件格式
+               $is_type_error=false;
+               foreach ($_info as $_val){
+                   if(gettype($_val)=='object'){
+                       $is_type_error=true;
+                   }
+               }
+               if($is_type_error){
+                   $_info[15]='导入的列格式错误，导入失败！';
+                   $result_data[] = $_info;
+                   continue;
+               }
                if(empty($brand_name) || empty($region_name) || empty($city_name) || empty($store_name) || 
                    empty($store_code) || empty($realname) || empty($phone)){
                    $_info[15]='数据项为空,导入失败！';
