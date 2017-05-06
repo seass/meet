@@ -102,7 +102,7 @@ class StoreController extends AdminController {
                 'region_id' =>$region_id,
                 'city_id' =>$city_id,
                 'status'=>I('post.status'),
-                'store_code'=>I('post.store_code'),
+                'store_code'=>strtoupper(I('post.store_code')),
             ]);
             if($add_res==false){
                 $this->error('新增失败！');
@@ -155,7 +155,7 @@ class StoreController extends AdminController {
                 'region_id' =>$region_id,
                 'city_id' =>$city_id,
                 'status'=>I('post.status'),
-                'store_code'=>I('post.store_code'),
+                'store_code'=>strtoupper(I('post.store_code')),
             ]);
             if($up_res!==false){
                 //若绑定的数据发生变更 同步冗余数据

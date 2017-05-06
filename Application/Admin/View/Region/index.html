@@ -31,7 +31,6 @@
 		<th class="">所属品牌</th>
 		<th class="">大区名称</th>
 		<th class="">状态</th>
-		<th class="">创建时间</th>
 		<th class="">操作</th>
 		</tr>
     </thead>
@@ -44,7 +43,6 @@
 			<td>{$vo.brand_name}</td>
 			<td>{$vo.region_name}</td>
 			<td>{$vo.status_text}</td>
-			<td>{$vo.create_time}</td>
 			<td>
 				<a href="{:U('Region/edit?id='.$vo['id'])}">编辑</a>
 				<if condition="$vo.status eq 1">

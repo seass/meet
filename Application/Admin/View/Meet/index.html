@@ -33,7 +33,6 @@
 		<th class="">报名开始时间</th>
 		<th class="">报名结束时间</th>
 		<th class="">状态</th>
-		<th class="">创建时间</th>
 		<th class="">操作</th>
 		</tr>
     </thead>
@@ -48,7 +47,6 @@
 			<td>{$vo.begin_time}</td>
 			<td>{$vo.end_time}</td>
 			<td>{$vo.status_text}</td>
-			<td>{$vo.create_time}</td>
 			<td>
 				<a href="{:U('Meetuser/Home/index?Mid='.$vo['id'])}" target="view_window">用户会议入口</a>
 				<a href="{:U('MeetAttchment/index?meet_id='.$vo['id'])}" class="btn" target="view_window">管理会议资料</a>

@@ -32,7 +32,6 @@
 			<th class="">所属大区</th>
 			<th class="">城市名称</th>
 			<th class="">状态</th>
-			<th class="">创建时间</th>
 			<th class="">操作</th>
 		</tr>
     </thead>
@@ -46,7 +45,6 @@
 			<td>{$vo.region_name}</td>
 			<td>{$vo.city_name}</td>
 			<td>{$vo.status_text}</td>
-			<td>{$vo.create_time}</td>
 			<td>
 				<a href="{:U('City/edit?id='.$vo['id'])}">编辑</a>
 				<if condition="$vo.status eq 1">

@@ -36,11 +36,8 @@
 			<th class="row-selected"><input class="check-all" type="checkbox"/></th>
 			<th class="">ID</th>
 			<th class="">会议名称</th>
-			<th class="">会议报名开始时间</th>
-			<th class="">会议报名结束时间</th>
 			<th class="">班级名称</th>
 			<th class="">状态</th>
-			<th class="">创建时间</th>
 			<th class="">班级座位图</th>
 			<th class="">操作</th>
 		</tr>
@@ -52,11 +49,8 @@
             <td><input class="ids" type="checkbox" name="id[]" value="{$vo.id}" /></td>
 			<td>{$vo.id}</td>
 			<td>{$vo.meet_name}</td>
-			<td>{$vo.begin_time}</td>
-			<td>{$vo.end_time}</td>
 			<td>{$vo.classes_name}</td>
 			<td>{$vo.status_text}</td>
-			<td>{$vo.create_time}</td>
 			<td><div class="upload-img-box">
 						<div class="upload-pre-item">
 							<img src="__ROOT__{$vo.seat_img|get_cover='path'}">
