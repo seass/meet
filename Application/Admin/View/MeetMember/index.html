@@ -1,5 +1,15 @@
 <extend name="Public/base" />
 
+<block name="style">
+<style type="text/css">
+body{
+	width:1400px;
+}
+.data-table thead th, .data-table tbody td{
+	padding:3px;
+}
+</style>
+</block>
 <block name="body">
 	<!-- 标题栏 -->
 	<div class="main-title">
@@ -45,32 +55,32 @@
     </div>
     <!-- 数据列表 -->
     <div class="data-table">
-	<table class="">
+	<table class="" >
     <thead>
         <tr>
 			<th class="row-selected"><input class="check-all" type="checkbox"/></th>
 			<th class="">ID</th>
-			<th class="">大区</th>
-			<th class="">城市</th>
-			<th class="">门店</th>
-			<th class="">门店代码</th>
-			<th class="">会议名称</th>
+			<th class="" style="width:40px">大区</th>
+			<th class="" style="width:40px">城市</th>
+			<th class="" style="width:80px">门店</th>
+			<th class="" style="width:40px">门店代码</th>
+			<th class="" style="width:80px">会议名称</th>
 			<!--<th class="">会议报名开始时间</th>
 			<th class="">会议报名结束时间</th>-->
-			<th class="">班级</th>
-			<th class="">参会编号</th>
-			<th class="">职务</th>
-			<th class="">姓名</th>
-			<th class="">手机号</th>
+			<th class="" style="width:40px">班级</th>
+			<th class="" style="width:40px">参会编号</th>
+			<th class="" style="width:40px">职务</th>
+			<th class="" style="width:50px">姓名</th>
+			<th class="" style="width:50px">手机号</th>
 			<th class="">证件号</th>
 			<th class="">性别</th>
-			<th class="">头像</th>
-			<th class="">二维码</th>
-			<th class="">住宿类型</th>
-			<th class="">室友名称</th>
-			<th class="">审核状态</th>
-			<th class="">状态</th>
-			<th class="">操作</th>
+			<th class="" style="width:60px">头像</th>
+			<th class="" style="width:40px">二维码</th>
+			<th class="" style="width:60px">住宿类型</th>
+			<th class="" style="width:40px">室友名称</th>
+			<th class="" style="width:40px">审核状态</th>
+			<th class="" style="width:40px">状态</th>
+			<th class="" style="width:200px">操作</th>
 		</tr>
     </thead>
     <tbody>
@@ -156,12 +166,6 @@
 				}
 	  		},'json');
 		}
-	
-	
-	
-	
-	
-	
 	//搜索功能
 	$("#search").click(function(){
 		var url = $(this).attr('url');
