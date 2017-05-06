@@ -67,7 +67,9 @@ function checkRegIdentity($identity){
  * @author sea
  */
 function  get_user_no($meet_id){
-    $count = M('MeetMember')->where(['meet_id'=>$meet_id])->count();
+    $info = M('MeetMember')->field('max(user_no) as max_no')
+    ->where(['meet_id'=>$meet_id,'status'=>['neq',-1]])->find();
+    $count=intval($info['max_no']);
     $count++;
     if($count<10){
         return '000'.$count;

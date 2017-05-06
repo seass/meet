@@ -78,8 +78,8 @@ class MeetMemberController extends AdminController {
         if(empty($method)){
             $method=I('get.method',null);
         }
-        //var_dump($id);
-        //var_dump($method);exit;
+//         var_dump($id);
+//         var_dump();exit;
         switch (strtolower($method)){
             case 'forbidmeetmember':
                 $this->forbid($this->_model, $map );
@@ -88,12 +88,66 @@ class MeetMemberController extends AdminController {
                 $this->resume($this->_model, $map );
                 break;
             case 'deletemeetmember':
-                $this->delete($this->_model, $map );
+                $this->deleteMeetMember(null,$id);
+                //$this->delete($this->_model, $map );
                 break;
             default:
                 $this->error('参数非法');
         }
     }
+    /**
+     * 删除用户人员（清空）
+     * @param unknown $meet_id
+     * @param unknown $mm_ids
+     */
+    public function deleteMeetMember($meet_id=null,$mm_ids=null){
+        //清空
+        if($meet_id!=null){
+           $up_res= M($this->_model)->where(['meet_id'=>$meet_id])->setField(['status'=>-1]);
+            if($up_res!==false){
+                $this->success('清空成功！');
+            }
+            $this->error('清空失败！');
+        }
+        if($mm_ids!=null){
+             //更新删除
+            $up_res= M($this->_model)
+            ->where(['id'=>['in',$mm_ids]])->setField(['status'=>-1]);
+            if($up_res!==false){
+                //从最下的id往后的本此会议下用户 会议编号都从新计算
+                //获取id最小的
+                $min_id=min($mm_ids);
+                $min_info=M($this->_model)->field('id,meet_id,user_no')->where(['id'=>$min_id])->find();
+                //获取从最下的id往后的本此会议下用户
+                $later_data=M($this->_model)
+                    ->field('id,user_no')
+                    ->where(
+                        ['_string'=>' meet_id='.$min_info['meet_id'].' and id>'.$min_id.' and status<>-1  '])
+                    ->order('id asc')->select();
+                if(!empty($later_data)){
+                    $curr_no=intval($min_info['user_no']);
+                    foreach ($later_data as $key=>$info){
+                        if($key==0){
+                            //紧挨着最少删除的那个值  替换成最少的 会议编号
+                            $new_start_no=$min_info['user_no'];
+                        }else{
+                            //开始＋＋
+                            $new_start_no=get_inc_user_no($curr_no);
+                        }
+                        M($this->_model)->where(['id'=>$info['id']])->setField(['user_no'=>$new_start_no]);
+                        $curr_no=intval($new_start_no);
+                    }
+                }
+                $this->success('删除成功！');
+            }
+            $this->error('删除失败！');
+        }
+        
+        
+    }
+    
+    
+    
     public function getSaveData(){
         //绑定门店
 //         $store_id=I('post.store_id',0);

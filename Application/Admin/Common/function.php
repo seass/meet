@@ -455,7 +455,25 @@ function  get_classes_meet_list($field='',$field_val=''){
  * @author sea
  */
 function  get_user_no($meet_id){
-    $count = M('MeetMember')->where(['meet_id'=>$meet_id])->count();
+    $info = M('MeetMember')->field('max(user_no) as max_no')
+    ->where(['meet_id'=>$meet_id,'status'=>['neq',-1]])->find();
+    $count=intval($info['max_no']);
+    $count++;
+    if($count<10){
+        return '000'.$count;
+    }else if($count>=10 && $count<100){
+        return '00'.$count;
+    }else if($count>=100 && $count<1000){
+        return '0'.$count;
+    }
+    return $count;
+}
+/**
+ * 返回当前会议编号＋1
+ * @param unknown $meet_id
+ * @return string|number
+ */
+function  get_inc_user_no($count){
     $count++;
     if($count<10){
         return '000'.$count;
