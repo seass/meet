@@ -43,12 +43,12 @@ function is_muser_login(){
     }
 }
 
-function is_admin_login(){
-    $user = session('muser_auth');
+function is_amuser_login(){
+    $user = session('amuser_auth');
     if (empty($user) || $user['role'] != 'admin') {
         return 0;
     } else {
-        return session('admin_auth_sign') == data_auth_sign($user) ? $user['id'] : 0;
+        return session('amuser_auth_sign') == data_auth_sign($user) ? $user['id'] : 0;
     }
 }
 

@@ -17,11 +17,11 @@
             <div class="logo">
                 <p>登录</p>
             </div>
-            <label for="nicky">姓名</label>
+            <label for="nicky">用户名</label>
 		    <input type="text" name='nickname'  placeholder="请输入姓名" >
 		        
-		    <!-- <label for="nicky">手机号</label>
-		    <input type="text" name='phone'  placeholder="请输入手机号" > -->
+		     <label for="nicky">密码</label>
+		    <input type="password" name='password'  placeholder="请输入密码" >
            
             <div class="chose">
             		<input type="hidden" name="Mid" value="{:I('Mid')}">
@@ -41,17 +41,13 @@
 			$("input[name='nickname']").focus();
 			return false;
 		}
-		/*var idcard=$("input[name='idcard']").val().trim();
-		if(idcard==''){
-			$("input[name='idcard']").focus();
-			return false;
-		}*/
-		// var phone=$("input[name='phone']").val().trim();
-		// if(phone==''){
-		// 	$("input[name='phone']").focus();
-		// 	return false;
-		// }
-		var p_data={'Mid':$("input[name='Mid']").val(),'nickname':nickname};
+		
+		 var password=$("input[name='password']").val().trim();
+		 if(password==''){
+		 	$("input[name='password']").focus();
+		 	return false;
+		 }
+		var p_data={'Mid':$("input[name='Mid']").val(),'nickname':nickname,'password':password};
 		$.post("{:U('adminlogin')}",p_data,
 				function(result){
 					console.log(result);

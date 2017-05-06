@@ -13,7 +13,7 @@ use Meetuser\Service\MeetService;
 /**
  * 用户扫码跳转控制器
  */
-class InfoController extends MeetuserController{
+class InfoController extends \Think\Controller{
     
     protected function _initialize(){
         /* 读取数据库中的配置 */
@@ -47,10 +47,22 @@ class InfoController extends MeetuserController{
         //var_dump($userInfo);exit;
         $this->assign('info', $userInfo);
         $this->assign('slogan_title','个人信息');
-        $this->assign('is_admin',IS_ADMIN);
+        
+        $this->assign('is_admin',is_amuser_login()?'TRUE':'FALSE');
         $this->display();
     }
     
-    
+    /**
+     * 签到
+     */
+    public function sign(){
+        $meet_member_id=I('post.meet_member_id','');
+        $add_res=M('MeetMemberSign')->add(['meet_member_id'=>$meet_member_id]);
+        $return['status']=false;
+        if($add_res!==false){
+            $return['status']=true;
+        }
+        $this->ajaxReturn($return);
+    }
 
 }

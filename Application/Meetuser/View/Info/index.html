@@ -9,9 +9,11 @@
 		
 			<else/>
 				<p class="content-img">
-					无头像
+					
 					<if condition="$info.headimg neq null">
 			               <img src="__ROOT__{$info.headimg}">
+			        <else/>
+			       	 无头像
 			        </if>
 		        </p>
 			<table>
@@ -92,9 +94,38 @@
 					<th style="text-align:right;">餐饮习惯：</th>
 					<td>{$info.food_req}</td>
 				</tr>
+				<if condition="$is_admin eq 'TRUE'">
+			          <tr>
+						<th style="text-align:center;" colspan='2'>
+            					<input type="hidden" name="MUid" value="{:I('MUid')}">
+                			    <a data-role="button" href="#" onclick="signIn();">签到</a>
+            				</th>
+					</tr>    
+			   </if>
 			</tbody>
 		</table>
 			</if>
 	</div>
 </body>
+
+<block name="script">
+<script src="__JS__/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript">
+		function signIn(){
+			if(!confirm("确定进行签到吗？")){
+				return false;
+			}
+			$.post("{:U('Sign')}",{'meet_member_id':$("input[name='MUid']").val()},
+					function(result){
+				if(result.status){
+					alert('签到成功');
+				}else{
+					alert('签到失败');
+				}
+	  		},'json');
+		}
+	</script>
+</block>
+
+
 </html>

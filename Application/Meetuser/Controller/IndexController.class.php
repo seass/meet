@@ -21,7 +21,8 @@ class IndexController extends \Think\Controller{
         }
         // 获取当前用户ID
         define('MUID',is_muser_login());
-        if( !MUID ){// 还没登录 跳转到登录页面
+        
+        if( !MUID && !is_amuser_login()){// 还没登录 跳转到登录页面
             $this->redirect('Index/login',$_GET);
         }
         /* 读取站点配置 */
@@ -115,30 +116,40 @@ class IndexController extends \Think\Controller{
                 $return['msg']='用户名异常，请重新输入！';
                 $this->ajaxReturn($return);
             }
-            $MUser=M("Member")->where([
+            $password=$_POST['password'];
+            
+            $UmUser=M("UcenterMember")->where([
                 'nickname'=>$nickname,
             ])->find();
-            if(empty($MUser)){
+            if(empty($UmUser)){
                 $return['msg']='信息验证失败，请重新输入！';
                 $this->ajaxReturn($return);
             }
-            if($MUser['status']!=1){
-                $return['msg']='用户不存在或被禁用，请联系管理员！';
+            if($UmUser['status']!=1){
+                $return['msg']='用户不存在或被禁用！';
                 $this->ajaxReturn($return);
             }
-            //登录成功 存储登录信息
-            self::autoAdminLogin($MUser);
-            $return['status']=true;
-            $return['msg']='登录成功！';
-            $return['success_url']=U("/Meetuser/Index/index/Mid/".$_POST['Mid']);
-            /* 返回JSON数据 */
-            $this->ajaxReturn($return);
+            $md5PassWord=md5(sha1($password).'E_TOnA/j5(u"8%gliw[:-H]{k}2bf#M.LpIK^|PD');
+            
+            /* 验证用户密码 */
+            if($md5PassWord === $UmUser['password']){
+               //登录成功 存储登录信息
+                self::autoAdminLogin();
+                $return['status']=true;
+                $return['msg']='登录成功！';
+                $return['success_url']=U("/Meetuser/Index/index/Mid/".$_POST['Mid']);
+                /* 返回JSON数据 */
+                $this->ajaxReturn($return);
+            } else {
+                $return['msg']='用户名和密码不一致！';
+                $this->ajaxReturn($return);
+            }
         }else{
             //每次进入必须带会议id
             if(empty($_GET["Mid"])){
                 $this->redirect('Index/error');
             }
-            if(is_muser_login()){
+            if(is_amuser_login()){
                 $this->redirect('Index/index',$_GET);
             }else{
                 /* 读取数据库中的配置 */
@@ -268,9 +279,11 @@ class IndexController extends \Think\Controller{
     }
     /* 退出登录 */
     public function logout(){
-        if(is_muser_login()){
+        if(is_muser_login() || is_amuser_login()){
             session('muser_auth', null);
             session('muser_auth_sign', null);
+            session('amuser_auth', null);
+            session('amuser_auth_sign', null);
             session('[destroy]');
             $this->redirect('login',$_GET);
             //$this->success('退出成功！', U('login',$_GET));
@@ -307,17 +320,17 @@ class IndexController extends \Think\Controller{
      * 自动登录admin
      * @param  integer $user 用户信息数组
      */
-    private function autoAdminLogin($user){
+    private function autoAdminLogin(){
        
         /* 记录登录SESSION和COOKIES */
         $auth = array(
-            'id'              => 0,
+            'id'              => -1,
             'role'            => 'admin',
             'realname'        => '管理员',
             'phone'           => '10000000000',
             'last_login_time' => time(),
         );
-        session('muser_auth', $auth);
-        session('muser_auth_sign', data_auth_sign($auth));
+        session('amuser_auth', $auth);
+        session('amuser_auth_sign', data_auth_sign($auth));
     }
 }
