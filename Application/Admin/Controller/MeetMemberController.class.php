@@ -368,6 +368,23 @@ class MeetMemberController extends AdminController {
         }
         $this->ajaxReturn($return);
     }
+    
+    public $import_title=[
+        0=>'品牌*',
+        1=>'大区*',
+        2=>'城市*',
+        3=>'经销店名称*',
+        4=>'经销店代码*', 
+        5=>'姓名*', 
+        6=>'电话号码*', 
+        7=>'性别', 
+        8=>'身份证信息',
+        9=>'职位', 
+        10=>'住宿类型',
+        11=>'房型', 
+        12=>'入住时间', 
+        13=>'离店时间',
+    ];
     /**
      * 导入人员信息
      * @author sea 
@@ -396,13 +413,15 @@ class MeetMemberController extends AdminController {
                
                //检查文件格式
                $is_type_error=false;
-               foreach ($_info as $_val){
+               $key_error=null;
+               foreach ($_info as $key=>$_val){
                    if(gettype($_val)=='object'){
                        $is_type_error=true;
+                       $key_error=$key;
                    }
                }
                if($is_type_error){
-                   $_info[15]='导入的列格式错误，导入失败！';
+                   $_info[15]='导入的列格式错误，导入失败！错误列：'.$this->import_title[$key_error];
                    $result_data[] = $_info;
                    continue;
                }
