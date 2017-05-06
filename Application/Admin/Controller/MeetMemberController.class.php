@@ -26,6 +26,7 @@ class MeetMemberController extends AdminController {
         $_meet_id   =   I('_meet_id');
         //$_sign   =   I('_sign');
         $map['m.status']    =   array('egt',0);
+        $map['me.status']    =   array('egt',0);
         //模糊搜索
         if(!empty($_key)){
             $map['m.realname|me.meet_name|m.phone|m.user_no|s.store_name|s.store_code|m1.realname']    =   array('like', '%'.(string)$_key.'%');

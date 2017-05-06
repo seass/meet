@@ -411,6 +411,7 @@ function  get_meet_list(){
     $list = M('Meet')->field("id,meet_name")->where(['status'=>1])->select();
     return $list;
 }
+
 /**
  * 获取启用的门店列表
  * @author sea
@@ -433,6 +434,20 @@ function  get_classes_list($field='',$field_val=''){
         $c_where[$field]=$field_val;
     }
     $list = M('Classes')->field("id,classes_name")->where($c_where)->select();
+    return $list;
+}
+/**
+ * 获取启用的班级列表-会议前缀
+ * @author weinan
+ */
+function  get_classes_meet_list($field='',$field_val=''){
+    $c_where=['c.status'=>1,'m.status'=>1];
+    if(!empty($field)){
+        $c_where[$field]=$field_val;
+    }
+    $list = M('Classes')->alias("c")
+        ->join(C('DB_PREFIX').('meet')." m on m.id = c.meet_id")
+        ->field("c.id,c.classes_name,m.meet_name")->where($c_where)->order("m.id,c.id")->select();
     return $list;
 }
 /**
