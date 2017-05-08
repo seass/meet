@@ -59,12 +59,12 @@ body{
     <thead>
         <tr>
 			<th class="row-selected"><input class="check-all" type="checkbox"/></th>
-			<th class="">ID</th>
+			<!-- <th class="">ID</th> -->
 			<th class="" style="width:40px">大区</th>
 			<th class="" style="width:40px">城市</th>
-			<th class="" style="width:80px">门店</th>
+			<th class="" style="width:150px">门店</th>
 			<th class="" style="width:40px">门店代码</th>
-			<th class="" style="width:80px">会议名称</th>
+			<th class="" style="width:150px">会议名称</th>
 			<!--<th class="">会议报名开始时间</th>
 			<th class="">会议报名结束时间</th>-->
 			<th class="" style="width:40px">班级</th>
@@ -88,7 +88,7 @@ body{
 		<volist name="_list" id="vo">
 		<tr>
             <td><input class="ids allotClasses" type="checkbox" name="id[]" value="{$vo.id}" /></td>
-			<td>{$vo.id}</td>
+			<!-- <td>{$vo.id}</td> -->
 			<td>{$vo.region_name}</td>
 			<td>{$vo.city_name}</td>
 			<td>{$vo.store_name}</td>
