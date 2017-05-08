@@ -42,6 +42,7 @@ body{
 		<th class="">报名开始时间</th>
 		<th class="">报名结束时间</th>
 		<th class="">状态</th>
+		<th class="">人员会议二维码</th>
 		<th class="">操作</th>
 		</tr>
     </thead>
@@ -56,8 +57,16 @@ body{
 			<td>{$vo.begin_time}</td>
 			<td>{$vo.end_time}</td>
 			<td>{$vo.status_text}</td>
+			<td><div class="upload-img-box">
+						<a >查看</a>
+						<div style="display:none;">
+							<img src="__ROOT__{$vo.qrcode}">
+						</div>
+				</div>
+			</td>
 			<td>
 				<a href="{:U('Meetuser/Home/index?Mid='.$vo['id'])}" target="view_window">用户会议入口</a>
+				<a href="{:U('Meetuser/Index/adminlogin?Mid='.$vo['id'])}" target="view_window">管理员会议入口</a>
 				<a href="{:U('MeetAttchment/index?meet_id='.$vo['id'])}" class="btn" target="view_window">管理会议资料</a>
 				<a href="{:U('Meet/edit?id='.$vo['id'])}">编辑</a>
 				<if condition="$vo.status eq 1">
