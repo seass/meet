@@ -34,6 +34,8 @@ class MeetMemberSignController extends AdminController {
         if(!empty($classes_id)){
             $map['c.id']=$classes_id;
         }
+        $map['m.status']= 1;
+        $map['me.status']= 1;
         $list=M()->table(C('DB_PREFIX').strtolower('meet_member_sign').' mms' )
                        ->where($map)
                        ->order('m.id DESC,mms.create_time desc')
