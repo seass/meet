@@ -57,6 +57,7 @@ class IndexController extends \Think\Controller{
                 'realname'=>$_POST['realname'],
                 //'idcard'=>$idcard,
                 'phone'=>$phone,
+                'status'=>2,
             ])->find();
             if(empty($MUser)){
                 $return['msg']='信息验证失败，请重新输入！';
@@ -66,10 +67,10 @@ class IndexController extends \Think\Controller{
                 $return['msg']='用户未审核通过，请等候审核！';
                 $this->ajaxReturn($return);
             }
-            if($MUser['status']!=1){
-                $return['msg']='用户不存在或被禁用，请联系管理员！';
-                $this->ajaxReturn($return);
-            }
+            // if($MUser['status']!=1){
+            //     $return['msg']='用户不存在或被禁用，请联系管理员！';
+            //     $this->ajaxReturn($return);
+            // }
             //登录成功 存储登录信息
             self::autoLogin($MUser);
             $return['status']=true;
