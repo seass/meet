@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title><?php echo ($meta_title); ?>|OneThink管理平台</title>
+    <title><?php echo ($meta_title); ?>|会议管理平台</title>
     <link href="/onethink/Public/favicon.ico" type="image/x-icon" rel="shortcut icon">
     <link rel="stylesheet" type="text/css" href="/onethink/Public/Admin/css/base.css" media="all">
     <link rel="stylesheet" type="text/css" href="/onethink/Public/Admin/css/common.css" media="all">
@@ -16,12 +16,21 @@
     <script type="text/javascript" src="/onethink/Public/Admin/js/jquery.mousewheel.js"></script>
     <!--<![endif]-->
     
+<style type="text/css">
+body{
+	width:1400px;
+}
+.data-table thead th, .data-table tbody td{
+	padding:3px;
+}
+</style>
+
 </head>
 <body>
     <!-- 头部 -->
     <div class="header">
         <!-- Logo -->
-        <span class="logo"></span>
+        <span class="logo" style="font-size: 20px;color: #86db00;">会议管理平台</span>
         <!-- /Logo -->
 
         <!-- 主导航 -->
@@ -91,63 +100,109 @@
 	</div>
 	<div class="cf">
 		<div class="fl">
-            <a class="btn" href="<?php echo U('MeetMember/add');?>">新 增人员</a>
-            <button class="btn ajax-post" url="<?php echo U('MeetMember/changeStatus',array('method'=>'resumeMeetMember'));?>" target-form="ids">启 用</button>
-            <button class="btn ajax-post" url="<?php echo U('MeetMember/changeStatus',array('method'=>'forbidMeetMember'));?>" target-form="ids">禁 用</button>
+            <a class="btn" href="<?php echo U('MeetMember/add');?>">新增</a>
+            <a class="btn" href="<?php echo U('MeetMember/import');?>">导入</a>
+            <button class="btn ajax-post" url="<?php echo U('MeetMember/changeStatus',array('method'=>'resumeMeetMember'));?>" target-form="ids">启用</button>
+            <button class="btn ajax-post" url="<?php echo U('MeetMember/changeStatus',array('method'=>'forbidMeetMember'));?>" target-form="ids">禁用</button>
             <button class="btn ajax-post confirm" url="<?php echo U('MeetMember/changeStatus',array('method'=>'deleteMeetMember'));?>" target-form="ids">删 除</button>
+        
+        		<select name="classes_id" class='allotClasses'>
+					<option value="0">请选择分配的班级</option>
+					<?php $_result=get_classes_meet_list();if(is_array($_result)): $i = 0; $__LIST__ = $_result;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><option value="<?php echo ($vo["id"]); ?>"><?php echo ($vo["meet_name"]); ?>-<?php echo ($vo["classes_name"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
+			</select>
+        		<button class="btn ajax-post" url="<?php echo U('MeetMember/allotClasses');?>" target-form="allotClasses">分班</button>
+        		
+        		<button class="btn ajax-post" url="<?php echo U('MeetMember/setRoommate');?>" target-form="ids">设置室友</button>
         </div>
 
         <!-- 高级搜索 -->
 		<div class="search-form fr cf">
 			<div class="sleft">
-				<input type="text" name="_key" class="search-input" value="<?php echo I('_key');?>" placeholder="请输入会议人员名称/大区名称">
+				<select name="_meet_id" style="float:left;margin-right:10px;" class="search_field" >
+					<option value="0">请选择会议名称</option>
+					<?php $_result=get_meet_list();if(is_array($_result)): $i = 0; $__LIST__ = $_result;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><option value="<?php echo ($vo["id"]); ?>" ><?php echo ($vo["meet_name"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
+				</select>
+				<!--  <select name="_sign" style="float:left;margin-right:10px;" class="search_field" >
+					<option value="0">签到状态</option>
+					<option value="1" >已签到</option>
+					<option value="2" >未签到</option>
+				</select>-->
+				<input type="text" name="_key" class="search-input search_field" value="<?php echo I('_key');?>" placeholder="支持会议名称/人员名称／手机号">
 				<a class="sch-btn" href="javascript:;" id="search" url="<?php echo U('index');?>"><i class="btn-search"></i></a>
 			</div>
 		</div>
     </div>
     <!-- 数据列表 -->
     <div class="data-table">
-	<table class="">
+	<table class="" >
     <thead>
         <tr>
 			<th class="row-selected"><input class="check-all" type="checkbox"/></th>
-			<th class="">ID</th>
-			<th class="">所属大区</th>
-			<th class="">所属门店</th>
-			<th class="">会议名称</th>
-			<th class="">会议开始时间</th>
-			<th class="">会议结束时间</th>
-			<th class="">班级名称</th>
-			<th class="">参会编号</th>
-			<th class="">人员姓名</th>
-			<th class="">人员手机号</th>
-			<th class="">人员证件号</th>
+			<!-- <th class="">ID</th> -->
+			<th class="" style="width:40px">大区</th>
+			<th class="" style="width:40px">城市</th>
+			<th class="" style="width:150px">门店</th>
+			<th class="" style="width:40px">门店代码</th>
+			<th class="" style="width:150px">会议名称</th>
+			<!--<th class="">会议报名开始时间</th>
+			<th class="">会议报名结束时间</th>-->
+			<th class="" style="width:40px">班级</th>
+			<th class="" style="width:40px">参会编号</th>
+			<th class="" style="width:40px">职务</th>
+			<th class="" style="width:50px">姓名</th>
+			<th class="" style="width:50px">手机号</th>
+			<th class="">证件号</th>
 			<th class="">性别</th>
-			<th class="">职务</th>
-			<th class="">状态</th>
-			<th class="">创建时间</th>
-			<th class="">操作</th>
+			<th class="" style="width:60px">头像</th>
+			<th class="" style="width:40px">二维码</th>
+			<th class="" style="width:60px">住宿类型</th>
+			<th class="" style="width:40px">室友名称</th>
+			<th class="" style="width:40px">审核状态</th>
+			<th class="" style="width:40px">状态</th>
+			<th class="" style="width:200px">操作</th>
 		</tr>
     </thead>
     <tbody>
 		<?php if(!empty($_list)): if(is_array($_list)): $i = 0; $__LIST__ = $_list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><tr>
-            <td><input class="ids" type="checkbox" name="id[]" value="<?php echo ($vo["id"]); ?>" /></td>
-			<td><?php echo ($vo["id"]); ?></td>
+            <td><input class="ids allotClasses" type="checkbox" name="id[]" value="<?php echo ($vo["id"]); ?>" /></td>
+			<!-- <td><?php echo ($vo["id"]); ?></td> -->
 			<td><?php echo ($vo["region_name"]); ?></td>
+			<td><?php echo ($vo["city_name"]); ?></td>
 			<td><?php echo ($vo["store_name"]); ?></td>
+			<td><?php echo ($vo["store_code"]); ?></td>
 			<td><?php echo ($vo["meet_name"]); ?></td>
-			<td><?php echo ($vo["begin_time"]); ?></td>
-			<td><?php echo ($vo["end_time"]); ?></td>
+			<!--  <td><?php echo ($vo["begin_time"]); ?></td>
+			<td><?php echo ($vo["end_time"]); ?></td>-->
 			<td><?php echo ($vo["classes_name"]); ?></td>
 			<td><?php echo ($vo["user_no"]); ?></td>
+			<td><?php echo ($vo["position"]); ?></td>
 			<td><?php echo ($vo["realname"]); ?></td>
 			<td><?php echo ($vo["phone"]); ?></td>
 			<td><?php echo ($vo["idcard"]); ?></td>
-			<td><?php echo ($vo["sex"]); ?></td>
-			<td><?php echo ($vo["position"]); ?></td>
-			<td><?php echo ($vo["status_text"]); ?></td>
-			<td><?php echo ($vo["create_time"]); ?></td>
+			<td><?php if($vo["sex"] == 1): ?>男<?php else: ?>女<?php endif; ?></td>
 			<td>
+				<?php if($vo["headimg"] == null): ?>未上传
+				<?php else: ?>
+					<div class="upload-img-box">
+						<a >查看</a>
+						<div style="display:none;">
+							<img src="/onethink<?php echo (get_cover($vo["headimg"],'path')); ?>">
+						</div>
+					</div><?php endif; ?>
+			</td>
+			<td><div class="upload-img-box">
+						<a >查看</a>
+						<div style="display:none;">
+							<img src="/onethink<?php echo ($vo["qrcode"]); ?>">
+						</div>
+				</div>
+			</td>
+			<td><?php if($vo["hotel_type"] == 0): ?>不住宿<?php elseif($vo["hotel_type"] == 1): ?>合住 <?php else: ?>单住<?php endif; ?></td>
+			<td><?php echo ($vo["roommate_name"]); ?></td>
+			<td><?php if($vo["is_audit"] == 0): ?>不通过<?php else: ?>通过<?php endif; ?></td>
+			<td><?php echo ($vo["status_text"]); ?></td>
+			<td>
+				<a href="javascript:signIn(<?php echo $vo['id'];?>)">签到</a>
 				<a href="<?php echo U('MeetMember/edit?id='.$vo['id']);?>">编辑</a>
 				<?php if($vo["status"] == 1): ?><a href="<?php echo U('MeetMember/changeStatus?method=forbidMeetMember&id='.$vo['id']);?>" class="ajax-get">禁用</a>
 				<?php else: ?>
@@ -156,7 +211,7 @@
                 </td>
 		</tr><?php endforeach; endif; else: echo "" ;endif; ?>
 		<?php else: ?>
-		<td colspan="17" class="text-center"> Oh! 暂时还没有内容! </td><?php endif; ?>
+		<td colspan="21" class="text-center"> Oh! 暂时还没有内容! </td><?php endif; ?>
 	</tbody>
     </table>
 	</div>
@@ -167,7 +222,7 @@
         </div>
         <div class="cont-ft">
             <div class="copyright">
-                <div class="fl">感谢使用<a href="http://www.onethink.cn" target="_blank">OneThink</a>管理平台</div>
+                <div class="fl">感谢使用会议管理平台</div>
                 <div class="fr">V<?php echo (ONETHINK_VERSION); ?></div>
             </div>
         </div>
@@ -260,10 +315,23 @@
 	<script src="/onethink/Public/static/thinkbox/jquery.thinkbox.js"></script>
 
 	<script type="text/javascript">
+		function signIn(id){
+			if(!confirm("确定进行签到吗？")){
+				return false;
+			}
+			$.post("<?php echo U('Sign');?>",{'meet_member_id':id},
+					function(result){
+				if(result.status){
+					alert('签到成功');
+				}else{
+					alert('签到失败');
+				}
+	  		},'json');
+		}
 	//搜索功能
 	$("#search").click(function(){
 		var url = $(this).attr('url');
-        var query  = $('.search-form').find('input').serialize();
+        var query  = $('.search-form').find('.search_field').serialize();
         query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g,'');
         query = query.replace(/^&/g,'');
         if( url.indexOf('?')>0 ){
@@ -280,6 +348,8 @@
 			return false;
 		}
 	});
+	Think.setValue('_meet_id',<?php echo ((isset($_meet_id) && ($_meet_id !== ""))?($_meet_id):0); ?>);
+	Think.setValue('_sign',<?php echo ((isset($_sign) && ($_sign !== ""))?($_sign):0); ?>);
     //导航高亮
     highlight_subnav('<?php echo U('MeetMember/index');?>');
 	</script>

@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title><?php echo ($meta_title); ?>|OneThink管理平台</title>
+    <title><?php echo ($meta_title); ?>|会议管理平台</title>
     <link href="/onethink/Public/favicon.ico" type="image/x-icon" rel="shortcut icon">
     <link rel="stylesheet" type="text/css" href="/onethink/Public/Admin/css/base.css" media="all">
     <link rel="stylesheet" type="text/css" href="/onethink/Public/Admin/css/common.css" media="all">
@@ -21,7 +21,7 @@
     <!-- 头部 -->
     <div class="header">
         <!-- Logo -->
-        <span class="logo"></span>
+        <span class="logo" style="font-size: 20px;color: #86db00;">会议管理平台</span>
         <!-- /Logo -->
 
         <!-- 主导航 -->
@@ -95,12 +95,17 @@
             <button class="btn ajax-post" url="<?php echo U('Classes/changeStatus',array('method'=>'resumeClasses'));?>" target-form="ids">启 用</button>
             <button class="btn ajax-post" url="<?php echo U('Classes/changeStatus',array('method'=>'forbidClasses'));?>" target-form="ids">禁 用</button>
             <button class="btn ajax-post confirm" url="<?php echo U('Classes/changeStatus',array('method'=>'deleteClasses'));?>" target-form="ids">删 除</button>
+        
         </div>
 
         <!-- 高级搜索 -->
 		<div class="search-form fr cf">
 			<div class="sleft">
-				<input type="text" name="_key" class="search-input" value="<?php echo I('_key');?>" placeholder="请输入班级名称/大区名称">
+				<select name="_meet_id" style="float:left;margin-right:10px;" class="search_field" >
+					<option value="0">请选择会议名称</option>
+					<?php $_result=get_meet_list();if(is_array($_result)): $i = 0; $__LIST__ = $_result;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><option value="<?php echo ($vo["id"]); ?>" ><?php echo ($vo["meet_name"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
+				</select>
+				<input type="text" name="_key" class="search-input search_field" value="<?php echo I('_key');?>" placeholder="请输入班级名称/大区名称">
 				<a class="sch-btn" href="javascript:;" id="search" url="<?php echo U('index');?>"><i class="btn-search"></i></a>
 			</div>
 		</div>
@@ -113,11 +118,9 @@
 			<th class="row-selected"><input class="check-all" type="checkbox"/></th>
 			<th class="">ID</th>
 			<th class="">会议名称</th>
-			<th class="">会议开始时间</th>
-			<th class="">会议结束时间</th>
 			<th class="">班级名称</th>
 			<th class="">状态</th>
-			<th class="">创建时间</th>
+			<th class="">班级座位图</th>
 			<th class="">操作</th>
 		</tr>
     </thead>
@@ -126,11 +129,18 @@
             <td><input class="ids" type="checkbox" name="id[]" value="<?php echo ($vo["id"]); ?>" /></td>
 			<td><?php echo ($vo["id"]); ?></td>
 			<td><?php echo ($vo["meet_name"]); ?></td>
-			<td><?php echo ($vo["begin_time"]); ?></td>
-			<td><?php echo ($vo["end_time"]); ?></td>
 			<td><?php echo ($vo["classes_name"]); ?></td>
 			<td><?php echo ($vo["status_text"]); ?></td>
-			<td><?php echo ($vo["create_time"]); ?></td>
+			<td>
+				<?php if($vo["seat_img"] == null): ?>未上传
+				<?php else: ?>
+					<div class="upload-img-box">
+						<a >查看</a>
+						<div style="display:none;">
+							<img src="/onethink<?php echo (get_cover($vo["seat_img"],'path')); ?>">
+						</div>
+					</div><?php endif; ?>
+			</td>
 			<td>
 				<a href="<?php echo U('Classes/edit?id='.$vo['id']);?>">编辑</a>
 				<?php if($vo["status"] == 1): ?><a href="<?php echo U('Classes/changeStatus?method=forbidClasses&id='.$vo['id']);?>" class="ajax-get">禁用</a>
@@ -140,7 +150,7 @@
                 </td>
 		</tr><?php endforeach; endif; else: echo "" ;endif; ?>
 		<?php else: ?>
-		<td colspan="7" class="text-center"> Oh! 暂时还没有内容! </td><?php endif; ?>
+		<td colspan="10" class="text-center"> Oh! 暂时还没有内容! </td><?php endif; ?>
 	</tbody>
     </table>
 	</div>
@@ -151,7 +161,7 @@
         </div>
         <div class="cont-ft">
             <div class="copyright">
-                <div class="fl">感谢使用<a href="http://www.onethink.cn" target="_blank">OneThink</a>管理平台</div>
+                <div class="fl">感谢使用会议管理平台</div>
                 <div class="fr">V<?php echo (ONETHINK_VERSION); ?></div>
             </div>
         </div>
@@ -247,7 +257,8 @@
 	//搜索功能
 	$("#search").click(function(){
 		var url = $(this).attr('url');
-        var query  = $('.search-form').find('input').serialize();
+        var query  = $('.search-form').find('.search_field').serialize();
+        
         query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g,'');
         query = query.replace(/^&/g,'');
         if( url.indexOf('?')>0 ){
@@ -264,6 +275,7 @@
 			return false;
 		}
 	});
+	Think.setValue('_meet_id',<?php echo ((isset($_meet_id) && ($_meet_id !== ""))?($_meet_id):0); ?>);
     //导航高亮
     highlight_subnav('<?php echo U('Classes/index');?>');
 	</script>

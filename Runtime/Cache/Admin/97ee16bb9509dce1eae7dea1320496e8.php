@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title><?php echo ($meta_title); ?>|OneThink管理平台</title>
+    <title><?php echo ($meta_title); ?>|会议管理平台</title>
     <link href="/onethink/Public/favicon.ico" type="image/x-icon" rel="shortcut icon">
     <link rel="stylesheet" type="text/css" href="/onethink/Public/Admin/css/base.css" media="all">
     <link rel="stylesheet" type="text/css" href="/onethink/Public/Admin/css/common.css" media="all">
@@ -16,12 +16,21 @@
     <script type="text/javascript" src="/onethink/Public/Admin/js/jquery.mousewheel.js"></script>
     <!--<![endif]-->
     
+<style type="text/css">
+body{
+	width:1000px;
+}
+.data-table thead th, .data-table tbody td{
+	padding:5px;
+}
+</style>
+
 </head>
 <body>
     <!-- 头部 -->
     <div class="header">
         <!-- Logo -->
-        <span class="logo"></span>
+        <span class="logo" style="font-size: 20px;color: #86db00;">会议管理平台</span>
         <!-- /Logo -->
 
         <!-- 主导航 -->
@@ -95,7 +104,7 @@
             <button class="btn ajax-post" url="<?php echo U('Meet/changeStatus',array('method'=>'resumeMeet'));?>" target-form="ids">启 用</button>
             <button class="btn ajax-post" url="<?php echo U('Meet/changeStatus',array('method'=>'forbidMeet'));?>" target-form="ids">禁 用</button>
             <button class="btn ajax-post confirm" url="<?php echo U('Meet/changeStatus',array('method'=>'deleteMeet'));?>" target-form="ids">删 除</button>
-        </div>
+          </div>
 
         <!-- 高级搜索 -->
 		<div class="search-form fr cf">
@@ -112,11 +121,11 @@
         <tr>
 		<th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
 		<th class="">ID</th>
-		<th class="">会议名称</th>
-		<th class="">会议开始时间</th>
-		<th class="">会议结束时间</th>
+		<th class="" style="width:80px">会议名称</th>
+		<th class="">是否开启注册</th>
+		<th class="">报名开始时间</th>
+		<th class="">报名结束时间</th>
 		<th class="">状态</th>
-		<th class="">创建时间</th>
 		<th class="">操作</th>
 		</tr>
     </thead>
@@ -125,16 +134,19 @@
             <td><input class="ids" type="checkbox" name="id[]" value="<?php echo ($vo["id"]); ?>" /></td>
 			<td><?php echo ($vo["id"]); ?> </td>
 			<td><?php echo ($vo["meet_name"]); ?></td>
+			<td><?php if($vo["is_open_register"] == 1): ?>是<?php else: ?>否<?php endif; ?></td>
 			<td><?php echo ($vo["begin_time"]); ?></td>
 			<td><?php echo ($vo["end_time"]); ?></td>
 			<td><?php echo ($vo["status_text"]); ?></td>
-			<td><?php echo ($vo["create_time"]); ?></td>
 			<td>
+				<a href="<?php echo U('Meetuser/Home/index?Mid='.$vo['id']);?>" target="view_window">用户会议入口</a>
+				<a href="<?php echo U('MeetAttchment/index?meet_id='.$vo['id']);?>" class="btn" target="view_window">管理会议资料</a>
 				<a href="<?php echo U('Meet/edit?id='.$vo['id']);?>">编辑</a>
 				<?php if($vo["status"] == 1): ?><a href="<?php echo U('Meet/changeStatus?method=forbidMeet&id='.$vo['id']);?>" class="ajax-get">禁用</a>
 				<?php else: ?>
 				<a href="<?php echo U('Meet/changeStatus?method=resumeMeet&id='.$vo['id']);?>" class="ajax-get">启用</a><?php endif; ?>
 				<a href="<?php echo U('Meet/changeStatus?method=deleteMeet&id='.$vo['id']);?>" class="confirm ajax-get">删除</a>
+				<a href="<?php echo U('MeetMember/deleteMeetMember',array('meet_id'=>$vo['id']));?>" class="confirm ajax-get">清空参会人员</a>
                 </td>
 		</tr><?php endforeach; endif; else: echo "" ;endif; ?>
 		<?php else: ?>
@@ -149,7 +161,7 @@
         </div>
         <div class="cont-ft">
             <div class="copyright">
-                <div class="fl">感谢使用<a href="http://www.onethink.cn" target="_blank">OneThink</a>管理平台</div>
+                <div class="fl">感谢使用会议管理平台</div>
                 <div class="fr">V<?php echo (ONETHINK_VERSION); ?></div>
             </div>
         </div>

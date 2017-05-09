@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit();?> <div class="container-span top-columns cf">
+<?php if (!defined('THINK_PATH')) exit();?> <div class="container-span top-columns cf" style="margin:40px 0 5px;">
 	<dl class="show-num-mod">
 		<dt><i class="count-icon user-count-icon"></i></dt>
 		<dd>
@@ -27,11 +27,11 @@
 			<span>文档模型</span>
 		</dd>
 	</dl>
-	<dl class="show-num-mod">
+	<!--  <dl class="show-num-mod">
 		<dt><i class="count-icon category-count-icon"></i></dt>
 		<dd>
 			<strong><?php echo ($info["category"]); ?></strong>
 			<span>分类数</span>
 		</dd>
-	</dl>
+	</dl>-->
 </div>

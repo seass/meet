@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title><?php echo ($meta_title); ?>|OneThink管理平台</title>
+    <title><?php echo ($meta_title); ?>|会议管理平台</title>
     <link href="/onethink/Public/favicon.ico" type="image/x-icon" rel="shortcut icon">
     <link rel="stylesheet" type="text/css" href="/onethink/Public/Admin/css/base.css" media="all">
     <link rel="stylesheet" type="text/css" href="/onethink/Public/Admin/css/common.css" media="all">
@@ -145,7 +145,7 @@
         </div>
         <div class="cont-ft">
             <div class="copyright">
-                <div class="fl">感谢使用<a href="http://www.onethink.cn" target="_blank">OneThink</a>管理平台</div>
+                <div class="fl">感谢使用会议管理平台</div>
                 <div class="fr">V<?php echo (ONETHINK_VERSION); ?></div>
             </div>
         </div>

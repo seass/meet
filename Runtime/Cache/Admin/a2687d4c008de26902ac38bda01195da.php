@@ -1,4 +1,4 @@
-<?php if (!defined('THINK_PATH')) exit();?><div class="span<?php echo ($addons_config["width"]); ?>">
+<?php if (!defined('THINK_PATH')) exit();?><div class="span<?php echo ($addons_config["width"]); ?>" style="float: initial;width: initial;">
 	<div class="columns-mod">
 		<div class="hd cf">
 			<h5><?php echo ($addons_config["title"]); ?></h5>
@@ -9,21 +9,21 @@
 			<div class="sys-info">
 				<table>
 					<tr>
-						<th>OneThink版本</th>
+						<th>版本</th>
 						<td><?php echo (ONETHINK_VERSION); ?>&nbsp;&nbsp;&nbsp;
-							<?php if(!empty($addons_config["new_version"])): ?><a href="http://www.onethink.cn" target="_blank">
+							<!--  <?php if(!empty($addons_config["new_version"])): ?><a href="http://www.onethink.cn" target="_blank">
 									发现新版本[<?php echo ($addons_config["new_version"]); ?>]
-								</a><?php endif; ?>
+								</a><?php endif; ?>-->
 						</td>
 					</tr>
 					<tr>
 						<th>服务器操作系统</th>
 						<td><?php echo (PHP_OS); ?></td>
 					</tr>
-					<tr>
+					<!--  <tr>
 						<th>ThinkPHP版本</th>
 						<td><?php echo (THINK_VERSION); ?></td>
-					</tr>
+					</tr>-->
 					<tr>
 						<th>运行环境</th>
 						<td><?php echo ($_SERVER['SERVER_SOFTWARE']); ?></td>
