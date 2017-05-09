@@ -408,6 +408,9 @@ class MeetMemberController extends AdminController {
                $realname=$_info[5];
                $phone=$_info[6];
                $sex=$_info[7];
+               if (!in_array($sex,['男','女'])) {
+                    $_info[15] = '性别数据异常，正确格式： 男 or 女';
+               }
                $idcard=$_info[8];
                $position=$_info[9];
                
@@ -426,8 +429,8 @@ class MeetMemberController extends AdminController {
                    continue;
                }
                if(empty($brand_name) || empty($region_name) || empty($city_name) || empty($store_name) || 
-                   empty($store_code) || empty($realname) || empty($phone)){
-                   $_info[15]='数据项为空,导入失败！';
+                   empty($store_code) || empty($realname) || empty($phone) || empty($sex)){
+                   $_info[15]='必填项数据项为空,导入失败，请看表头*号！';
                    $result_data[] = $_info;
                    continue;
                }
