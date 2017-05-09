@@ -410,6 +410,8 @@ class MeetMemberController extends AdminController {
                $sex=$_info[7];
                if (!in_array($sex,['男','女'])) {
                     $_info[15] = '性别数据异常，正确格式： 男 or 女';
+                    $result_data[] = $_info;
+                    continue;
                }
                $idcard=$_info[8];
                $position=$_info[9];
