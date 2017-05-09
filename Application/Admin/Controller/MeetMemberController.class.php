@@ -24,6 +24,8 @@ class MeetMemberController extends AdminController {
     public function index(){
         $_key       =   I('_key');
         $_meet_id   =   I('_meet_id');
+        $hotel_type =   I('hotel_type');
+        $is_room_user=   I('is_room_user');
         //$_sign   =   I('_sign');
         $map['m.status']    =   array('egt',0);
         $map['me.status']    =   array('egt',0);
@@ -34,6 +36,18 @@ class MeetMemberController extends AdminController {
         if(!empty($_meet_id)){
             $map['me.id']=$_meet_id;
         }
+        if(!empty($hotel_type)){
+            $map['m.hotel_type']=($hotel_type==-1?0:$hotel_type);
+        }
+        if(!empty($is_room_user)){
+            if($is_room_user==1){
+                $map['m.room_meet_member_id']=['neq',0];
+            }else{
+                $map['m.room_meet_member_id']=['eq',0];
+            }
+            
+        }
+        
 //         if(!empty($_sign)){
 //             if($_sign==1){
 //                 $map['_string']=' mms.id is not null';
@@ -61,6 +75,8 @@ class MeetMemberController extends AdminController {
         
         $this->assign('_list', $list);
         $this->assign('_meet_id', $_meet_id);
+        $this->assign('hotel_type',$hotel_type);
+        $this->assign('is_room_user',$is_room_user);
         $this->assign('_sign', $_sign);
         $this->meta_title = '会议人员管理';
         $this->display();
@@ -343,10 +359,15 @@ class MeetMemberController extends AdminController {
         //检查两个人是否都是合住 
         $checkData=M($this->_model)->where([
                             'id'=>array('in',$ids)
-                        ])->field("hotel_type")->select();
+                        ])->field("hotel_type,sex")->select();
         $hotel_type_arr=array_unique(array_column($checkData, 'hotel_type'));
         if(count($hotel_type_arr)>1){
             $this->error('选择的用户中包含不住宿或者单住的，不能进行设置同住室友！');
+        }
+        //男女不能合住
+        $sex_arr=array_unique(array_column($checkData, 'sex'));
+        if(count($sex_arr)>1){
+            $this->error('男女不能合住，不能进行设置同住室友！');
         }
         //设置同住室友
         $up_res1=M($this->_model)->where(['id'=>$ids[0]])->save(['room_meet_member_id'=>$ids[1]]);
@@ -516,7 +537,7 @@ class MeetMemberController extends AdminController {
                if(empty($store_id)){
                    $store_id=M("Store")->add(['store_name'=>$store_name,
                        'brand_id'=>$brand_id,'region_id'=>$region_id,
-                       'city_id'=>$city_id,'store_code'=>$store_code]);
+                       'city_id'=>$city_id,'store_code'=>strtoupper($store_code)]);
                }
                $save_data=[
                    'brand_id'=>$brand_id,//品牌id

@@ -43,6 +43,17 @@ body{
 						<option value="{$vo.id}" >{$vo.meet_name}</option>
 					</volist>
 				</select>
+				<select name="hotel_type" style="float:left;margin-right:10px;" class="search_field" >
+					<option value="0">请选择住宿类型</option>
+					<option value="－1">不住宿</option>
+					<option value="1">合住</option>
+					<option value="2">单住</option>
+				</select>
+				<select name="is_room_user" style="float:left;margin-right:10px;" class="search_field" >
+					<option value="0">是否有室友</option>
+					<option value="1">是</option>
+					<option value="2">否</option>
+				</select>
 				<!--  <select name="_sign" style="float:left;margin-right:10px;" class="search_field" >
 					<option value="0">签到状态</option>
 					<option value="1" >已签到</option>
@@ -188,6 +199,8 @@ body{
 	});
 	Think.setValue('_meet_id',{$_meet_id|default=0});
 	Think.setValue('_sign',{$_sign|default=0});
+	Think.setValue('hotel_type',{$hotel_type|default=0});
+	Think.setValue('is_room_user',{$is_room_user|default=0});
     //导航高亮
     highlight_subnav('{:U('MeetMember/index')}');
 	</script>
