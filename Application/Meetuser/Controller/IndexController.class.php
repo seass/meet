@@ -57,7 +57,7 @@ class IndexController extends \Think\Controller{
                 'realname'=>$_POST['realname'],
                 //'idcard'=>$idcard,
                 'phone'=>$phone,
-                'status'=>2,
+                'status'=>1,
             ])->find();
             if(empty($MUser)){
                 $return['msg']='信息验证失败，请重新输入！';
