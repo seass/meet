@@ -418,7 +418,7 @@ class MeetMemberController extends AdminController {
            $meet_id=$_POST['meet_id'];
            $excel = new Excel();
            $file_data = $excel->readerExcel($_FILES['import']['tmp_name'],0,14);
-           //var_dump($file_data);exit;
+           // var_dump($file_data);exit;
            $result_data=[];
            foreach ($file_data as $_info){
                $brand_name=$_info[0];

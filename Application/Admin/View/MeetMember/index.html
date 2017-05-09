@@ -35,21 +35,22 @@ body{
         </div>
 
         <!-- 高级搜索 -->
-		<div class="search-form fr cf">
+		<div class="search-form" style="margin-top:50px">
 			<div class="sleft">
-				<select name="_meet_id" style="float:left;margin-right:10px;" class="search_field" >
+				<label style="float:left;margin-right:10px;text-align: -webkit-center;line-height: 30px;width: 50px;">搜索：</label>
+				<select name="_meet_id" style="float:left;margin-right:10px;margin-top:2px;" class="search_field" >
 					<option value="0">请选择会议名称</option>
 					<volist name=":get_meet_list()" id="vo">
 						<option value="{$vo.id}" >{$vo.meet_name}</option>
 					</volist>
 				</select>
-				<select name="hotel_type" style="float:left;margin-right:10px;" class="search_field" >
+				<select name="hotel_type" style="float:left;margin-right:10px;margin-top:2px;" class="search_field" >
 					<option value="0">请选择住宿类型</option>
 					<option value="-1">不住宿</option>
 					<option value="1">合住</option>
 					<option value="2">单住</option>
 				</select>
-				<select name="is_room_user" style="float:left;margin-right:10px;" class="search_field" >
+				<select name="is_room_user" style="float:left;margin-right:10px;margin-top:2px;" class="search_field" >
 					<option value="0">是否有室友</option>
 					<option value="1">是</option>
 					<option value="2">否</option>

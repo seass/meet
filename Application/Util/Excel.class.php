@@ -198,7 +198,7 @@ class Excel {
         for ($currentRow = 2; $currentRow <= $allRow; $currentRow++) {
             for ($currentColumn = 0; $currentColumn <= $max_column - 1; $currentColumn++) {
                 $val = $currentSheet->getCellByColumnAndRow($currentColumn, $currentRow)->getValue();
-                $data[$currentRow - 2][$currentColumn] = $val;
+                $data[$currentRow - 2][$currentColumn] = is_object($val)?$val->__toString():$val;
             }
         }
        
