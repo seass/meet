@@ -485,6 +485,20 @@ function  get_inc_user_no($count){
     return $count;
 }
 /**
+ * 生成二维码(会议用户入口 二维码)
+ * @author sea
+ */
+function  createMeetQrcode($meet_id){
+    $qr_text='http://'.$_SERVER['HTTP_HOST'].U('/Meetuser/Home/index',['Mid'=>$meet_id]);
+    // 文件名称
+    $file_name = date('YmdHis') . rand(100, 999)."_".$meet_member_id . '.png';
+    $QrObj = new \Util\Qrcode\QR($qr_text, array(
+        'QrName' => $file_name,
+        'matrixPointSize' => 8
+    ));
+    return substr($QrObj->QR,1);
+}
+/**
  * 生成二维码
  * @author sea 
  */

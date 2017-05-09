@@ -27,7 +27,7 @@ class MeetController extends AdminController {
         if(!empty($_key)){
             $map['meet_name']    =   array('like', '%'.(string)$_key.'%');
         }
-        $field='id,meet_name,status,create_time,begin_time,end_time,is_open_register';
+        $field='id,meet_name,status,create_time,begin_time,end_time,is_open_register,qrcode';
         $list   = $this->lists($this->_model, $map,null,null,$field);
         int_to_string($list);
         $this->assign('_list', $list);
@@ -145,6 +145,10 @@ class MeetController extends AdminController {
             if($add_res==false){
                 $this->error('新增失败！');
             }
+            //生成二维码
+            $qrcode=createMeetQrcode($add_res);
+            M($this->_model)->where(['id'=>$add_res])->save(['qrcode'=>$qrcode]);
+            
             //记录行为(需要提前创建add_meet行为标记)
             action_log('add_meet',$this->_model, $add_res, UID);
             $this->success('新增成功！',U('index'));
