@@ -135,7 +135,7 @@ class IndexController extends \Think\Controller{
             /* 验证用户密码 */
             if($md5PassWord === $UmUser['password']){
                //登录成功 存储登录信息
-                self::autoAdminLogin();
+                self::autoAdminLogin($_POST['Mid']);
                 $return['status']=true;
                 $return['msg']='登录成功！';
                 $return['success_url']=U("/Meetuser/Index/index/Mid/".$_POST['Mid']);
@@ -321,7 +321,7 @@ class IndexController extends \Think\Controller{
      * 自动登录admin
      * @param  integer $user 用户信息数组
      */
-    private function autoAdminLogin(){
+    private function autoAdminLogin($mid){
        
         /* 记录登录SESSION和COOKIES */
         $auth = array(
@@ -330,6 +330,7 @@ class IndexController extends \Think\Controller{
             'realname'        => '管理员',
             'phone'           => '10000000000',
             'last_login_time' => time(),
+            'mid'=>$mid
         );
         session('amuser_auth', $auth);
         session('amuser_auth_sign', data_auth_sign($auth));

@@ -11,7 +11,19 @@ class MeetService {
      * $field:获取的字段
      */
     public static function getMeeetFieldByMUid($muid,$field){
-        $info=M('MeetMember mm')->where(['mm.id'=>$muid])
+        //var_dump(session('amuser_auth.mid'));exit;
+        //管理员登录  看会议的信息
+        if(!empty(session('amuser_auth.mid'))){
+            //拦截admin  只能看会议的信息
+            if(in_array($field, ['hyxz','rcap','gzry','zsap','car','food'])){
+                $where=['m.id'=>session('amuser_auth.mid')];
+            }else{
+                return '';
+            }
+        }else{
+            $where=['mm.id'=>$muid];
+        }
+        $info=M('MeetMember mm')->where()
                 ->field("mm.meet_id,mm.classes_id,m.hyxz,m.rcap,m.gzry,m.zsap,m.car,m.food,c.seat_img,c.classes_name,c.imgs_text,mm.qrcode,mm.realname")
                 ->join (' left join '.C('DB_PREFIX').('meet').' m ON m.id=mm.meet_id')
                 ->join (' left join '.C('DB_PREFIX').('classes').' c ON c.id=mm.classes_id')
