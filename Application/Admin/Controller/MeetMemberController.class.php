@@ -639,4 +639,13 @@ class MeetMemberController extends AdminController {
             M('MeetMember')->where(['id'=>$m['id']])->save(['qrcode'=>$qrcode]);
         }
    }
+
+   public function refresh_meet_qr() {
+        $meets = M('Meet')->select();
+        dump($meets);
+        foreach ($meets as $m) {
+            $qrcode=createMeetQrcode($m['id']);
+            M('Meet')->where(['id'=>$m['id']])->save(['qrcode'=>$qrcode]);
+        }
+   }
 }
