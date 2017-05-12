@@ -634,9 +634,9 @@ class MeetMemberController extends AdminController {
    public function refresh_qr() {
         $members = M('MeetMember')->select();
         dump($members);
-        // foreach ($members as $m) {
-        //     $qrcode=createQrcode($m['id']);
-        //     M('MeetMember')->where(['id'=>$m['id']])->save(['qrcode'=>$qrcode]);
-        // }
+        foreach ($members as $m) {
+            $qrcode=createQrcode($m['id']);
+            M('MeetMember')->where(['id'=>$m['id']])->save(['qrcode'=>$qrcode]);
+        }
    }
 }
