@@ -23,7 +23,7 @@ class MeetService {
         }else{
             $where=['mm.id'=>$muid];
         }
-        $info=M('MeetMember mm')->where()
+        $info=M('MeetMember mm')->where($where)
                 ->field("mm.meet_id,mm.classes_id,m.hyxz,m.rcap,m.gzry,m.zsap,m.car,m.food,c.seat_img,c.classes_name,c.imgs_text,mm.qrcode,mm.realname")
                 ->join (' left join '.C('DB_PREFIX').('meet').' m ON m.id=mm.meet_id')
                 ->join (' left join '.C('DB_PREFIX').('classes').' c ON c.id=mm.classes_id')

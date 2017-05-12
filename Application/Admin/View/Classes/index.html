@@ -55,12 +55,13 @@
 				<if condition="$vo.seat_img eq null">
 					未上传
 				<else/>
-					<div class="upload-img-box">
+					<a target="_blank" href="__ROOT__{$vo.seat_img|get_cover='path'}"/>
+					<!-- <div class="upload-img-box">
 						<a >查看</a>
 						<div style="display:none;">
 							<img src="__ROOT__{$vo.seat_img|get_cover='path'}">
 						</div>
-					</div>
+					</div> -->
 				</if>
 			</td>
 			<td>
