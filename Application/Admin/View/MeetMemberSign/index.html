@@ -56,7 +56,8 @@
 			<th class="" style="width:40px">职务</th>
 			<th class="" style="width:50px">姓名</th>
 			<th class="" style="width:50px">手机号</th>
-			<th class="" style="width:40px">签到时间</th>
+			<th class="" style="width:100px">签到时间</th>
+			<th class="" style="width:50px">操作</th>
 		</tr>
     </thead>
     <tbody>
@@ -74,6 +75,9 @@
 			<td>{$vo.realname}</td>
 			<td>{$vo.phone}</td>
 			<td>{$vo.create_time}</td>
+			<td>
+				<a href="{:U('MeetMemberSign/changeStatus?method=deleteMeetMemberSign&id='.$vo['id'])}" class="confirm ajax-get">删除</a>
+                </td>
 		</tr>
 		</volist>
 		<else/>

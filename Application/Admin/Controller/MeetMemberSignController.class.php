@@ -36,6 +36,7 @@ class MeetMemberSignController extends AdminController {
         }
         $map['m.status']= 1;
         $map['me.status']= 1;
+        $map['mms.status']= 1;
         $list=M()->table(C('DB_PREFIX').strtolower('meet_member_sign').' mms' )
                        ->where($map)
                        ->order('m.id DESC,mms.create_time desc')
@@ -56,5 +57,34 @@ class MeetMemberSignController extends AdminController {
         $this->assign('classes_id', $classes_id);
         $this->meta_title = '会议人员签到管理';
         $this->display();
+    }
+    /**
+     * 状态修改
+     * @author sea
+     */
+    public function changeStatus($method=null){
+        $id = array_unique((array)I('id',null));
+        if (empty($id)) {
+            $this->error('请选择要操作的数据!');
+        }
+        $map['id'] =   array('in',$id);
+        if(empty($method)){
+            $method=I('get.method',null);
+        }
+        //         var_dump($id);
+        //         var_dump();exit;
+        switch (strtolower($method)){
+            case 'forbidmeetmembersign':
+                $this->forbid($this->_model, $map );
+                break;
+            case 'resumemeetmembersign':
+                $this->resume($this->_model, $map );
+                break;
+            case 'deletemeetmembersign':
+                $this->delete($this->_model, $map );
+                break;
+            default:
+                $this->error('参数非法');
+        }
     }
 }
