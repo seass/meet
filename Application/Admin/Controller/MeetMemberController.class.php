@@ -382,8 +382,18 @@ class MeetMemberController extends AdminController {
      */
     public function sign(){
         $meet_member_id=I('post.meet_member_id','');
-        $add_res=M('MeetMemberSign')->add(['meet_member_id'=>$meet_member_id]);
         $return['status']=false;
+        /*
+         * 检查一个人一天 只能签到一次
+         */
+        $check_res=M('MeetMemberSign')->where(['meet_member_id'=>$meet_member_id,'_string'=>" date(create_time)='".date('Y-m-d')."' and status=1 "])->find();
+        if(!empty($check_res)){
+            $return['smg']='一次会议中，一个人一天只能签到一次！';
+            $this->ajaxReturn($return);
+        }
+        
+        $add_res=M('MeetMemberSign')->add(['meet_member_id'=>$meet_member_id]);
+        
         if($add_res!==false){
             $return['status']=true;
         }
