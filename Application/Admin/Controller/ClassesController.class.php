@@ -23,7 +23,7 @@ class ClassesController extends AdminController {
     public function index(){
         $_key       =   I('_key');
         $_meet_id   =   I('_meet_id');
-        $map['c.status']    =   array('egt',0);
+        $map['c.status']    =   array('eq',1);
         //模糊搜索
         if(!empty($_key)){
             $map['c.classes_name|m.meet_name']    =   array('like', '%'.(string)$_key.'%');

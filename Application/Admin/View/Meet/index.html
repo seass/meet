@@ -38,11 +38,11 @@ body{
 		<th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
 		<th class="">ID</th>
 		<th class="" style="width:300px">会议名称</th>
-		<th class="">是否开启注册</th>
-		<th class="">报名开始时间</th>
-		<th class="">报名结束时间</th>
+		<th class="">开放注册</th>
+		<th class="">报名开始</th>
+		<th class="">报名结束</th>
 		<th class="">状态</th>
-		<th class="">会议二维码</th>
+		<th class="">二维码</th>
 		<th class="">操作</th>
 		</tr>
     </thead>
@@ -67,7 +67,6 @@ body{
 			<td>
 				<a href="{:U('Meetuser/Home/index?Mid='.$vo['id'])}" target="view_window">用户会议入口</a>
 				<a href="{:U('Meetuser/Index/adminlogin?Mid='.$vo['id'])}" target="view_window">管理员会议入口</a>
-				<a href="{:U('MeetAttchment/index?meet_id='.$vo['id'])}" class="btn" target="view_window">管理会议资料</a>
 				<a href="{:U('Meet/edit?id='.$vo['id'])}">编辑</a>
 				<if condition="$vo.status eq 1">
 				<a href="{:U('Meet/changeStatus?method=forbidMeet&id='.$vo['id'])}" class="ajax-get">禁用</a>
@@ -75,7 +74,9 @@ body{
 				<a href="{:U('Meet/changeStatus?method=resumeMeet&id='.$vo['id'])}" class="ajax-get">启用</a>
 				</if>
 				<a href="{:U('Meet/changeStatus?method=deleteMeet&id='.$vo['id'])}" class="confirm ajax-get">删除</a>
-				<a href="{:U('MeetMember/deleteMeetMember',array('meet_id'=>$vo['id']))}" class="confirm ajax-get">清空参会人员</a>
+				<a href="{:U('MeetMember/deleteMeetMember',array('meet_id'=>$vo['id']))}" class="confirm ajax-get">清空</a>
+                <a href="{:U('MeetAttchment/index?meet_id='.$vo['id'])}" class="btn" target="view_window">管理会议资料</a>
+				
                 </td>
 		</tr>
 		</volist>

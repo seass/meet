@@ -27,7 +27,7 @@ class MeetMemberController extends AdminController {
         $hotel_type =   I('hotel_type');
         $is_room_user=   I('is_room_user');
         //$_sign   =   I('_sign');
-        $map['m.status']    =   array('egt',0);
+        $map['m.status']    =   array('eq',1);
         $map['me.status']    =   array('egt',0);
         //模糊搜索
         if(!empty($_key)){
@@ -62,13 +62,14 @@ class MeetMemberController extends AdminController {
                        //->group('m.id')
                        ->join (' left join '.C('DB_PREFIX').('meet').' me ON me.id=m.meet_id' )
                        ->join (' left join '.C('DB_PREFIX').('classes').' c ON c.id=m.classes_id' )
+                       ->join (' left join '.C('DB_PREFIX').('brand').' b ON b.id=m.brand_id' )
                        ->join (' left join '.C('DB_PREFIX').('region').' r ON r.id=m.region_id' )
                        ->join (' left join '.C('DB_PREFIX').('city').' ci ON ci.id=m.city_id' )
                        ->join (' left join '.C('DB_PREFIX').('store').' s ON s.id=m.store_id' )
                        //->join (' left join '.C('DB_PREFIX').('meet_member_sign').' mms ON mms.meet_member_id=m.id' )//,mms.id as mms_id
                         ->join (' left join '.C('DB_PREFIX').('meet_member').' m1 ON m1.id=m.room_meet_member_id' );
         $field='m.id,m.user_no,m.realname,m.phone,m.sex,m.idcard,m.headimg,m.position,m.qrcode,'.
-            'm.status,m.create_time,me.meet_name,me.begin_time,me.end_time,c.classes_name,r.region_name,'.
+            'm.status,m.create_time,me.meet_name,me.begin_time,me.end_time,c.classes_name,b.brand_name,r.region_name,'.
             's.store_name,s.store_code,ci.city_name,m.hotel_type,m1.realname as roommate_name,m.is_audit';
         $list = $this->lists($list,null,null,null,$field);
         int_to_string($list);

@@ -16,13 +16,13 @@ use Meetuser\Service\MeetService;
 class DetailController extends MeetuserController{
     
     public static  $_field_config=[
-        1=>['key'=>'hyxz','name'=>'会议须知'],
+        1=>['key'=>'hyxz','name'=>'会议信息'],
         2=>['key'=>'rcap','name'=>'会议日程'],
         3=>['key'=>'gzry','name'=>'工作人员'],
         4=>['key'=>'zsap','name'=>'住宿安排'],
         5=>['key'=>'car','name'=>'车辆安排'],
         6=>['key'=>'food','name'=>'用餐安排'],
-        7=>['key'=>'imgs_text','name'=>'班级照片'],
+        7=>['key'=>'imgs_text','name'=>'会议照片'],
         8=>['key'=>'qrcode','name'=>'我的二维码'],
     ];
     
@@ -61,7 +61,7 @@ class DetailController extends MeetuserController{
         $this->assign('classes_name', $classes_name);
         $realname=MeetService::getMeeetFieldByMUid(MUID,'realname');
         $this->assign('realname', $realname);
-        $this->assign('slogan_title','班级信息');
+        $this->assign('slogan_title','座位信息');
         $this->display();
     }
     /**

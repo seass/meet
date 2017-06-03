@@ -8,8 +8,8 @@
 	<div class="cf">
 		<div class="fl">
             <a class="btn" href="{:U('Classes/add')}">新 增</a>
-            <button class="btn ajax-post" url="{:U('Classes/changeStatus',array('method'=>'resumeClasses'))}" target-form="ids">启 用</button>
-            <button class="btn ajax-post" url="{:U('Classes/changeStatus',array('method'=>'forbidClasses'))}" target-form="ids">禁 用</button>
+            <!--  <button class="btn ajax-post" url="{:U('Classes/changeStatus',array('method'=>'resumeClasses'))}" target-form="ids">启 用</button>
+            <button class="btn ajax-post" url="{:U('Classes/changeStatus',array('method'=>'forbidClasses'))}" target-form="ids">禁 用</button>-->
             <button class="btn ajax-post confirm" url="{:U('Classes/changeStatus',array('method'=>'deleteClasses'))}" target-form="ids">删 除</button>
         
         </div>
@@ -36,9 +36,9 @@
 			<th class="row-selected"><input class="check-all" type="checkbox"/></th>
 			<th class="">ID</th>
 			<th class="">会议名称</th>
-			<th class="">班级名称</th>
+			<th class="">名称</th>
 			<th class="">状态</th>
-			<th class="">班级座位图</th>
+			<th class="">座位图</th>
 			<th class="">操作</th>
 		</tr>
     </thead>
@@ -66,11 +66,11 @@
 			</td>
 			<td>
 				<a href="{:U('Classes/edit?id='.$vo['id'])}">编辑</a>
-				<if condition="$vo.status eq 1">
+				<!-- <if condition="$vo.status eq 1">
 				<a href="{:U('Classes/changeStatus?method=forbidClasses&id='.$vo['id'])}" class="ajax-get">禁用</a>
 				<else/>
 				<a href="{:U('Classes/changeStatus?method=resumeClasses&id='.$vo['id'])}" class="ajax-get">启用</a>
-				</if>
+				</if>-->
 				<a href="{:U('Classes/changeStatus?method=deleteClasses&id='.$vo['id'])}" class="confirm ajax-get">删除</a>
                 </td>
 		</tr>

@@ -19,31 +19,29 @@ body{
 		<div class="fl">
             <a class="btn" href="{:U('MeetMember/add')}">新增</a>
             <a class="btn" href="{:U('MeetMember/import')}">导入</a>
-            <button class="btn ajax-post" url="{:U('MeetMember/changeStatus',array('method'=>'resumeMeetMember'))}" target-form="ids">启用</button>
+           <!--  <button class="btn ajax-post" url="{:U('MeetMember/changeStatus',array('method'=>'resumeMeetMember'))}" target-form="ids">启用</button>  -->
             <button class="btn ajax-post" url="{:U('MeetMember/changeStatus',array('method'=>'forbidMeetMember'))}" target-form="ids">禁用</button>
             <button class="btn ajax-post confirm" url="{:U('MeetMember/changeStatus',array('method'=>'deleteMeetMember'))}" target-form="ids">删 除</button>
-        
-        		<select name="classes_id" class='allotClasses'>
-					<option value="0">请选择分配的班级</option>
-					<volist name=":get_classes_meet_list()" id="vo">
-						<option value="{$vo.id}">{$vo.meet_name}-{$vo.classes_name}</option>
-					</volist>
-			</select>
-        		<button class="btn ajax-post" url="{:U('MeetMember/allotClasses')}" target-form="allotClasses">分班</button>
-        		
-        		<button class="btn ajax-post" url="{:U('MeetMember/setRoommate')}" target-form="ids">设置室友</button>
         </div>
-
-        <!-- 高级搜索 -->
+        <!-- 高级搜索1 四级联动 -->
 		<div class="search-form" style="margin-top:50px">
 			<div class="sleft">
 				<label style="float:left;margin-right:10px;text-align: -webkit-center;line-height: 30px;width: 50px;">搜索：</label>
+				
 				<select name="_meet_id" style="float:left;margin-right:10px;margin-top:2px;" class="search_field" >
 					<option value="0">请选择会议名称</option>
 					<volist name=":get_meet_list()" id="vo">
 						<option value="{$vo.id}" >{$vo.meet_name}</option>
 					</volist>
 				</select>
+			</div>
+		</div>
+		<br/>
+        <!-- 高级搜索2 -->
+		<div class="search-form" style="margin-top:15px">
+			<div class="sleft">
+				<label style="float:left;margin-right:10px;text-align: -webkit-center;line-height: 30px;width: 50px;">搜索：</label>
+				
 				<select name="hotel_type" style="float:left;margin-right:10px;margin-top:2px;" class="search_field" >
 					<option value="0">请选择住宿类型</option>
 					<option value="-1">不住宿</option>
@@ -64,6 +62,21 @@ body{
 				<a class="sch-btn" href="javascript:;" id="search" url="{:U('index')}"><i class="btn-search"></i></a>
 			</div>
 		</div>
+		<!-- 操作 -->
+		<br/>
+		<div class="search-form" style="margin-top:15px">
+			<div class="sleft">
+				<label style="float:left;margin-right:10px;text-align: -webkit-center;line-height: 30px;width: 50px;">操作：</label>
+				<select name="classes_id" class='allotClasses'>
+					<option value="0">请选择分配的班级</option>
+					<volist name=":get_classes_meet_list()" id="vo">
+						<option value="{$vo.id}">{$vo.meet_name}-{$vo.classes_name}</option>
+					</volist>
+				</select>
+        			<button class="btn ajax-post" url="{:U('MeetMember/allotClasses')}" target-form="allotClasses">分班</button>
+        			<button class="btn ajax-post" url="{:U('MeetMember/setRoommate')}" target-form="ids">设置室友</button>
+       		</div>
+		</div>
     </div>
     <!-- 数据列表 -->
     <div class="data-table">
@@ -72,10 +85,11 @@ body{
         <tr>
 			<th class="row-selected"><input class="check-all" type="checkbox"/></th>
 			<!-- <th class="">ID</th> -->
+			<th class="" style="width:80px">品牌</th>
 			<th class="" style="width:40px">大区</th>
 			<th class="" style="width:40px">城市</th>
-			<th class="" style="width:150px">门店</th>
-			<th class="" style="width:40px">门店代码</th>
+			<th class="" style="width:150px">经销店</th>
+			<th class="" style="width:40px">代码</th>
 			<th class="" style="width:150px">会议名称</th>
 			<!--<th class="">会议报名开始时间</th>
 			<th class="">会议报名结束时间</th>-->
@@ -86,7 +100,7 @@ body{
 			<th class="" style="width:50px">手机号</th>
 			<th class="">证件号</th>
 			<th class="">性别</th>
-			<th class="" style="width:60px">头像</th>
+			<!--<th class="" style="width:60px">头像</th>-->
 			<th class="" style="width:40px">二维码</th>
 			<th class="" style="width:60px">住宿类型</th>
 			<th class="" style="width:40px">室友名称</th>
@@ -101,6 +115,7 @@ body{
 		<tr>
             <td><input class="ids allotClasses" type="checkbox" name="id[]" value="{$vo.id}" /></td>
 			<!-- <td>{$vo.id}</td> -->
+			<td>{$vo.brand_name}</td>
 			<td>{$vo.region_name}</td>
 			<td>{$vo.city_name}</td>
 			<td>{$vo.store_name}</td>
@@ -115,7 +130,7 @@ body{
 			<td>{$vo.phone}</td>
 			<td>{$vo.idcard}</td>
 			<td><if condition="$vo.sex eq 1">男<else/>女</if></td>
-			<td>
+			<!--<td>
 				<if condition="$vo.headimg eq null">
 					未上传
 				<else/>
@@ -126,7 +141,7 @@ body{
 						</div>
 					</div>
 				</if>
-			</td>
+			</td>-->
 			<td><div class="upload-img-box">
 						<a >查看</a>
 						<div style="display:none;">
