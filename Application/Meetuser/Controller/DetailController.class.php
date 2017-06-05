@@ -53,14 +53,21 @@ class DetailController extends MeetuserController{
      */
     public function classes_seat_img(){
         //获取信息
-        $seat_img=MeetService::getMeeetFieldByMUid(MUID,'seat_img');
-        $img_path=MeetService::getImgUrlByid($seat_img);
-        //var_dump($img_path);exit;
-        $this->assign('img_path', $img_path);
-        $classes_name=MeetService::getMeeetFieldByMUid(MUID,'classes_name');
-        $this->assign('classes_name', $classes_name);
-        $realname=MeetService::getMeeetFieldByMUid(MUID,'realname');
-        $this->assign('realname', $realname);
+        $info=MeetService::getMeeetFieldByMUid(MUID,'','array');
+        
+        if(isset($info['seat_img'])){
+            $img_path=MeetService::getImgUrlByid($info['seat_img']);
+            $this->assign('img_path', $img_path);
+        }
+        if(isset($info['classes_name'])){
+            $this->assign('classes_name', $info['classes_name']);
+        }
+        if(isset($info['realname'])){
+            $this->assign('realname', $info['realname']);
+        }
+        if(isset($info['is_show_info_before'])){
+            $this->assign('is_show_info_before', $info['is_show_info_before']);
+        }
         $this->assign('slogan_title','座位信息');
         $this->display();
     }

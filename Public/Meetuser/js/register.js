@@ -51,10 +51,11 @@ function submit(){
 				'city_id':city_id,
 				'store_id':store_id,
 				'hotel_type':$("input[name='hotel_type']:checked").val(),
-				'house_type':$("input[name='house_type']:checked").val(),
+				//'house_type':$("input[name='house_type']:checked").val(),
 				'checkin_date':$("input[name='checkin_date']").val(),
 				'leave_date':$("input[name='leave_date']").val(),
-				'food_req':$("input[name='food_req']").val()
+				'food_req':$("input[name='food_req']").val(),
+				'roommate_name':$("input[name='roommate_name']").val(),
 				};
 		$.post(register_config.submit_url,p_data,
 				function(result){
@@ -131,4 +132,15 @@ $(function(){
 	  		},'json');
 		}
 	});
+	
+	$("input[name='hotel_type']").change(function(){
+		var val=$(this).val();
+		if(val==1){
+			$("#roommate_name").show();
+		}else{
+			$("#roommate_name").hide();
+		}
+	});
+	
+	
 });

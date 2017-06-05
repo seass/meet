@@ -9,8 +9,9 @@ class MeetService {
      * 获取会议和会议用户的某字段信息
      * @param unknown $muid 
      * $field:获取的字段
+     * $return_type:返回类型（string：某字段的值，array:整个查询结果集）
      */
-    public static function getMeeetFieldByMUid($muid,$field){
+    public static function getMeeetFieldByMUid($muid,$field,$return_type='string'){
         //var_dump(session('amuser_auth.mid'));exit;
         //管理员登录  看会议的信息
         if(!empty(session('amuser_auth.mid'))){
@@ -24,14 +25,17 @@ class MeetService {
             $where=['mm.id'=>$muid];
         }
         $info=M('MeetMember mm')->where($where)
-                ->field("mm.meet_id,mm.classes_id,m.hyxz,m.rcap,m.gzry,m.zsap,m.car,m.food,c.seat_img,c.classes_name,c.imgs_text,mm.qrcode,mm.realname")
+                ->field("mm.meet_id,mm.classes_id,m.hyxz,m.rcap,m.gzry,m.zsap,m.car,m.food,c.seat_img,c.classes_name,c.imgs_text,mm.qrcode,mm.realname,c.is_show_info_before")
                 ->join (' left join '.C('DB_PREFIX').('meet').' m ON m.id=mm.meet_id')
                 ->join (' left join '.C('DB_PREFIX').('classes').' c ON c.id=mm.classes_id')
                 ->find();
-        if(!isset($info[$field])){
-            return null;
+        if($return_type=='string'){
+            if(!isset($info[$field])){
+                return null;
+            }
+            return $info[$field];
         }
-        return $info[$field];
+        return $info;
     }
     /**
      * 获取图片地址

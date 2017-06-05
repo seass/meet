@@ -22,15 +22,32 @@ class MeetController extends AdminController {
      */
     public function index(){
         $_key       =   I('_key');
-        $map['status']  =   array('egt',0);
+        $status=   I('status');
+        $meet_date_s=   I('meet_date_s');
+        $meet_date_e=   I('meet_date_e');
+        if($status==''){
+            $status=1;//默认展示启用的会议
+        }
+        $map['status']  =   $status;
+        if($status==-2){
+            $map['status']    =   array('egt',0);//不显示删除的会议
+        }
+        if(!empty($meet_date_s)){
+            $map['meet_date'] =   array('egt',$meet_date_s);
+        }
+        if(!empty($meet_date_e)){
+            $map['meet_date'] =   array('elt',$meet_date_e);
+        }
+        
         //模糊搜索
         if(!empty($_key)){
             $map['meet_name']    =   array('like', '%'.(string)$_key.'%');
         }
-        $field='id,meet_name,status,create_time,begin_time,end_time,is_open_register,qrcode';
+        $field='id,meet_name,status,create_time,begin_time,end_time,is_open_register,qrcode,meet_date';
         $list   = $this->lists($this->_model, $map,null,null,$field);
         int_to_string($list);
         $this->assign('_list', $list);
+        $this->assign('status', $status);
         $this->meta_title = '会议管理';
         $this->display();
     }
@@ -98,6 +115,10 @@ class MeetController extends AdminController {
             }
             if(!empty(I('post.end_time'))){
                 $data['end_time']=I('post.end_time');
+            }
+            //会议时间
+            if(!empty(I('post.meet_date'))){
+                $data['meet_date']=I('post.meet_date');
             }
         }
         if(!empty(I('post.hyxz'))){

@@ -25,8 +25,15 @@ body{
         <!-- 高级搜索 -->
 		<div class="search-form fr cf">
 			<div class="sleft">
-				<input type="text" name="_key" class="search-input" value="{:I('_key')}" placeholder="请输入会议名称">
-				<a class="sch-btn" href="javascript:;" id="search" url="{:U('index')}"><i class="btn-search"></i></a>
+				<select name="status" style="float:left;margin-right:10px;margin-top:2px;" class="search_field search-automation" >
+					<option value="-2">选择会议状态</option>
+					<option value="1">启用</option>
+					<option value="0">禁用</option>
+				</select>
+				<input type="text" name="meet_date_s" class="search-input meet_date search_field" value="{:I('meet_date_s')}" placeholder="会议时间开始" style="float:none;">～
+				<input type="text" name="meet_date_e" class="search-input meet_date search_field" value="{:I('meet_date_e')}" placeholder="会议时间截止" style="float:none;">
+				<input type="text" name="_key" class="search-input" value="{:I('_key')}" placeholder="请输入会议名称" style="float:none;">
+				<a class="sch-btn" href="javascript:;" id="search" url="{:U('index')}" style="float:none;"><i class="btn-search"></i></a>
 			</div>
 		</div>
     </div>
@@ -38,6 +45,7 @@ body{
 		<th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
 		<th class="">ID</th>
 		<th class="" style="width:300px">会议名称</th>
+		<th class="">会议时间</th>
 		<th class="">开放注册</th>
 		<th class="">报名开始</th>
 		<th class="">报名结束</th>
@@ -53,6 +61,7 @@ body{
             <td><input class="ids" type="checkbox" name="id[]" value="{$vo.id}" /></td>
 			<td>{$vo.id} </td>
 			<td>{$vo.meet_name}</td>
+			<td>{$vo.meet_date}</td>
 			<td><if condition="$vo.is_open_register eq 1">是<else/>否</if></td>
 			<td>{$vo.begin_time}</td>
 			<td>{$vo.end_time}</td>
@@ -93,12 +102,24 @@ body{
 
 <block name="script">
 	<script src="__STATIC__/thinkbox/jquery.thinkbox.js"></script>
+<link href="__STATIC__/datetimepicker/css/datetimepicker.css" rel="stylesheet" type="text/css">
+<php>if(C('COLOR_STYLE')=='blue_color') echo '<link href="__STATIC__/datetimepicker/css/datetimepicker_blue.css" rel="stylesheet" type="text/css">';</php>
+<link href="__STATIC__/datetimepicker/css/dropdown.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="__STATIC__/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="__STATIC__/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 
 	<script type="text/javascript">
+	$('.meet_date').datetimepicker({
+	    format: 'yyyy-mm-dd',
+	    language:"zh-CN",
+	    startDate:'2017-01-01 00:00:00',
+	    minView:2,
+	    autoclose:true
+	});
 	//搜索功能
 	$("#search").click(function(){
 		var url = $(this).attr('url');
-        var query  = $('.search-form').find('input').serialize();
+		var query  = $('.search-form').find('.search_field').serialize();
         query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g,'');
         query = query.replace(/^&/g,'');
         if( url.indexOf('?')>0 ){
@@ -115,6 +136,8 @@ body{
 			return false;
 		}
 	});
+	Think.setValue('status',{$status|default=-2});
+
     //导航高亮
     highlight_subnav('{:U('Meet/index')}');
 	</script>

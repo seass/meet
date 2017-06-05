@@ -64,10 +64,10 @@
 					<th style="text-align:right;">住宿类型：</th>
 					<td><if condition="$info.hotel_type eq 0">不住宿<elseif condition="$info.hotel_type eq 1"/>合住 <else/>单住 </if></td>
 				</tr>
-				<tr>
+				<!--  <tr>
 					<th style="text-align:right;">房型：</th>
 					<td><if condition="$info.house_type eq 0">无<elseif condition="$info.house_type eq 1"/>双床 <else/>大床 </if></td>
-				</tr>
+				</tr>-->
 				<if condition="$info.hotel_type neq 0">
 					<tr>
 						<th style="text-align:right;">入住时间：</th>

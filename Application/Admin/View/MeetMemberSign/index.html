@@ -19,13 +19,13 @@
         <!-- 高级搜索 -->
 		<div class="search-form fr cf">
 			<div class="sleft">
-				<select name="_meet_id" style="float:left;margin-right:10px;" class="search_field" >
+				<select name="_meet_id" style="float:left;margin-right:10px;" class="search_field search-automation"  >
 					<option value="0">请选择会议名称</option>
 					<volist name=":get_meet_list()" id="vo">
 						<option value="{$vo.id}" >{$vo.meet_name}</option>
 					</volist>
 				</select>
-				<select name="classes_id" style="float:left;margin-right:10px;" class="search_field">
+				<select name="classes_id" style="float:left;margin-right:10px;" class="search_field search-automation">
 					<option value="0">请选择所属班级</option>
 					<!-- 编辑时 选中当前班级 -->
 					<if condition="$_meet_id neq 0">

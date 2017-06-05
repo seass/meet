@@ -27,12 +27,38 @@ body{
 		<div class="search-form" style="margin-top:50px">
 			<div class="sleft">
 				<label style="float:left;margin-right:10px;text-align: -webkit-center;line-height: 30px;width: 50px;">搜索：</label>
-				
-				<select name="_meet_id" style="float:left;margin-right:10px;margin-top:2px;" class="search_field" >
-					<option value="0">请选择会议名称</option>
-					<volist name=":get_meet_list()" id="vo">
-						<option value="{$vo.id}" >{$vo.meet_name}</option>
-					</volist>
+				<select name="brand_id" id="brand_id" style="float:left;margin-right:10px;margin-top:2px;" class="search_field search-automation" >
+					    		<option value="0">请选择品牌</option>
+					    		<volist name=":get_brand_list()" id="vo">
+								<option value="{$vo.id}">{$vo.brand_name}</option>
+							</volist>
+				</select>
+				<select name="region_id" id="region_id" style="float:left;margin-right:10px;margin-top:2px;" class="search_field search-automation">
+					  <option value="0">请选择大区</option>
+					  <!-- 编辑时 选中当前大区 -->
+					 <if condition="$region_id neq null">
+						<volist name=":get_region_list($brand_id)" id="vo">
+							<option value="{$vo.id}">{$vo.region_name}</option>
+						</volist>
+					</if>
+				</select>
+				<select name="city_id" id="city_id" style="float:left;margin-right:10px;margin-top:2px;" class="search_field search-automation">
+					    		<option value="0">请选择城市</option>
+					    		<!-- 编辑时 选中当前城市 -->
+					 <if condition="$city_id neq null">
+						<volist name=":get_city_list('region_id',$region_id)" id="vo">
+							<option value="{$vo.id}">{$vo.city_name}</option>
+						</volist>
+					</if>
+				</select>
+				<select name="store_id" style="float:left;margin-right:10px;margin-top:2px;" class="search_field search-automation">
+					<option value="0">请选择经销门店</option>
+					<!-- 编辑时 选中当前门店 -->
+					 <if condition="$store_id neq null">
+						<volist name=":get_store_list('city_id',$city_id)" id="vo">
+							<option value="{$vo.id}">{$vo.store_name}</option>
+						</volist>
+					</if>
 				</select>
 			</div>
 		</div>
@@ -41,14 +67,19 @@ body{
 		<div class="search-form" style="margin-top:15px">
 			<div class="sleft">
 				<label style="float:left;margin-right:10px;text-align: -webkit-center;line-height: 30px;width: 50px;">搜索：</label>
-				
-				<select name="hotel_type" style="float:left;margin-right:10px;margin-top:2px;" class="search_field" >
+				<select name="_meet_id" style="float:left;margin-right:10px;margin-top:2px;" class="search_field search-automation" >
+					<option value="0">请选择会议名称</option>
+					<volist name=":get_meet_list()" id="vo">
+						<option value="{$vo.id}" >{$vo.meet_name}</option>
+					</volist>
+				</select>
+				<select name="hotel_type" style="float:left;margin-right:10px;margin-top:2px;" class="search_field search-automation" >
 					<option value="0">请选择住宿类型</option>
 					<option value="-1">不住宿</option>
 					<option value="1">合住</option>
 					<option value="2">单住</option>
 				</select>
-				<select name="is_room_user" style="float:left;margin-right:10px;margin-top:2px;" class="search_field" >
+				<select name="is_room_user" style="float:left;margin-right:10px;margin-top:2px;" class="search_field search-automation" >
 					<option value="0">是否有室友</option>
 					<option value="1">是</option>
 					<option value="2">否</option>
@@ -103,6 +134,7 @@ body{
 			<!--<th class="" style="width:60px">头像</th>-->
 			<th class="" style="width:40px">二维码</th>
 			<th class="" style="width:60px">住宿类型</th>
+			<th class="" style="width:40px">合住人姓名</th>
 			<th class="" style="width:40px">室友名称</th>
 			<th class="" style="width:40px">审核状态</th>
 			<th class="" style="width:40px">状态</th>
@@ -151,6 +183,7 @@ body{
 			</td>
 			<td><if condition="$vo.hotel_type eq 0">不住宿<elseif condition="$vo.hotel_type eq 1"/>合住 <else/>单住 </if></td>
 			<td>{$vo.roommate_name}</td>
+			<td>{$vo.roommate_name2}</td>
 			<td><if condition="$vo.is_audit eq 0">不通过<else/>通过</if></td>
 			<td>{$vo.status_text}</td>
 			<td>
@@ -180,6 +213,70 @@ body{
 	<script src="__STATIC__/thinkbox/jquery.thinkbox.js"></script>
 
 	<script type="text/javascript">
+	//选择品牌
+	$("select[name='brand_id']").change(function(){
+		var brand_id=$("select[name='brand_id']").val();
+		if(brand_id!=''){
+			$.post("{:U('/Admin/Common/get_brand_json')}",{'brand_id':brand_id},
+					function(result){
+						//大区
+						var region_data=result.data.region_data;
+						var r_html="<option value=\"0\">请选择大区</option>";
+						if(region_data!=null){
+							 for(var i=0;i<region_data.length;i++){
+								 r_html+="<option value=\""+region_data[i].id+"\">"+region_data[i].region_name+"</option>";
+							} 
+						}else{
+							$("select[name='region_id']").val("");
+						}
+						$("select[name='region_id']").html(r_html);
+	  		},'json');
+		}
+	});
+	//选择大区
+	$("select[name='region_id']").change(function(){
+		var region_id=$("select[name='region_id']").val();
+		if(region_id!=''){
+			$.post("{:U('/Admin/Common/get_region_json')}",{'region_id':region_id},
+					function(result){
+						//城市
+						var city_data=result.data.city_data;
+						var c_html="<option value=\"0\">请选择城市</option>";
+						if(city_data!=null){
+							 for(var i=0;i<city_data.length;i++){
+								 c_html+="<option value=\""+city_data[i].id+"\">"+city_data[i].city_name+"</option>";
+							} 
+						}else{
+							$("select[name='city_id']").val("");
+						}
+						$("select[name='city_id']").html(c_html);
+	  		},'json');
+		}
+	});
+	//选择城市
+	$("select[name='city_id']").change(function(){
+		var city_id=$("select[name='city_id']").val();
+		if(city_id!=''){
+			$.post("{:U('/Admin/Common/get_city_json')}",{'city_id':city_id},
+					function(result){
+						//门店
+						var store_data=result.data.store_data;
+						var s_html="<option value=\"0\">请选择经销门店</option>";
+						if(store_data!=null){
+							 for(var i=0;i<store_data.length;i++){
+								 s_html+="<option value=\""+store_data[i].id+"\">"+store_data[i].store_name+",代码："+store_data[i].store_code+"</option>";
+							} 
+						}else{
+							$("select[name='store_id']").val("");
+						}
+						$("select[name='store_id']").html(s_html);
+						
+						
+	  		},'json');
+		}
+	});
+	
+	
 		function signIn(id){
 			if(!confirm("确定进行签到吗？")){
 				return false;
@@ -213,6 +310,11 @@ body{
 			return false;
 		}
 	});
+	Think.setValue('brand_id',{$brand_id|default=0});
+	Think.setValue('region_id',{$region_id|default=0});
+	Think.setValue('city_id',{$city_id|default=0});
+	Think.setValue('store_id',{$store_id|default=0});
+	
 	Think.setValue('_meet_id',{$_meet_id|default=0});
 	Think.setValue('_sign',{$_sign|default=0});
 	Think.setValue('hotel_type',{$hotel_type|default=0});

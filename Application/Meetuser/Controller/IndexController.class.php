@@ -212,10 +212,10 @@ class IndexController extends \Think\Controller{
             //是否住宿
             $hotel_type=$_POST['hotel_type'];
             if(!empty($hotel_type)){
-                if(empty($_POST["house_type"])){
-                    $return['msg']='请选择房型！';
-                    $this->ajaxReturn($return);
-                }
+//                 if(empty($_POST["house_type"])){
+//                     $return['msg']='请选择房型！';
+//                     $this->ajaxReturn($return);
+//                 }
                 $checkin_date=$_POST['checkin_date'];
                 if(empty($checkin_date)){
                     $return['msg']='请选择入住时间！';
@@ -231,9 +231,10 @@ class IndexController extends \Think\Controller{
                     $this->ajaxReturn($return);
                 }
                 $data['hotel_type']=$hotel_type;
-                $data['house_type']=$_POST["house_type"];
+                //$data['house_type']=$_POST["house_type"];
                 $data['checkin_date']=$checkin_date;
                 $data['leave_date']=$leave_date;
+                $data['roommate_name']=$_POST["roommate_name"];
             }
             /*
              * 检查用户的手机号 是否已经存在次会议的班级下

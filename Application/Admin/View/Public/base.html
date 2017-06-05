@@ -123,9 +123,10 @@
     })();
     </script>
     <script type="text/javascript" src="__STATIC__/think.js"></script>
-    <script type="text/javascript" src="__JS__/common.js"></script>
+    <!-- <script type="text/javascript" src="__JS__/common.js"></script>  -->
     <script type="text/javascript">
-        +function(){
+    		document.write("<s" + "cript type='text/javascript' src='__JS__/common.js?t=" + Math.random() + "'></s" + "cript>"); 
+		+function(){
             var $window = $(window), $subnav = $("#subnav"), url;
             $window.resize(function(){
                 $("#main").css("min-height", $window.height() - 130);

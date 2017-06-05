@@ -24,6 +24,10 @@ class MeetMemberController extends AdminController {
     public function index(){
         $_key       =   I('_key');
         $_meet_id   =   I('_meet_id');
+        $brand_id   =   I('brand_id',null);
+        $region_id   =   I('region_id',null);
+        $city_id   =   I('city_id',null);
+        $store_id   =   I('store_id',null);
         $hotel_type =   I('hotel_type');
         $is_room_user=   I('is_room_user');
         //$_sign   =   I('_sign');
@@ -47,6 +51,18 @@ class MeetMemberController extends AdminController {
             }
             
         }
+        if(!empty($brand_id)){
+            $map['m.brand_id']=$brand_id;
+        }
+        if(!empty($region_id)){
+            $map['m.region_id']=$region_id;
+        }
+        if(!empty($city_id)){
+            $map['m.city_id']=$city_id;
+        }
+        if(!empty($store_id)){
+            $map['m.store_id']=$store_id;
+        }
         
 //         if(!empty($_sign)){
 //             if($_sign==1){
@@ -68,14 +84,18 @@ class MeetMemberController extends AdminController {
                        ->join (' left join '.C('DB_PREFIX').('store').' s ON s.id=m.store_id' )
                        //->join (' left join '.C('DB_PREFIX').('meet_member_sign').' mms ON mms.meet_member_id=m.id' )//,mms.id as mms_id
                         ->join (' left join '.C('DB_PREFIX').('meet_member').' m1 ON m1.id=m.room_meet_member_id' );
-        $field='m.id,m.user_no,m.realname,m.phone,m.sex,m.idcard,m.headimg,m.position,m.qrcode,'.
+        $field='m.id,m.user_no,m.realname,m.phone,m.sex,m.idcard,m.headimg,m.position,m.qrcode,m.roommate_name,'.
             'm.status,m.create_time,me.meet_name,me.begin_time,me.end_time,c.classes_name,b.brand_name,r.region_name,'.
-            's.store_name,s.store_code,ci.city_name,m.hotel_type,m1.realname as roommate_name,m.is_audit';
+            's.store_name,s.store_code,ci.city_name,m.hotel_type,m1.realname as roommate_name2,m.is_audit';
         $list = $this->lists($list,null,null,null,$field);
         int_to_string($list);
         
         $this->assign('_list', $list);
         $this->assign('_meet_id', $_meet_id);
+        $this->assign('brand_id', $brand_id);
+        $this->assign('region_id', $region_id);
+        $this->assign('city_id', $city_id);
+        $this->assign('store_id', $store_id);
         $this->assign('hotel_type',$hotel_type);
         $this->assign('is_room_user',$is_room_user);
         $this->assign('_sign', $_sign);
@@ -226,16 +246,16 @@ class MeetMemberController extends AdminController {
             'status'=>I('post.status'),
             'is_audit'=>I('post.is_audit'),
             'hotel_type'=>0,//不住宿,
-            'house_type'=>0,
+            'house_type'=>0,//17-06-05废弃
             'checkin_date'=>'',
             'leave_date'=>''
         ];
         //是否住宿
         $hotel_type=$_POST['hotel_type'];
         if(!empty($hotel_type)){
-            if(empty($_POST["house_type"])){
-                 $this->error('请选择房型！');
-            }
+//             if(empty($_POST["house_type"])){
+//                  $this->error('请选择房型！');
+//             }
             $checkin_date=$_POST['checkin_date'];
             if(empty($checkin_date)){
                 $this->error('请选择入住时间！');
@@ -248,7 +268,7 @@ class MeetMemberController extends AdminController {
                 $this->error('入住时间不能大于离店时间！');
             }
             $data['hotel_type']=$hotel_type;
-            $data['house_type']=$_POST["house_type"];
+            //$data['house_type']=$_POST["house_type"];
             $data['checkin_date']=$checkin_date;
             $data['leave_date']=$leave_date;
         }
@@ -477,12 +497,12 @@ class MeetMemberController extends AdminController {
                    continue;
                }
                //房型
-               $house_type_val=$_info[11];
-               if(!empty($house_type_val) && !in_array($house_type_val,['','无','双床','大床'])){
-                   $_info[15]='房型有误，请按照模板选项值填写,导入失败！';
-                   $result_data[] = $_info;
-                   continue;
-               }
+//                $house_type_val=$_info[11];
+//                if(!empty($house_type_val) && !in_array($house_type_val,['','无','双床','大床'])){
+//                    $_info[15]='房型有误，请按照模板选项值填写,导入失败！';
+//                    $result_data[] = $_info;
+//                    continue;
+//                }
                if($hotel_type_val=='不住宿' || $hotel_type_val==''){
                    $hotel_type=0;
                }else if($hotel_type_val=='合住'){
@@ -491,13 +511,13 @@ class MeetMemberController extends AdminController {
                    $hotel_type=2;
                }
                
-               if($house_type_val=='无' || $house_type_val==''){
-                   $house_type=0;
-               }else if($house_type_val=='双床'){
-                   $house_type=1;
-               }else{
-                   $house_type=2;
-               }
+//                if($house_type_val=='无' || $house_type_val==''){
+//                    $house_type=0;
+//                }else if($house_type_val=='双床'){
+//                    $house_type=1;
+//                }else{
+//                    $house_type=2;
+//                }
                
                $checkin_date=$_info[12];
                $leave_date=$_info[13];
@@ -567,7 +587,7 @@ class MeetMemberController extends AdminController {
                ];
                if($is_stay){
                    $save_data['hotel_type']=$hotel_type;
-                   $save_data['house_type']=$house_type;
+                   //$save_data['house_type']=$house_type;
                    $save_data['checkin_date']=$checkin_date;
                    $save_data['leave_date']=$leave_date;
                }

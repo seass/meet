@@ -346,3 +346,10 @@ function showBtn() {
 function highlight_subnav(url){
     $('.side-sub-menu').find('a[href="'+url+'"]').closest('li').addClass('current');
 }
+
+$(".search-automation").change(function(){
+	$(".search-form").find("#search").click();
+});
+
+
+

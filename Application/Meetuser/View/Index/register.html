@@ -87,7 +87,11 @@
 			         	<input type="radio" name="hotel_type" id="radio-choice-5"  value="2"  />
 			         	<label for="radio-choice-5">单住</label>
 			        </fieldset>
-			        <fieldset data-role="controlgroup" data-type="horizontal">
+			        <div id="roommate_name" style="display:none;">
+			        <label for="nicky">合住人姓名</label>
+		            <input type="text" name='roommate_name'  placeholder="如果您有希望合住的人，请输入对方姓名" >
+			       	</div>
+			       <!--   <fieldset data-role="controlgroup" data-type="horizontal">
 						<legend>选择房型:</legend>
 						<input type="radio" name="house_type" id="radio-choice-6" value="0" checked="checked" />
 			         	<label for="radio-choice-6" >无</label>
@@ -97,7 +101,7 @@
 			
 			         	<input type="radio" name="house_type" id='radio-choice-8'  value="2"  />
 			         	<label for="radio-choice-8">大床</label>
-			        </fieldset>
+			        </fieldset> -->
 		             <label for="date">入住时间:</label>  
              		<input type="date" name="checkin_date" id="checkin_date" />  
               		<label for="date">离店时间:</label>  

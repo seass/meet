@@ -21,12 +21,19 @@
 				            		</div>
 		        				</div>
 		        				<div class="form-item">
+					            <label class="item-label">会议时间<span class="check-tips"></span></label>
+					            <div class="controls">
+					                <input type="text" class="text input-large date" name="meet_date" value="{$info.meet_date|default=''}">
+					            </div>
+					        </div>
+		        				<div class="form-item">
 					            <label class="item-label"><span style="color:red;">*</span> 是否开启注册<span class="check-tips">开启注册时，报名时间必填</span></label>
 					            <div class="controls">
 					                <label class="radio"><input type="radio" name="is_open_register" value="1">是</label>
 					                <label class="radio"><input type="radio" name="is_open_register" value="0">否</label>
 					            </div>
 					        </div>
+					        
 					        <div class="form-item">
 					            <label class="item-label">报名开始时间<span class="check-tips"></span></label>
 					            <div class="controls">
@@ -127,6 +134,13 @@
 <script type="text/javascript" charset="utf-8">
 	$('.time').datetimepicker({
 	    format: 'yyyy-mm-dd hh:ii:ss',
+	    language:"zh-CN",
+	    startDate:'2017-01-01 00:00:00',
+	    minView:2,
+	    autoclose:true
+	});
+	$('.date').datetimepicker({
+	    format: 'yyyy-mm-dd',
 	    language:"zh-CN",
 	    startDate:'2017-01-01 00:00:00',
 	    minView:2,
