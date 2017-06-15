@@ -41,9 +41,12 @@ class UcenterMemberModel extends Model{
 		array('email', '', -8, self::EXISTS_VALIDATE, 'unique'), //邮箱被占用
 
 		/* 验证手机号码 */
-		array('mobile', '//', -9, self::EXISTS_VALIDATE), //手机格式不正确 TODO:
+		array('mobile', 'mobile', -9, self::EXISTS_VALIDATE), //手机格式不正确 TODO:
+	    array('mobile', '11', -6, self::EXISTS_VALIDATE, 'length'), //邮箱长度不合法
 		array('mobile', 'checkDenyMobile', -10, self::EXISTS_VALIDATE, 'callback'), //手机禁止注册
 		array('mobile', '', -11, self::EXISTS_VALIDATE, 'unique'), //手机号被占用
+		
+	    //array('email', 'email', -5, self::MODEL_INSERT), //邮箱格式不正确
 	);
 
 	/* 用户模型自动完成 */
@@ -98,12 +101,13 @@ class UcenterMemberModel extends Model{
 	 * @param  string $mobile   用户手机号码
 	 * @return integer          注册成功-用户信息，注册失败-错误编号
 	 */
-	public function register($username, $password, $email, $mobile){
+	public function register($username, $password, $email, $mobile,$group_type){
 		$data = array(
 			'username' => $username,
 			'password' => $password,
 			'email'    => $email,
 			'mobile'   => $mobile,
+		    'group_type'=>$group_type
 		);
 
 		//验证手机

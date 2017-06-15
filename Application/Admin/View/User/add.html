@@ -24,11 +24,25 @@
             </div>
         </div>
         <div class="form-item">
-            <label class="item-label">邮箱<span class="check-tips">（用户邮箱，用于找回密码等安全操作）</span></label>
+            <label class="item-label">邮箱<span class="check-tips">（必填）</span></label>
             <div class="controls">
                 <input type="text" class="text input-large" name="email" value="">
             </div>
         </div>
+        <div class="form-item">
+            <label class="item-label">手机号<span class="check-tips">（必填）</span></label>
+            <div class="controls">
+                <input type="text" class="text input-large" name="mobile" value="">
+            </div>
+        </div>
+        <div class="form-item">
+					            <label class="item-label">用户组类型<span class="check-tips"></span></label>
+					            <div class="controls">
+					                <label class="radio"><input type="radio" name="group_type" value="1">管理员</label>
+					                <label class="radio"><input type="radio" name="group_type" value="2">运营</label>
+					                <label class="radio"><input type="radio" name="group_type" value="3">客户</label>
+					            </div>
+					        </div>
         <div class="form-item">
             <button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
             <button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
@@ -38,6 +52,7 @@
 
 <block name="script">
     <script type="text/javascript">
+    Think.setValue("group_type", {$group_type|default = 3});
         //导航高亮
         highlight_subnav('{:U('User/index')}');
     </script>

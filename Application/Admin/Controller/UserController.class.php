@@ -22,16 +22,26 @@ class UserController extends AdminController {
      */
     public function index(){
         $nickname       =   I('nickname');
-        $map['status']  =   array('egt',0);
+        $map['m.status']  =   array('egt',0);
+        $group_type=I('group_type');
+        
         if(is_numeric($nickname)){
-            $map['uid|nickname']=   array(intval($nickname),array('like','%'.$nickname.'%'),'_multi'=>true);
+            $map['m.uid|m.nickname']=   array(intval($nickname),array('like','%'.$nickname.'%'),'_multi'=>true);
         }else{
-            $map['nickname']    =   array('like', '%'.(string)$nickname.'%');
+            $map['m.nickname']    =   array('like', '%'.(string)$nickname.'%');
         }
-
-        $list   = $this->lists('Member', $map);
+        if(!empty($group_type)){
+            $map['um.group_type']=$group_type;
+        }
+        $list=M('Member m')
+                    ->join (' left join '.C('DB_PREFIX').('ucenter_member').' um ON um.id=m.uid' )
+                    ->where($map)->order('m.uid DESC');
+        $list = $this->lists($list,null,null,null,'m.*,um.email,um.mobile,um.group_type');
+        //var_dump($list);exit;
+        //$list   = $this->lists('Member', $map);
         int_to_string($list);
         $this->assign('_list', $list);
+        $this->assign('group_type',$group_type);
         $this->meta_title = '用户信息';
         $this->display();
     }
@@ -200,16 +210,21 @@ class UserController extends AdminController {
         }
     }
 
-    public function add($username = '', $password = '', $repassword = '', $email = ''){
+    public function add($username = '', $password = '', $repassword = '', $email = '',$mobile='',$group_type=''){
         if(IS_POST){
             /* 检测密码 */
             if($password != $repassword){
                 $this->error('密码和重复密码不一致！');
             }
-
+            if(empty($email)){
+                $this->error('邮箱必填！');
+            }
+            if(empty($mobile)){
+                $this->error('手机号必填！');
+            }
             /* 调用注册接口注册用户 */
             $User   =   new UserApi;
-            $uid    =   $User->register($username, $password, $email);
+            $uid    =   $User->register($username, $password, $email,$mobile,$group_type);
             if(0 < $uid){ //注册成功
                 $user = array('uid' => $uid, 'nickname' => $username, 'status' => 1);
                 if(!M('Member')->add($user)){

@@ -16,7 +16,13 @@
         <!-- 高级搜索 -->
 		<div class="search-form fr cf">
 			<div class="sleft">
-				<input type="text" name="nickname" class="search-input" value="{:I('nickname')}" placeholder="请输入用户昵称或者ID">
+				<select name="group_type" style="float:left;margin-right:10px;margin-top:2px;" class="search_field search-automation" >
+					<option value="0">请选择角色组</option>
+					<option value="1">管理员</option>
+					<option value="2">运营</option>
+					<option value="3">用户</option>
+				</select>
+				<input type="text" name="nickname" class="search-input search_field" value="{:I('nickname')}" placeholder="请输入用户昵称或者ID">
 				<a class="sch-btn" href="javascript:;" id="search" url="{:U('index')}"><i class="btn-search"></i></a>
 			</div>
 		</div>
@@ -28,7 +34,10 @@
         <tr>
 		<th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
 		<th class="">UID</th>
+		<th class="">角色组</th>
 		<th class="">昵称</th>
+		<th class="">邮箱</th>
+		<th class="">手机号</th>
 		<th class="">积分</th>
 		<th class="">登录次数</th>
 		<th class="">最后登录时间</th>
@@ -43,7 +52,15 @@
 		<tr>
             <td><input class="ids" type="checkbox" name="id[]" value="{$vo.uid}" /></td>
 			<td>{$vo.uid} </td>
+			<td>
+				<if condition="$vo.group_type eq 1">管理员
+				<elseif condition="$vo.group_type eq 2"/>运营
+				<else/>用户
+				</if>
+			</td>
 			<td>{$vo.nickname}</td>
+			<td>{$vo.email}</td>
+			<td>{$vo.mobile}</td>
 			<td>{$vo.score}</td>
 			<td>{$vo.login}</td>
 			<td><span>{$vo.last_login_time|time_format}</span></td>
@@ -76,7 +93,7 @@
 	//搜索功能
 	$("#search").click(function(){
 		var url = $(this).attr('url');
-        var query  = $('.search-form').find('input').serialize();
+		var query  = $('.search-form').find('.search_field').serialize();
         query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g,'');
         query = query.replace(/^&/g,'');
         if( url.indexOf('?')>0 ){
@@ -93,6 +110,7 @@
 			return false;
 		}
 	});
+	Think.setValue('group_type',{$group_type|default=0});
     //导航高亮
     highlight_subnav('{:U('User/index')}');
 	</script>
