@@ -37,6 +37,31 @@ class DetailController extends MeetuserController{
         $this->assign('html_text', $html_text);
         $this->assign('slogan_title',self::$_field_config[$type]['name']);
         $this->assign('type', $type);
+        
+        //工作人员页面 展示班级负责人
+        if($type==3){
+            if(!empty(session('amuser_auth.mid'))){
+                $where=['m.id'=>session('amuser_auth.mid')];
+                $leader_list=M('ClassesLeader cl')->where($where)
+                    ->field('um.username,um.mobile,um.email')
+                    ->join (' inner join '.C('DB_PREFIX').('ucenter_member').' um ON um.id=cl.uid')
+                    ->join (' inner join '.C('DB_PREFIX').('classes').' c ON c.id=cl.classes_id')
+                    ->join (' inner join '.C('DB_PREFIX').('meet').' m ON m.id=c.meet_id')
+                    ->group('um.id')
+                    ->select();
+            }else{
+                $where=['mm.id'=>MUID];
+                $leader_list=M('ClassesLeader cl')->where($where)
+                    ->field('um.username,um.mobile,um.email')
+                    ->join (' inner join '.C('DB_PREFIX').('ucenter_member').' um ON um.id=cl.uid')
+                    ->join (' inner join '.C('DB_PREFIX').('classes').' c ON c.id=cl.classes_id')
+                    ->join (' inner join '.C('DB_PREFIX').('meet').' m ON m.id=c.meet_id')
+                    ->join (' inner join '.C('DB_PREFIX').('meet_member').' mm ON mm.meet_id=m.meet_id')
+                    ->group('um.id')
+                    ->select();
+            }
+            $this->assign('leader_list', $leader_list);
+        }
         if($type==4){
             //住宿安排 显示用户的住宿信息
             $stay_info=M('MeetMember mm')->where(['mm.id'=>MUID])

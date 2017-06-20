@@ -1,6 +1,30 @@
 <include file="Index/head"/>
  <div class="content">
     {:$html_text}
+    
+    <!-- 工作人员页面 展示班级负责人 -->
+    <if condition="$type eq 3">
+    		<notempty name="leader_list">
+    		<table style="width:100%;">
+		    <thead>
+		        <tr>
+					<th class="">姓名</th>
+					<th class="">手机号</th>
+					<th class="">邮箱</th>
+				</tr>
+		    </thead>
+		    <tbody>
+				<volist name="leader_list" id="vo">
+				<tr>
+					<td>{$vo.username}</td>
+					<td>{$vo.mobile}</td>
+					<td>{$vo.email}</td>
+				</tr>
+				</volist>
+			</tbody>
+    		</table>
+    		</notempty>
+    </if>
     <if condition="$type eq 4">
 			<table style="width:100%;">
 		    <tbody>

@@ -119,9 +119,8 @@ class IndexController extends \Think\Controller{
             }
             $password=$_POST['password'];
             
-            $UmUser=M("UcenterMember")->where([
-                'nickname'=>$nickname,
-            ])->find();
+            $UmUser=M("UcenterMember")->where(['username'=>$nickname])->find();
+            
             if(empty($UmUser)){
                 $return['msg']='信息验证失败，请重新输入！';
                 $this->ajaxReturn($return);
@@ -129,6 +128,23 @@ class IndexController extends \Think\Controller{
             if($UmUser['status']!=1){
                 $return['msg']='用户不存在或被禁用！';
                 $this->ajaxReturn($return);
+            }
+            //检查会议客户
+            if($UmUser['group_type']==3){
+                $checkClient=M('MeetClient')->where(['uid'=>$UmUser['id'],'meet_id'=>$_POST['Mid']])->find();
+                if(empty($checkClient)){
+                    $return['msg']='此用户不属于本会议客户，不能登录！';
+                    $this->ajaxReturn($return);
+                }
+            }elseif($UmUser['group_type']==2){
+                //运营人员
+                $checkLeader=M('ClassesLeader cl')->where(['cl.uid'=>$UmUser['id'],'c.meet_id'=>$_POST['Mid']])
+                ->join (C('DB_PREFIX').('classes').' c ON c.id=cl.classes_id ')
+                ->find();
+                if(empty($checkLeader)){
+                    $return['msg']='此用户不属于本会议运营人员，不能登录！';
+                    $this->ajaxReturn($return);
+                }
             }
             $md5PassWord=md5(sha1($password).'E_TOnA/j5(u"8%gliw[:-H]{k}2bf#M.LpIK^|PD');
             
