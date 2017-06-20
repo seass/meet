@@ -80,7 +80,14 @@
 												<td>{$vo.nickname}</td>
 												<td>{$vo.email}</td>
 												<td>{$vo.mobile}</td>
-												<td> </td>
+												<td> 
+												<if condition="$vo.cl_id eq null">
+													<a href="javascript:classes_leader('add',{:$vo['uid']});">添加为班级负责人</a>
+													<else/>	
+														<a href="javascript:classes_leader('del',{:$vo['uid']});" style="color:red;">移除班级负责人</a>
+												</if>
+												
+												</td>
 											</tr>
 											</volist>
 											<else/>
@@ -136,7 +143,21 @@
 	        },1500);
 	    }
 	}
-	
+	function classes_leader(op,uid){
+		if(!confirm("确定要进行操作吗？")){
+			return false;
+		}
+		var classes_id="{$classes_id}";
+		 $.post("{:U('classes_leader')}",{'op':op,'classes_id':classes_id,'uid':uid},
+				function(result){
+			if(result.status){
+				alert('操作成功！');
+				location.reload();
+			}else{
+				alert(result.smg);
+			}
+			},'json');
+	}
 	
 	//设置回显值
 	Think.setValue('is_show_info_before',{$info.is_show_info_before|default=0});

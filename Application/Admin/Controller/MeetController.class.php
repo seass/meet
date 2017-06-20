@@ -193,12 +193,13 @@ class MeetController extends AdminController {
         ];
         
         //获取用户信息
-        $userlist=M('Member m')->field('m.*,um.email,um.mobile,um.group_type')
+        $userlist=M('Member m')->field('m.*,um.email,um.mobile,um.group_type,mc.id as mc_id')
                 ->join (' left join '.C('DB_PREFIX').('ucenter_member').' um ON um.id=m.uid' )
+                ->join (' left join '.C('DB_PREFIX').('meet_client').' mc ON mc.uid=um.id and mc.meet_id='.I('get.id'))
                 ->where(['um.group_type'=>3,'m.status'=>['egt',0]])->order('m.uid DESC')->select();
         
         $this->assign('userlist', $userlist);
-        
+        $this->assign('meet_id', I('get.id'));
         $curr_type = I('curr_type',0);//默认0 显示基本信息
         $this->assign('tablist', $tablist);
         $this->assign('curr_type', $curr_type);
@@ -235,6 +236,37 @@ class MeetController extends AdminController {
             $this->meta_title = '编辑会议';
             $this->display('edit');
         }
+    }
+    
+    /**
+     * 操作客户
+     */
+    public function meet_client(){
+        $op=I('post.op','');
+        $meet_id=I('post.meet_id','');
+        $uid=I('post.uid','');
+        
+        $return['status']=false;
+        if(empty($op) || empty($meet_id) || empty($uid)){
+            $return['smg']='操作异常，参数错误！';
+            $this->ajaxReturn($return);
+        }
+        if($op=='add'){
+            $add_res=M('MeetClient')->add(['uid'=>$uid,'meet_id'=>$meet_id]);
+            if($add_res!==false){
+                $return['status']=true;
+            }else{
+                $return['smg']='添加异常！';
+            }
+        }elseif($op=='del'){
+            $del_res=M('MeetClient')->where(['uid'=>$uid,'meet_id'=>$meet_id])->delete();
+            if($del_res!==false){
+                $return['status']=true;
+            }else{
+                $return['smg']='移除异常！';
+            }
+        }
+        $this->ajaxReturn($return);
     }
     
 }

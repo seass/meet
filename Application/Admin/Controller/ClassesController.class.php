@@ -164,14 +164,45 @@ class ClassesController extends AdminController {
         ];
     
         //获取用户信息
-        $userlist=M('Member m')->field('m.*,um.email,um.mobile,um.group_type')
+        $userlist=M('Member m')->field('m.*,um.email,um.mobile,um.group_type,cl.id as cl_id')
         ->join (' left join '.C('DB_PREFIX').('ucenter_member').' um ON um.id=m.uid' )
+        ->join (' left join '.C('DB_PREFIX').('classes_leader').' cl ON cl.uid=um.id and cl.classes_id='.I('get.id'))
         ->where(['um.group_type'=>2,'m.status'=>['egt',0]])->order('m.uid DESC')->select();
     
         $this->assign('userlist', $userlist);
-    
+        $this->assign('classes_id', I('get.id'));
         $curr_type = I('curr_type',0);//默认0 显示基本信息
         $this->assign('tablist', $tablist);
         $this->assign('curr_type', $curr_type);
+    }
+    /**
+     * 操作班级负责人
+     */
+    public function classes_leader(){
+        $op=I('post.op','');
+        $classes_id=I('post.classes_id','');
+        $uid=I('post.uid','');
+    
+        $return['status']=false;
+        if(empty($op) || empty($classes_id) || empty($uid)){
+            $return['smg']='操作异常，参数错误！';
+            $this->ajaxReturn($return);
+        }
+        if($op=='add'){
+            $add_res=M('ClassesLeader')->add(['uid'=>$uid,'classes_id'=>$classes_id]);
+            if($add_res!==false){
+                $return['status']=true;
+            }else{
+                $return['smg']='添加异常！';
+            }
+        }elseif($op=='del'){
+            $del_res=M('ClassesLeader')->where(['uid'=>$uid,'classes_id'=>$classes_id])->delete();
+            if($del_res!==false){
+                $return['status']=true;
+            }else{
+                $return['smg']='移除异常！';
+            }
+        }
+        $this->ajaxReturn($return);
     }
 }

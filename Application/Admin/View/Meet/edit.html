@@ -132,7 +132,13 @@
 										<td>{$vo.nickname}</td>
 										<td>{$vo.email}</td>
 										<td>{$vo.mobile}</td>
-										<td> </td>
+										<td> 
+											<if condition="$vo.mc_id eq null">
+												<a href="javascript:meet_client('add',{:$vo['uid']});">添加为会议客户</a>
+											<else/>	
+												<a href="javascript:meet_client('del',{:$vo['uid']});" style="color:red;">移除会议客户</a>
+											</if>
+										</td>
 									</tr>
 									</volist>
 									<else/>
@@ -160,6 +166,24 @@
 <script type="text/javascript" src="__STATIC__/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
 <script type="text/javascript" src="__STATIC__/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 <script type="text/javascript" charset="utf-8">
+	function meet_client(op,uid){
+		if(!confirm("确定要进行操作吗？")){
+			return false;
+		}
+		var meet_id="{$meet_id}";
+		 $.post("{:U('meet_client')}",{'op':op,'meet_id':meet_id,'uid':uid},
+				function(result){
+			if(result.status){
+				alert('操作成功！');
+				location.reload();
+			}else{
+				alert(result.smg);
+			}
+			},'json');
+	}
+
+
+
 	$('.time').datetimepicker({
 	    format: 'yyyy-mm-dd hh:ii:ss',
 	    language:"zh-CN",
