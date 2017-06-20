@@ -4,60 +4,101 @@
 	<div class="main-title cf">
 		<h2>{:isset($info['id'])?'编辑':'新增'}班级</h2>
 	</div>
-<form action="{:U()}" method="post" class="form-horizontal">
-		<div class="form-item cf">
-			<label class="item-label"><span style="color:red;">*</span> 绑定会议<span class="check-tips">（启用状态下的大区）</span></label>
-			<div class="controls">
-				<select name="meet_id">
-					<option value="0">请选择会议</option>
-					<volist name=":get_meet_list()" id="vo">
-						<option value="{$vo.id}">{$vo.meet_name}</option>
-					</volist>
-				</select>
-			</div>
-		</div>
-        <div class="form-item">
-            <label class="item-label"><span style="color:red;">*</span> 班级名称<span class="check-tips">（必填）</span></label>
-            <div class="controls">
-                <input type="text" class="text input-large" name="classes_name" value="{$info.classes_name|default=''}">
-            </div>
-        </div>
-        <div class="form-item">
-            <label class="item-label"> 班级座位图<span class="check-tips"></span></label>
-            <div class="controls">
-               <div class="controls">
-					<input type="file" id="upload_picture_seat_img">
-					<input type="hidden" name="seat_img" id="cover_id_seat_img" value="{$info.seat_img}"/>
-					<div class="upload-img-box">
-						<notempty name="info.seat_img">
-							<div class="upload-pre-item"><img src="__ROOT__{$info.seat_img|get_cover='path'}"/></div>
-						</notempty>
+	<div class="tab-wrap">
+		<ul class="tab-nav nav">
+				<volist name="tablist" id="group">		
+					<li <eq name="curr_type" value="$key">class="current"</eq>><a href="{:U('?curr_type='.$key.'&id='.$info['id'])}">{$group}</a></li>
+				</volist>
+		</ul>
+		<div class="tab-content">
+		<form action="{:U()}" method="post" class="form-horizontal">
+			<switch name="curr_type">
+				<case value="0">
+				<div class="form-item cf">
+					<label class="item-label"><span style="color:red;">*</span> 绑定会议<span class="check-tips">（启用状态下的大区）</span></label>
+					<div class="controls">
+						<select name="meet_id">
+							<option value="0">请选择会议</option>
+							<volist name=":get_meet_list()" id="vo">
+								<option value="{$vo.id}">{$vo.meet_name}</option>
+							</volist>
+						</select>
 					</div>
-			   </div>
-            </div>
-            
-        </div>      
-        <div class="form-item cf">
-			<label class="item-label">班级照片<span class="check-tips"></span></label>
-								<div class="controls">
-									<label class="textarea input-large"><textarea name="imgs_text">{$info.imgs_text}</textarea>
-									 {:hook('adminArticleEdit', array('name'=>'imgs_text','value'=>$info.imgs_text))}
-									 </label>
-								</div>
-		</div>     
-        <div class="form-item">
-            <label class="item-label">是否展示班级信息到前台<span class="check-tips"></span></label>
-            <div class="controls">
-                <label class="radio"><input type="radio" name="is_show_info_before" value="1">是</label>
-                <label class="radio"><input type="radio" name="is_show_info_before" value="0">否</label>
-            </div>
-        </div>
-        <div class="form-item">
-        		<input type="hidden" name="id" value="{$info.id|default=''}">
-            <button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
-            <button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
-        </div>
-    </form>
+				</div>
+		        <div class="form-item">
+		            <label class="item-label"><span style="color:red;">*</span> 班级名称<span class="check-tips">（必填）</span></label>
+		            <div class="controls">
+		                <input type="text" class="text input-large" name="classes_name" value="{$info.classes_name|default=''}">
+		            </div>
+		        </div>
+		        <div class="form-item">
+		            <label class="item-label"> 班级座位图<span class="check-tips"></span></label>
+		            <div class="controls">
+		               <div class="controls">
+							<input type="file" id="upload_picture_seat_img">
+							<input type="hidden" name="seat_img" id="cover_id_seat_img" value="{$info.seat_img}"/>
+							<div class="upload-img-box">
+								<notempty name="info.seat_img">
+									<div class="upload-pre-item"><img src="__ROOT__{$info.seat_img|get_cover='path'}"/></div>
+								</notempty>
+							</div>
+					   </div>
+		            </div>
+		            
+		        </div>      
+		        <div class="form-item cf">
+					<label class="item-label">班级照片<span class="check-tips"></span></label>
+										<div class="controls">
+											<label class="textarea input-large"><textarea name="imgs_text">{$info.imgs_text}</textarea>
+											 {:hook('adminArticleEdit', array('name'=>'imgs_text','value'=>$info.imgs_text))}
+											 </label>
+										</div>
+				</div>     
+		        <div class="form-item">
+		            <label class="item-label">是否展示班级信息到前台<span class="check-tips"></span></label>
+		            <div class="controls">
+		                <label class="radio"><input type="radio" name="is_show_info_before" value="1">是</label>
+		                <label class="radio"><input type="radio" name="is_show_info_before" value="0">否</label>
+		            </div>
+		        </div>
+		        </case>
+				<case value="1">
+					<div class="data-table table-striped">
+									<table class="">
+									    <thead>
+									        <tr>
+											<th class="">昵称</th>
+											<th class="">邮箱</th>
+											<th class="">手机号</th>
+											<th class="">操作</th>
+											</tr>
+									    </thead>
+									    	<tbody>
+									    	<notempty name="userlist">
+									    		<volist name="userlist" id="vo">
+									    		<tr>
+												<td>{$vo.nickname}</td>
+												<td>{$vo.email}</td>
+												<td>{$vo.mobile}</td>
+												<td> </td>
+											</tr>
+											</volist>
+											<else/>
+											<td colspan="4" class="text-center"> Oh! 暂时还没有内容! </td>
+											</notempty>
+										</tbody>
+									</table>
+									</div>
+				</case>
+				</switch>
+		        <div class="form-item">
+		        		<input type="hidden" name="id" value="{$info.id|default=''}">
+		            <button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+		            <button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+		        </div>
+		    </form>
+		  </div>
+	</div>
 </block>
 <block name="script">
 <script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>

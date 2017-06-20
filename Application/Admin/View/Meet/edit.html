@@ -114,6 +114,34 @@
 								</div>
 							</div>
 					</case>
+					<case value="7">
+							<div class="data-table table-striped">
+							<table class="">
+							    <thead>
+							        <tr>
+									<th class="">昵称</th>
+									<th class="">邮箱</th>
+									<th class="">手机号</th>
+									<th class="">操作</th>
+									</tr>
+							    </thead>
+							    	<tbody>
+							    	<notempty name="userlist">
+							    		<volist name="userlist" id="vo">
+							    		<tr>
+										<td>{$vo.nickname}</td>
+										<td>{$vo.email}</td>
+										<td>{$vo.mobile}</td>
+										<td> </td>
+									</tr>
+									</volist>
+									<else/>
+									<td colspan="4" class="text-center"> Oh! 暂时还没有内容! </td>
+									</notempty>
+								</tbody>
+							</table>
+							</div>
+					</case>
 				</switch>
 		        <div class="form-item">
 		       		<input type="hidden" name="curr_type" value="{$curr_type}">

@@ -7,10 +7,12 @@
 	</div>
 	<div class="cf">
 		<div class="fl">
-            <a class="btn" href="{:U('Brand/add')}">新 增</a>
-            <button class="btn ajax-post" url="{:U('Brand/changeStatus',array('method'=>'resumebrand'))}" target-form="ids">启 用</button>
-            <button class="btn ajax-post" url="{:U('Brand/changeStatus',array('method'=>'forbidbrand'))}" target-form="ids">禁 用</button>
-            <button class="btn ajax-post confirm" url="{:U('Brand/changeStatus',array('method'=>'deletebrand'))}" target-form="ids">删 除</button>
+			<if condition="session('user_auth.group_type') eq 1">
+				<a class="btn" href="{:U('Brand/add')}">新 增</a>
+            		<button class="btn ajax-post" url="{:U('Brand/changeStatus',array('method'=>'resumebrand'))}" target-form="ids">启 用</button>
+            		<button class="btn ajax-post" url="{:U('Brand/changeStatus',array('method'=>'forbidbrand'))}" target-form="ids">禁 用</button>
+            		<button class="btn ajax-post confirm" url="{:U('Brand/changeStatus',array('method'=>'deletebrand'))}" target-form="ids">删 除</button>
+			</if>
         </div>
 
         <!-- 高级搜索 -->
@@ -42,14 +44,18 @@
 			<td>{$vo.brand_name}</td>
 			<td>{$vo.status_text}</td>
 			<td>
-				<a href="{:U('Brand/edit?id='.$vo['id'])}">编辑</a>
-				<if condition="$vo.status eq 1">
-				<a href="{:U('Brand/changeStatus?method=forbidbrand&id='.$vo['id'])}" class="ajax-get">禁用</a>
-				<else/>
-				<a href="{:U('Brand/changeStatus?method=resumebrand&id='.$vo['id'])}" class="ajax-get">启用</a>
+				<if condition="session('user_auth.group_type') eq 1">
+					<a href="{:U('Brand/edit?id='.$vo['id'])}">编辑</a>
+					<if condition="$vo.status eq 1">
+					<a href="{:U('Brand/changeStatus?method=forbidbrand&id='.$vo['id'])}" class="ajax-get">禁用</a>
+					<else/>
+					<a href="{:U('Brand/changeStatus?method=resumebrand&id='.$vo['id'])}" class="ajax-get">启用</a>
+					</if>
+					<a href="{:U('Brand/changeStatus?method=deletebrand&id='.$vo['id'])}" class="confirm ajax-get">删除</a>
+	               
 				</if>
-				<a href="{:U('Brand/changeStatus?method=deletebrand&id='.$vo['id'])}" class="confirm ajax-get">删除</a>
-                </td>
+				
+               </td>
 		</tr>
 		</volist>
 		<else/>

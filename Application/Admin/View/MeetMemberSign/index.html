@@ -76,8 +76,10 @@
 			<td>{$vo.phone}</td>
 			<td>{$vo.create_time}</td>
 			<td>
+				<if condition="session('user_auth.group_type') eq 1">
 				<a href="{:U('MeetMemberSign/changeStatus?method=deleteMeetMemberSign&id='.$vo['id'])}" class="confirm ajax-get">删除</a>
-                </td>
+            		</if>
+            </td>
 		</tr>
 		</volist>
 		<else/>

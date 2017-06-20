@@ -230,6 +230,10 @@ class UserController extends AdminController {
                 if(!M('Member')->add($user)){
                     $this->error('用户添加失败！');
                 } else {
+                    //运营组用户配置
+                    if($group_type==2){
+                        M('AuthGroupAccess')->add(['uid'=>$uid,'group_id'=>2]);
+                    }
                     $this->success('用户添加成功！',U('index'));
                 }
             } else { //注册失败，显示错误信息

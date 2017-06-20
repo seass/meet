@@ -46,17 +46,25 @@ class AdminController extends Controller {
         if ( $access === false ) {
             $this->error('403:禁止访问');
         }elseif( $access === null ){
-            $dynamic        =   $this->checkDynamic();//检测分类栏目有关的各项动态权限
-            if( $dynamic === null ){
-                //检测非动态权限
-                $rule  = strtolower(MODULE_NAME.'/'.CONTROLLER_NAME.'/'.ACTION_NAME);
-                if ( !$this->checkRule($rule,array('in','1,2')) ){
-                    $this->error('未授权访问!');
-                }
-            }elseif( $dynamic === false ){
+            $rule  = strtolower(MODULE_NAME.'/'.CONTROLLER_NAME.'/'.ACTION_NAME);
+            //var_dump($rule);exit;
+            if ( !$this->checkRule($rule,array('in','1,2')) ){
+               // echo "sss";exit;
                 $this->error('未授权访问!');
             }
+//             $dynamic        =   $this->checkDynamic();//检测分类栏目有关的各项动态权限
+//             if( $dynamic === null ){
+//                 //检测非动态权限
+//                 $rule  = strtolower(MODULE_NAME.'/'.CONTROLLER_NAME.'/'.ACTION_NAME);
+//                 if ( !$this->checkRule($rule,array('in','1,2')) ){
+//                     $this->error('未授权访问!');
+//                 }
+//             }elseif( $dynamic === false ){
+//                 $this->error('未授权访问!');
+//             }
         }
+        //var_dump($this->getMenus());exit;
+       
         $this->assign('__MENU__', $this->getMenus());
     }
 

@@ -7,10 +7,12 @@
 	</div>
 	<div class="cf">
 		<div class="fl">
+		<if condition="session('user_auth.group_type') eq 1">
 			<input type="file" name="file" id="upload-file">
             <button class="btn ajax-post" url="{:U('MeetAttchment/changeStatus',array('method'=>'resumemeetattchment'))}" target-form="ids">启 用</button>
             <button class="btn ajax-post" url="{:U('MeetAttchment/changeStatus',array('method'=>'forbidmeetattchment'))}" target-form="ids">禁 用</button>
             <button class="btn ajax-post confirm" url="{:U('MeetAttchment/changeStatus',array('method'=>'deletemeetattchment'))}" target-form="ids">删 除</button>
+        </if>
         </div>
         <!-- 高级搜索 -->
 		<div class="search-form fr cf">
@@ -46,13 +48,15 @@
 			<td>{$vo.status_text}</td>
 			<td>
 				<a href="__ROOT__{:C('DOWNLOAD_UPLOAD.rootDPath')}{$vo.savepath}{$vo.savename}" target="_blank">下载</a>
+				<if condition="session('user_auth.group_type') eq 1">
 				<if condition="$vo.status eq 1">
 				<a href="{:U('MeetAttchment/changeStatus?method=forbidmeetattchment&id='.$vo['id'])}" class="ajax-get">禁用</a>
 				<else/>
 				<a href="{:U('MeetAttchment/changeStatus?method=resumemeetattchment&id='.$vo['id'])}" class="ajax-get">启用</a>
 				</if>
 				<a href="{:U('MeetAttchment/changeStatus?method=deletemeetattchment&id='.$vo['id'])}" class="confirm ajax-get">删除</a>
-                </td>
+            </if>
+            </td>
 		</tr>
 		</volist>
 		<else/>

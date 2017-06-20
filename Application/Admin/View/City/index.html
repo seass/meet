@@ -7,10 +7,12 @@
 	</div>
 	<div class="cf">
 		<div class="fl">
+			<if condition="session('user_auth.group_type') eq 1">
             <a class="btn" href="{:U('City/add')}">新 增</a>
             <button class="btn ajax-post" url="{:U('City/changeStatus',array('method'=>'resumecity'))}" target-form="ids">启 用</button>
             <button class="btn ajax-post" url="{:U('City/changeStatus',array('method'=>'forbidcity'))}" target-form="ids">禁 用</button>
             <button class="btn ajax-post confirm" url="{:U('City/changeStatus',array('method'=>'deletecity'))}" target-form="ids">删 除</button>
+        	</if>
         </div>
 
         <!-- 高级搜索 -->
@@ -46,6 +48,7 @@
 			<td>{$vo.city_name}</td>
 			<td>{$vo.status_text}</td>
 			<td>
+				<if condition="session('user_auth.group_type') eq 1">
 				<a href="{:U('City/edit?id='.$vo['id'])}">编辑</a>
 				<if condition="$vo.status eq 1">
 				<a href="{:U('City/changeStatus?method=forbidcity&id='.$vo['id'])}" class="ajax-get">禁用</a>
@@ -53,6 +56,7 @@
 				<a href="{:U('City/changeStatus?method=resumecity&id='.$vo['id'])}" class="ajax-get">启用</a>
 				</if>
 				<a href="{:U('City/changeStatus?method=deletecity&id='.$vo['id'])}" class="confirm ajax-get">删除</a>
+               </if>
                 </td>
 		</tr>
 		</volist>

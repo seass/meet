@@ -76,6 +76,7 @@ class MemberModel extends Model {
             'uid'             => $user['uid'],
             'username'        => $user['nickname'],
             'last_login_time' => $user['last_login_time'],
+            'group_type'      =>M("UcenterMember")->where('id='.$user['uid'])->getField('group_type'),
         );
 
         session('user_auth', $auth);

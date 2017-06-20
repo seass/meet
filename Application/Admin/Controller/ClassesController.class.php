@@ -120,23 +120,26 @@ class ClassesController extends AdminController {
             if(empty($id)){
                 $this->error('参数异常！');
             }
-            //绑定会议
-            $meet_id=I('post.meet_id',0);
-            if(empty($meet_id)){
-                $this->error('请选择会议，若无选择项，请先去新增会议！');
+            if(I('post.curr_type')==0){//检查基本信息
+                //绑定会议
+                $meet_id=I('post.meet_id',0);
+                if(empty($meet_id)){
+                    $this->error('请选择会议，若无选择项，请先去新增会议！');
+                }
+                $classes_name=I('post.classes_name');
+                if(empty($classes_name)){
+                    $this->error('班级名称必填！');
+                }
+                //编辑数据
+                M($this->_model)->where(['id'=>$id])->save([
+                    'classes_name'=>$classes_name,
+                    'meet_id' =>$meet_id,
+                    'seat_img'=>I('post.seat_img'),//存储的onethink_picture表的ID
+                    'imgs_text'=>I('post.imgs_text'),
+                    'is_show_info_before'=>I('post.is_show_info_before'),
+                ]);
             }
-            $classes_name=I('post.classes_name');
-            if(empty($classes_name)){
-                $this->error('班级名称必填！');
-            }
-            //编辑数据
-            M($this->_model)->where(['id'=>$id])->save([
-                'classes_name'=>$classes_name,
-                'meet_id' =>$meet_id,
-                'seat_img'=>I('post.seat_img'),//存储的onethink_picture表的ID
-                'imgs_text'=>I('post.imgs_text'),
-                'is_show_info_before'=>I('post.is_show_info_before'),
-            ]);
+            
             //记录行为(需要提前创建edit_classes行为标记)
             action_log('edit_classes',$this->_model, $id, UID);
             $this->success('操作成功！',U('index'));
@@ -146,10 +149,29 @@ class ClassesController extends AdminController {
             if(empty($id)){
                 $this->error('参数异常！');
             }
+            $this->form();
+            
             $_info=M($this->_model)->where('id='.$id)->find();
             $this->assign('info', $_info);
             $this->meta_title = '编辑班级';
             $this->display('edit');
         }
+    }
+    public function form(){
+        $tablist=[
+            0=>'基本信息',
+            1=>'会议工作人员',
+        ];
+    
+        //获取用户信息
+        $userlist=M('Member m')->field('m.*,um.email,um.mobile,um.group_type')
+        ->join (' left join '.C('DB_PREFIX').('ucenter_member').' um ON um.id=m.uid' )
+        ->where(['um.group_type'=>2,'m.status'=>['egt',0]])->order('m.uid DESC')->select();
+    
+        $this->assign('userlist', $userlist);
+    
+        $curr_type = I('curr_type',0);//默认0 显示基本信息
+        $this->assign('tablist', $tablist);
+        $this->assign('curr_type', $curr_type);
     }
 }

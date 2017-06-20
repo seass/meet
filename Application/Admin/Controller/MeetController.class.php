@@ -189,7 +189,16 @@ class MeetController extends AdminController {
             4=>'住宿安排',
             5=>'车辆安排',
             6=>'用餐安排',
+            7=>'客户',
         ];
+        
+        //获取用户信息
+        $userlist=M('Member m')->field('m.*,um.email,um.mobile,um.group_type')
+                ->join (' left join '.C('DB_PREFIX').('ucenter_member').' um ON um.id=m.uid' )
+                ->where(['um.group_type'=>3,'m.status'=>['egt',0]])->order('m.uid DESC')->select();
+        
+        $this->assign('userlist', $userlist);
+        
         $curr_type = I('curr_type',0);//默认0 显示基本信息
         $this->assign('tablist', $tablist);
         $this->assign('curr_type', $curr_type);
