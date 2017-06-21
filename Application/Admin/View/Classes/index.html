@@ -35,7 +35,7 @@
     <thead>
         <tr>
 			<th class="row-selected"><input class="check-all" type="checkbox"/></th>
-			<th class="">ID</th>
+			<!--<th class="">ID</th> -->
 			<th class="">会议名称</th>
 			<th class="">名称</th>
 			<th class="">状态</th>
@@ -48,7 +48,7 @@
 		<volist name="_list" id="vo">
 		<tr>
             <td><input class="ids" type="checkbox" name="id[]" value="{$vo.id}" /></td>
-			<td>{$vo.id}</td>
+			<!--<td>{$vo.id}</td>-->
 			<td>{$vo.meet_name}</td>
 			<td>{$vo.classes_name}</td>
 			<td>{$vo.status_text}</td>
@@ -67,14 +67,16 @@
 			</td>
 			<td>
 				<if condition="session('user_auth.group_type') eq 1">
-				<a href="{:U('Classes/edit?id='.$vo['id'])}">编辑</a>
-				<!-- <if condition="$vo.status eq 1">
-				<a href="{:U('Classes/changeStatus?method=forbidClasses&id='.$vo['id'])}" class="ajax-get">禁用</a>
-				<else/>
-				<a href="{:U('Classes/changeStatus?method=resumeClasses&id='.$vo['id'])}" class="ajax-get">启用</a>
-				</if>-->
-				<a href="{:U('Classes/changeStatus?method=deleteClasses&id='.$vo['id'])}" class="confirm ajax-get">删除</a>
-               </if>
+					<a href="{:U('Classes/edit?id='.$vo['id'])}">编辑</a>
+					<!-- <if condition="$vo.status eq 1">
+					<a href="{:U('Classes/changeStatus?method=forbidClasses&id='.$vo['id'])}" class="ajax-get">禁用</a>
+					<else/>
+					<a href="{:U('Classes/changeStatus?method=resumeClasses&id='.$vo['id'])}" class="ajax-get">启用</a>
+					</if>-->
+					<a href="{:U('Classes/changeStatus?method=deleteClasses&id='.$vo['id'])}" class="confirm ajax-get">删除</a>
+	             </if>
+	             	<a href="{:U('ClassesImgs/index?classes_id='.$vo['id'])}" class="btn" target="view_window">管理班级图片</a>
+				
                 </td>
 		</tr>
 		</volist>

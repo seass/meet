@@ -3,21 +3,21 @@
 <block name="body">
 	<!-- 标题栏 -->
 	<div class="main-title">
-		<h2>会议资料列表</h2>
+		<h2>班级照片列表</h2>
 	</div>
 	<div class="cf">
 		<div class="fl">
 		<if condition="session('user_auth.group_type') eq 1">
 			<input type="file" name="file" id="upload-file">
-            <button class="btn ajax-post" url="{:U('MeetAttchment/changeStatus',array('method'=>'resumemeetattchment'))}" target-form="ids">启 用</button>
-            <button class="btn ajax-post" url="{:U('MeetAttchment/changeStatus',array('method'=>'forbidmeetattchment'))}" target-form="ids">禁 用</button>
-            <button class="btn ajax-post confirm" url="{:U('MeetAttchment/changeStatus',array('method'=>'deletemeetattchment'))}" target-form="ids">删 除</button>
+            <!-- <button class="btn ajax-post" url="{:U('ClassesImgs/changeStatus',array('method'=>'resumemeetattchment'))}" target-form="ids">启 用</button>
+            <button class="btn ajax-post" url="{:U('ClassesImgs/changeStatus',array('method'=>'forbidmeetattchment'))}" target-form="ids">禁 用</button>
+             --><button class="btn ajax-post confirm" url="{:U('ClassesImgs/changeStatus',array('method'=>'deletemeetattchment'))}" target-form="ids">删 除</button>
         </if>
         </div>
         <!-- 高级搜索 -->
 		<div class="search-form fr cf">
 			<div class="sleft">
-				<input type="text" name="_key" class="search-input" value="{:I('_key')}" placeholder="请输入资料名称/文件类型">
+				<input type="text" name="_key" class="search-input" value="{:I('_key')}" placeholder="请输入图片名称/文件类型">
 				<a class="sch-btn" href="javascript:;" id="search" url="{:U('index')}"><i class="btn-search"></i></a>
 			</div>
 		</div>
@@ -47,14 +47,14 @@
 			<td>{$vo.create_time}</td>
 			<td>{$vo.status_text}</td>
 			<td>
-				<a href="__ROOT__{:C('DOWNLOAD_UPLOAD.rootDPath')}{$vo.savepath}{$vo.savename}" target="_blank">下载</a>
-				<if condition="session('user_auth.group_type') eq 1">
-				<if condition="$vo.status eq 1">
-				<a href="{:U('MeetAttchment/changeStatus?method=forbidmeetattchment&id='.$vo['id'])}" class="ajax-get">禁用</a>
-				<else/>
-				<a href="{:U('MeetAttchment/changeStatus?method=resumemeetattchment&id='.$vo['id'])}" class="ajax-get">启用</a>
-				</if>
-				<a href="{:U('MeetAttchment/changeStatus?method=deletemeetattchment&id='.$vo['id'])}" class="confirm ajax-get">删除</a>
+				<a href="__ROOT__{:C('DOWNLOAD_UPLOAD.rootDPath')}{$vo.savepath}{$vo.savename}" target="_blank">查看</a>
+				<!--<if condition="session('user_auth.group_type') eq 1">
+						  <if condition="$vo.status eq 1">
+						<a href="{:U('ClassesImgs/changeStatus?method=forbidmeetattchment&id='.$vo['id'])}" class="ajax-get">禁用</a>
+						<else/>
+						<a href="{:U('ClassesImgs/changeStatus?method=resumemeetattchment&id='.$vo['id'])}" class="ajax-get">启用</a> 
+				</if>-->
+				<a href="{:U('ClassesImgs/changeStatus?method=deletemeetattchment&id='.$vo['id'])}" class="confirm ajax-get">删除</a>
             </if>
             </td>
 		</tr>
@@ -68,7 +68,7 @@
     <div class="page">
         {$_page}
     </div>
-    <input  type="hidden" id="meet_id" value="{$meet_id}" />
+    <input  type="hidden" id="classes_id" value="{$classes_id}" />
 </block>
 
 <block name="script">
@@ -88,8 +88,8 @@
 			"width"           : 120,
 			'removeTimeout'   : 1,
 			'onInit'		  : init,
-			'multi'			  : false,
-			'fileTypeExts'	  : '*.csv; *.xlsx; *.pdf; *.xls; *.docx;*.png;',
+			'multi'			  : true,
+			'fileTypeExts'	  : '*.jpg; *.gif; *.jpeg; *.png;',
 			"onUploadSuccess" : uploadSuccess,
 			'onFallback' : function() {
 	            alert('未检测到兼容版本的Flash.');
@@ -105,7 +105,7 @@
 			var data = $.parseJSON(data);
 			if(data.status){
 				//保存file_id
-				$.post("{:U('saveFileId')}",{'meet_id':$("#meet_id").val(),'file_id':data.info.id},
+				$.post("{:U('saveFileId')}",{'classes_id':$("#classes_id").val(),'file_id':data.info.id},
 						function(result){
 							if(result.status){
 								updateAlert('上传成功', 'alert-success');
@@ -144,6 +144,6 @@
 		}
 	});
     //导航高亮
-    highlight_subnav('{:U('Meet/index')}');
+    highlight_subnav('{:U('Classes/index')}');
 	</script>
 </block>

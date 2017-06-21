@@ -33,7 +33,7 @@
     <thead>
         <tr>
 		<th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
-		<th class="">UID</th>
+		<!--<th class="">UID</th>-->
 		<th class="">角色组</th>
 		<th class="">昵称</th>
 		<th class="">邮箱</th>
@@ -51,7 +51,7 @@
 		<volist name="_list" id="vo">
 		<tr>
             <td><input class="ids" type="checkbox" name="id[]" value="{$vo.uid}" /></td>
-			<td>{$vo.uid} </td>
+			<!--<td>{$vo.uid} </td>-->
 			<td>
 				<if condition="$vo.group_type eq 1">管理员
 				<elseif condition="$vo.group_type eq 2"/>运营

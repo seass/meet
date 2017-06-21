@@ -45,7 +45,7 @@ body{
     <thead>
         <tr>
 		<th class="row-selected row-selected"><input class="check-all" type="checkbox"/></th>
-		<th class="">ID</th>
+		<!--  <th class="">ID</th> -->
 		<th class="" style="width:300px">会议名称</th>
 		<th class="">会议时间</th>
 		<th class="">开放注册</th>
@@ -61,7 +61,7 @@ body{
 		<volist name="_list" id="vo">
 		<tr>
             <td><input class="ids" type="checkbox" name="id[]" value="{$vo.id}" /></td>
-			<td>{$vo.id} </td>
+			<!--<td>{$vo.id} </td>-->
 			<td>{$vo.meet_name}</td>
 			<td>{$vo.meet_date}</td>
 			<td><if condition="$vo.is_open_register eq 1">是<else/>否</if></td>

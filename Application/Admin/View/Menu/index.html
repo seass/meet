@@ -27,7 +27,7 @@
                         <th class="row-selected">
                             <input class="checkbox check-all" type="checkbox">
                         </th>
-                        <th>ID</th>
+                        <!--<th>ID</th>-->
                         <th>名称</th>
                         <th>上级菜单</th>
                         <th>分组</th>
@@ -43,7 +43,7 @@
                 <volist name="list" id="menu">
                     <tr>
                         <td><input class="ids row-selected" type="checkbox" name="id[]" value="{$menu.id}"></td>
-                        <td>{$menu.id}</td>
+                        <!--<td>{$menu.id}</td>-->
                         <td>
                             <a href="{:U('index?pid='.$menu['id'])}">{$menu.title}</a>
                         </td>
