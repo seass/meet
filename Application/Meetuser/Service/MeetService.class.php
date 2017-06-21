@@ -16,10 +16,14 @@ class MeetService {
         //管理员登录  看会议的信息
         if(!empty(session('amuser_auth.mid'))){
             //拦截admin  只能看会议的信息
-            if(in_array($field, ['hyxz','rcap','gzry','zsap','car','food'])){
+            if(in_array($field, ['hyxz','rcap','gzry','zsap','car','food','classes_id'])){
                 $where=['m.id'=>session('amuser_auth.mid')];
             }else{
                 return '';
+            }
+            //班级负责人登录后看班级信息
+            if(!empty(session('amuser_auth.classes_id'))){
+                $where=['c.id'=>session('amuser_auth.classes_id')];
             }
         }else{
             $where=['mm.id'=>$muid];

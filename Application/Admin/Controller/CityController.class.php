@@ -22,11 +22,20 @@ class CityController extends AdminController {
      */
     public function index(){
         $_key       =   I('_key');
+        $brand_id   =   I('brand_id',null);
+        $region_id   =   I('region_id',null);
         $map['c.status']    =   array('egt',0);
         //模糊搜索
         if(!empty($_key)){
             $map['c.city_name|r.region_name|b.brand_name']    =   array('like', '%'.(string)$_key.'%');
         }
+        if(!empty($brand_id)){
+            $map['c.brand_id']=$brand_id;
+        }
+        if(!empty($region_id)){
+            $map['c.region_id']=$region_id;
+        }
+        
         $list=M()->table(C('DB_PREFIX').strtolower($this->_model).' c' )
                        ->where($map)
                        ->order('c.id DESC')
@@ -37,6 +46,8 @@ class CityController extends AdminController {
         int_to_string($list);
         
         $this->assign('_list', $list);
+        $this->assign('brand_id', $brand_id);
+        $this->assign('region_id', $region_id);
         $this->meta_title = '城市管理';
         $this->display();
     }

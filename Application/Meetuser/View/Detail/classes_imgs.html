@@ -1,0 +1,18 @@
+<include file="Index/head"/>
+	<div class="content">
+		<notempty name="img_list">
+			<table style="width:100%;">
+			    <thead>
+			    		<volist name="img_list" id="vo">
+				        <tr>
+							<td class="">
+								<img src="__ROOT__{:C('rootDPath')}{$vo.savepath}{$vo.savename}" style="padding-top:20px;">
+							</td>
+						</tr>
+					</volist>
+			    </thead>
+			 </table>
+		</notempty>
+	</div>
+</body>
+</html>

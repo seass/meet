@@ -35,8 +35,9 @@ class ClassesController extends AdminController {
         $list=M()->table(C('DB_PREFIX').strtolower($this->_model).' c' )
                        ->where($map)
                        ->order('c.id DESC')
-                       ->join (C('DB_PREFIX').('meet').' m ON m.id=c.meet_id' );
-        $field='c.id,c.classes_name,c.seat_img,c.status,c.create_time,m.meet_name,m.begin_time,m.end_time';
+                       ->join (' left join '.C('DB_PREFIX').('meet').' m ON m.id=c.meet_id' )
+                       ->join (' left join '.C('DB_PREFIX').('classes_leader').' cl ON cl.classes_id=c.id and cl.uid='.session('user_auth.uid') );
+        $field='c.id,c.classes_name,c.seat_img,c.status,c.create_time,m.meet_name,m.begin_time,m.end_time,cl.id as cl_id';
         $list = $this->lists($list,null,null,null,$field);
         int_to_string($list);
         
@@ -44,6 +45,9 @@ class ClassesController extends AdminController {
         $this->assign('_meet_id', $_meet_id);
         $this->meta_title = '班级管理';
         $this->display();
+        
+        
+        
     }
     /**
      * 状态修改

@@ -88,5 +88,22 @@ class ClassesImgsController extends AdminController {
         /* 返回JSON数据 */
         $this->ajaxReturn($return);
     }
+    /**
+     * 检查图片上传次数
+     * @author sea
+     */
+    public function checkImgCount(){
+        //添加数据
+        $checkCount=M($this->_model)->where([
+            'classes_id'=>I('post.classes_id'),
+            'status'=>1,
+        ])->count();
+        $return = ['status'=>false];
+        if($checkCount>=20){
+            $return['status'] = true;
+        }
+        /* 返回JSON数据 */
+        $this->ajaxReturn($return);
+    }
     
 }

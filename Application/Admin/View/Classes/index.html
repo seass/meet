@@ -74,9 +74,13 @@
 					<a href="{:U('Classes/changeStatus?method=resumeClasses&id='.$vo['id'])}" class="ajax-get">启用</a>
 					</if>-->
 					<a href="{:U('Classes/changeStatus?method=deleteClasses&id='.$vo['id'])}" class="confirm ajax-get">删除</a>
-	             </if>
 	             	<a href="{:U('ClassesImgs/index?classes_id='.$vo['id'])}" class="btn" target="view_window">管理班级图片</a>
-				
+	             </if>
+	             <if condition="session('user_auth.group_type') eq 2">
+	             		<if condition="$vo.cl_id neq null">
+	             			<a href="{:U('ClassesImgs/index?classes_id='.$vo['id'])}" class="btn" target="view_window">管理班级图片</a>
+	             		</if>
+	             </if>	
                 </td>
 		</tr>
 		</volist>

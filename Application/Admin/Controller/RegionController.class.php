@@ -22,10 +22,14 @@ class RegionController extends AdminController {
      */
     public function index(){
         $_key       =   I('_key');
+        $brand_id   =   I('brand_id',null);
         $map['r.status']    =   array('egt',0);
         //模糊搜索
         if(!empty($_key)){
             $map['b.brand_name|r.region_name']    =   array('like', '%'.(string)$_key.'%');
+        }
+        if(!empty($brand_id)){
+            $map['b.id']=$brand_id;
         }
         $list=M()->table(C('DB_PREFIX').strtolower($this->_model).' r' )
         ->where($map)
@@ -36,6 +40,7 @@ class RegionController extends AdminController {
         int_to_string($list);
         
         $this->assign('_list', $list);
+        $this->assign('brand_id', $brand_id);
         $this->meta_title = '大区管理';
         $this->display();
     }

@@ -18,7 +18,22 @@
         <!-- 高级搜索 -->
 		<div class="search-form fr cf">
 			<div class="sleft">
-				<input type="text" name="_key" class="search-input" value="{:I('_key')}" placeholder="请输入城市/大区/品牌名称">
+				<select name="brand_id" id="brand_id" style="float:left;margin-right:10px;margin-top:2px;" class="search_field search-automation" >
+					    		<option value="0">请选择品牌</option>
+					    		<volist name=":get_brand_list()" id="vo">
+								<option value="{$vo.id}">{$vo.brand_name}</option>
+							</volist>
+				</select>
+				<select name="region_id" id="region_id" style="float:left;margin-right:10px;margin-top:2px;" class="search_field search-automation">
+					  <option value="0">请选择大区</option>
+					  <!-- 编辑时 选中当前大区 -->
+					 <if condition="$region_id neq null">
+						<volist name=":get_region_list($brand_id)" id="vo">
+							<option value="{$vo.id}">{$vo.region_name}</option>
+						</volist>
+					</if>
+				</select>
+				<input type="text" name="_key" class="search-input search_field" value="{:I('_key')}" placeholder="请输入城市/大区/品牌名称">
 				<a class="sch-btn" href="javascript:;" id="search" url="{:U('index')}"><i class="btn-search"></i></a>
 			</div>
 		</div>
@@ -75,10 +90,30 @@
 	<script src="__STATIC__/thinkbox/jquery.thinkbox.js"></script>
 
 	<script type="text/javascript">
+	//选择品牌
+	$("select[name='brand_id']").change(function(){
+		var brand_id=$("select[name='brand_id']").val();
+		if(brand_id!=''){
+			$.post("{:U('/Admin/Common/get_brand_json')}",{'brand_id':brand_id},
+					function(result){
+						//大区
+						var region_data=result.data.region_data;
+						var r_html="<option value=\"0\">请选择大区</option>";
+						if(region_data!=null){
+							 for(var i=0;i<region_data.length;i++){
+								 r_html+="<option value=\""+region_data[i].id+"\">"+region_data[i].region_name+"</option>";
+							} 
+						}else{
+							$("select[name='region_id']").val("");
+						}
+						$("select[name='region_id']").html(r_html);
+	  		},'json');
+		}
+	});
 	//搜索功能
 	$("#search").click(function(){
 		var url = $(this).attr('url');
-        var query  = $('.search-form').find('input').serialize();
+		var query  = $('.search-form').find('.search_field').serialize();
         query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g,'');
         query = query.replace(/^&/g,'');
         if( url.indexOf('?')>0 ){
@@ -95,6 +130,8 @@
 			return false;
 		}
 	});
+	Think.setValue('brand_id',{$brand_id|default=0});
+	Think.setValue('region_id',{$region_id|default=0});
     //导航高亮
     highlight_subnav('{:U('City/index')}');
 	</script>

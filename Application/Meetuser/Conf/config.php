@@ -27,6 +27,7 @@ return array(
     ),
     
     'RootDPath'=>'/Uploads/Download/',//下载文件地址
+    'rootDPath' => '/Uploads/Download/',//读取下载的地址
 
     /* SESSION 和 COOKIE 配置 */
     'SESSION_PREFIX' => 'onethink_meetuser', //session前缀

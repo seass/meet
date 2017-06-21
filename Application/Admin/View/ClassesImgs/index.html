@@ -7,12 +7,13 @@
 	</div>
 	<div class="cf">
 		<div class="fl">
-		<if condition="session('user_auth.group_type') eq 1">
+		<!--<if condition="session('user_auth.group_type') eq 1"> </if> -->
 			<input type="file" name="file" id="upload-file">
             <!-- <button class="btn ajax-post" url="{:U('ClassesImgs/changeStatus',array('method'=>'resumemeetattchment'))}" target-form="ids">启 用</button>
             <button class="btn ajax-post" url="{:U('ClassesImgs/changeStatus',array('method'=>'forbidmeetattchment'))}" target-form="ids">禁 用</button>
-             --><button class="btn ajax-post confirm" url="{:U('ClassesImgs/changeStatus',array('method'=>'deletemeetattchment'))}" target-form="ids">删 除</button>
-        </if>
+             -->
+             <button class="btn ajax-post confirm" url="{:U('ClassesImgs/changeStatus',array('method'=>'deletemeetattchment'))}" target-form="ids">删 除</button>
+       
         </div>
         <!-- 高级搜索 -->
 		<div class="search-form fr cf">
@@ -53,9 +54,9 @@
 						<a href="{:U('ClassesImgs/changeStatus?method=forbidmeetattchment&id='.$vo['id'])}" class="ajax-get">禁用</a>
 						<else/>
 						<a href="{:U('ClassesImgs/changeStatus?method=resumemeetattchment&id='.$vo['id'])}" class="ajax-get">启用</a> 
-				</if>-->
+				</if> </if> -->
 				<a href="{:U('ClassesImgs/changeStatus?method=deletemeetattchment&id='.$vo['id'])}" class="confirm ajax-get">删除</a>
-            </if>
+            
             </td>
 		</tr>
 		</volist>
@@ -96,6 +97,7 @@
 	        }
 		});
 		function init(){
+			checkImgCount();
 			$('#upload-file, #upload-file-queue').css('display','inline-block');
 		}
 
@@ -121,6 +123,20 @@
 				updateAlert('上传失败');
 			}
 		}
+		
+		function checkImgCount(){
+			$.post("{:U('checkImgCount')}",{'classes_id':$("#classes_id").val()},
+					function(result){
+						if(result.status){
+							updateAlert('班级图片最多限制上传20张');
+							$('#upload-file').css('display','none');
+						}else{
+							$('#upload-file, #upload-file-queue').css('display','inline-block');
+						}
+	  				},'json');
+		}
+		
+		
 	})(jQuery);
 
 	//搜索功能

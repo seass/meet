@@ -97,6 +97,28 @@ class DetailController extends MeetuserController{
         $this->display();
     }
     /**
+     * (会议照片)班级座位
+     * @author sea
+     */
+    public function classes_imgs(){
+        //获取信息
+        $classes_id=MeetService::getMeeetFieldByMUid(MUID,'classes_id');
+        $img_list=[];
+        if(!empty($classes_id)){
+            $map['ci.classes_id']   =   $classes_id;
+            $map['ci.status']    =   array('egt',0);
+            $img_list=M('ClassesImgs ci')
+            ->field('ci.id,f.name,f.savepath,f.savename')
+            ->where($map)
+            ->order('ci.id DESC')
+            ->join (' left join '.C('DB_PREFIX').('file').' f ON f.id=ci.file_id' )
+            ->select();
+        }
+        $this->assign('img_list',$img_list);
+        $this->assign('slogan_title','会议照片');
+        $this->display();
+    }
+    /**
      * 会议资料
      * @author sea
      */

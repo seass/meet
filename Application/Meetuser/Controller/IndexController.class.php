@@ -130,6 +130,7 @@ class IndexController extends \Think\Controller{
                 $this->ajaxReturn($return);
             }
             //检查会议客户
+            $classes_id=null;
             if($UmUser['group_type']==3){
                 $checkClient=M('MeetClient')->where(['uid'=>$UmUser['id'],'meet_id'=>$_POST['Mid']])->find();
                 if(empty($checkClient)){
@@ -145,13 +146,14 @@ class IndexController extends \Think\Controller{
                     $return['msg']='此用户不属于本会议运营人员，不能登录！';
                     $this->ajaxReturn($return);
                 }
+                $classes_id=$checkLeader['classes_id'];
             }
             $md5PassWord=md5(sha1($password).'E_TOnA/j5(u"8%gliw[:-H]{k}2bf#M.LpIK^|PD');
             
             /* 验证用户密码 */
             if($md5PassWord === $UmUser['password']){
                //登录成功 存储登录信息
-                self::autoAdminLogin($_POST['Mid']);
+                self::autoAdminLogin($_POST['Mid'],$classes_id);
                 $return['status']=true;
                 $return['msg']='登录成功！';
                 $return['success_url']=U("/Meetuser/Index/index/Mid/".$_POST['Mid']);
@@ -338,7 +340,7 @@ class IndexController extends \Think\Controller{
      * 自动登录admin
      * @param  integer $user 用户信息数组
      */
-    private function autoAdminLogin($mid){
+    private function autoAdminLogin($mid,$classes_id=''){
        
         /* 记录登录SESSION和COOKIES */
         $auth = array(
@@ -347,7 +349,8 @@ class IndexController extends \Think\Controller{
             'realname'        => '管理员',
             'phone'           => '10000000000',
             'last_login_time' => time(),
-            'mid'=>$mid
+            'mid'=>$mid,
+            'classes_id'=>$classes_id
         );
         session('amuser_auth', $auth);
         session('amuser_auth_sign', data_auth_sign($auth));
