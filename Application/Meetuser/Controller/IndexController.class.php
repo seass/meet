@@ -40,6 +40,14 @@ class IndexController extends \Think\Controller{
     public function login(){
         if(IS_POST){
             $return = ['status'=>false,'msg'=>''];
+            
+            //检查会议状态
+            $meetInfo=M("Meet")->where(['id'=>$_POST['Mid'],])->find();
+            if(!empty($meetInfo) && $meetInfo['status']!=1){
+                $return['msg']='本次会议已结束！';
+                $this->ajaxReturn($return);
+            }
+            
             //验证手机格式
             $phone=$_POST['phone'];
             if(!checkRegPhone($phone)){
@@ -112,6 +120,13 @@ class IndexController extends \Think\Controller{
             //     $return['msg']='密码异常，请重新输入！';
             //     $this->ajaxReturn($return);
             // }
+            //检查会议状态
+            $meetInfo=M("Meet")->where(['id'=>$_POST['Mid'],])->find();
+            if(!empty($meetInfo) && $meetInfo['status']!=1){
+                $return['msg']='本次会议已结束！';
+                $this->ajaxReturn($return);
+            }
+            
             $nickname=$_POST['nickname'];
             if(empty($nickname)){
                 $return['msg']='用户名异常，请重新输入！';
