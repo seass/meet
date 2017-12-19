@@ -110,6 +110,7 @@ class ClassesController extends AdminController {
             $this->success('新增成功！',U('index'));
            
         } else {
+            $this->form();
             $this->meta_title = '新增班级';
             $this->display('edit');
         }
