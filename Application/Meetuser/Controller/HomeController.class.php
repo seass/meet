@@ -65,7 +65,7 @@ class HomeController extends \Think\Controller{
             }
             if(strtotime($_info['end_time'])<time()){
                 $this->assign('grade',2);
-                $this->assign('msg', '已超过注册开发时间');
+                $this->assign('msg', '已超过注册开放时间');
                 $this->assign('login_url',U('/Meetuser/Index/index/Mid/'.$_GET["Mid"]));
                 $this->display('Index/register');
                 exit;
