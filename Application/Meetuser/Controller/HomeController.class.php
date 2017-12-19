@@ -50,7 +50,7 @@ class HomeController extends \Think\Controller{
         if(empty($_GET["Mid"])){
             $this->redirect('Index/error');
         }
-        $_info=M("Meet")->field("id,is_open_register,begin_time,end_time")->where(['id'=>$_GET['Mid']])->find();
+        $_info=M("Meet")->field("id,meet_name,is_open_register,begin_time,end_time")->where(['id'=>$_GET['Mid']])->find();
         if(empty($_info)){
             $this->redirect('Index/error');
         }
@@ -72,6 +72,7 @@ class HomeController extends \Think\Controller{
             }
             $this->assign('login_url',U('/Meetuser/Index/index/Mid/'.$_GET["Mid"]));
             $this->assign('region_list',$this->get_region_list());
+            $this->assign('meet_name',$_info['meet_name']);
             $this->display('Index/register');
         }else{
             //未开放注册 直接登录
