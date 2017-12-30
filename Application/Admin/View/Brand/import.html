@@ -1,0 +1,70 @@
+<extend name="Public/base" />
+
+<block name="body">
+	<div class="span{$addons_config.width}">
+    <div class="columns-mod">
+        <div class="hd cf">
+            <h5>Excel导入数据</h5>
+            <div class="title-opt">
+            </div>
+        </div>
+        <div class="bd">
+            <div class="sys-info">
+            <form action="{:U()}" method="post" enctype="multipart/form-data">
+                <table>
+                		<tr>
+                        <th>选择品牌</th>
+                        <td>
+                        			<select name="brand_id">
+									<option value="0">请择品牌</option>
+									<volist name=":get_brand_list()" id="vo">
+										<option value="{$vo.id}" >{$vo.brand_name}</option>
+									</volist>
+								</select>
+        					</td>
+                    </tr>
+                    <tr>
+                        <th>导入</th>
+                        <td>
+	            						<input type="file" name="import"/>
+	            						<input type="button" value="导入" onclick="import_data();"/>
+        					</td>
+                    </tr>
+                    <tr>
+                        <th>格式</th>
+                        <td><a href="__ROOT__{:C('DOWNLOAD_UPLOAD.rootDPath')}导入品牌数据Excel模板.xlsx">导入品牌数据Excel模板</a> </td>
+                    </tr>
+                </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</block>
+<block name="script">
+<script type="text/javascript" charset="utf-8">
+	//导航高亮
+	highlight_subnav('{:U('index')}');
+	function import_data(){
+		var brand_id=$("select[name='brand_id']").val();
+		if(brand_id==0){
+			alert("请选择品牌");
+			return false;
+		}
+		var import_val=$("input[name='import']").val();
+		if(import_val==''){
+			alert("请选择导入文件");
+			return false;
+		}
+		if(!confirm("导入品牌下数据时，会批量禁用原从属关系，确定要导入吗？"))
+		 {
+			 return false;
+		 }
+		$("form").submit();
+	}
+	
+	
+	
+</script>
+</block>
+
