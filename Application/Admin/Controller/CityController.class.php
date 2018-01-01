@@ -24,7 +24,7 @@ class CityController extends AdminController {
         $_key       =   I('_key');
         $brand_id   =   I('brand_id',null);
         $region_id   =   I('region_id',null);
-        $map['c.status']    =   array('egt',0);
+        $map['c.status']    =   1;
         //模糊搜索
         if(!empty($_key)){
             $map['c.city_name|r.region_name|b.brand_name']    =   array('like', '%'.(string)$_key.'%');

@@ -23,7 +23,7 @@ class RegionController extends AdminController {
     public function index(){
         $_key       =   I('_key');
         $brand_id   =   I('brand_id',null);
-        $map['r.status']    =   array('egt',0);
+        $map['r.status']    =1;
         //模糊搜索
         if(!empty($_key)){
             $map['b.brand_name|r.region_name']    =   array('like', '%'.(string)$_key.'%');
