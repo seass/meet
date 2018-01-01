@@ -54,11 +54,11 @@
 			<td>
 				<if condition="session('user_auth.group_type') eq 1">
 					<a href="{:U('Region/edit?id='.$vo['id'])}">编辑</a>
-					<if condition="$vo.status eq 1">
+					<!--  <if condition="$vo.status eq 1">
 					<a href="{:U('Region/changeStatus?method=forbidRegion&id='.$vo['id'])}" class="ajax-get">禁用</a>
 					<else/>
 					<a href="{:U('Region/changeStatus?method=resumeRegion&id='.$vo['id'])}" class="ajax-get">启用</a>
-					</if>
+					</if> -->
 					<a href="{:U('Region/changeStatus?method=deleteRegion&id='.$vo['id'])}" class="confirm ajax-get">删除</a>
                 </if>
                 

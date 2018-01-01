@@ -78,11 +78,11 @@
 			<td>
 				<if condition="session('user_auth.group_type') eq 1">
 				<a href="{:U('store/edit?id='.$vo['id'])}">编辑</a>
-				<if condition="$vo.status eq 1">
+				<!--  <if condition="$vo.status eq 1">
 				<a href="{:U('Store/changeStatus?method=forbidStore&id='.$vo['id'])}" class="ajax-get">禁用</a>
 				<else/>
 				<a href="{:U('Store/changeStatus?method=resumeStore&id='.$vo['id'])}" class="ajax-get">启用</a>
-				</if>
+				</if> -->
 				<a href="{:U('Store/changeStatus?method=deleteStore&id='.$vo['id'])}" class="confirm ajax-get">删除</a>
                 </if>
                 </td>
