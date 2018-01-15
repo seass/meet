@@ -29,7 +29,7 @@ class UcenterMemberModel extends Model{
 		/* 验证用户名 */
 		array('username', '1,30', -1, self::EXISTS_VALIDATE, 'length'), //用户名长度不合法
 		array('username', 'checkDenyMember', -2, self::EXISTS_VALIDATE, 'callback'), //用户名禁止注册
-		array('username', '', -3, self::EXISTS_VALIDATE, 'unique'), //用户名被占用
+		//array('username', '', -3, self::EXISTS_VALIDATE, 'unique'), //用户名被占用
 
 		/* 验证密码 */
 		array('password', '6,30', -4, self::EXISTS_VALIDATE, 'length'), //密码长度不合法
@@ -38,13 +38,13 @@ class UcenterMemberModel extends Model{
 		array('email', 'email', -5, self::EXISTS_VALIDATE), //邮箱格式不正确
 		array('email', '1,32', -6, self::EXISTS_VALIDATE, 'length'), //邮箱长度不合法
 		array('email', 'checkDenyEmail', -7, self::EXISTS_VALIDATE, 'callback'), //邮箱禁止注册
-		array('email', '', -8, self::EXISTS_VALIDATE, 'unique'), //邮箱被占用
+		//array('email', '', -8, self::EXISTS_VALIDATE, 'unique'), //邮箱被占用
 
 		/* 验证手机号码 */
 		array('mobile', 'mobile', -9, self::EXISTS_VALIDATE), //手机格式不正确 TODO:
 	    array('mobile', '11', -6, self::EXISTS_VALIDATE, 'length'), //邮箱长度不合法
 		array('mobile', 'checkDenyMobile', -10, self::EXISTS_VALIDATE, 'callback'), //手机禁止注册
-		array('mobile', '', -11, self::EXISTS_VALIDATE, 'unique'), //手机号被占用
+		//array('mobile', '', -11, self::EXISTS_VALIDATE, 'unique'), //手机号被占用
 		
 	    //array('email', 'email', -5, self::MODEL_INSERT), //邮箱格式不正确
 	);
@@ -130,7 +130,7 @@ class UcenterMemberModel extends Model{
 	 * @return integer           登录成功-用户ID，登录失败-错误编号
 	 */
 	public function login($username, $password, $type = 1){
-		$map = array();
+		$map = array('status'=>1);
 		switch ($type) {
 			case 1:
 				$map['username'] = $username;

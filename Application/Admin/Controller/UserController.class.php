@@ -197,12 +197,15 @@ class UserController extends AdminController {
         $map['uid'] =   array('in',$id);
         switch ( strtolower($method) ){
             case 'forbiduser':
+                M('UcenterMember')->where(['id'=>array('in',$id)])->setField('status',0);
                 $this->forbid('Member', $map );
                 break;
             case 'resumeuser':
+                M('UcenterMember')->where(['id'=>array('in',$id)])->setField('status',1);
                 $this->resume('Member', $map );
                 break;
             case 'deleteuser':
+                M('UcenterMember')->where(['id'=>array('in',$id)])->setField('status',-1);
                 $this->delete('Member', $map );
                 break;
             default:
@@ -222,6 +225,22 @@ class UserController extends AdminController {
             if(empty($mobile)){
                 $this->error('手机号必填！');
             }
+            
+            //检查用户名 手机号 邮箱 是否被占用
+            $checkUsername=M('UcenterMember')->where(['status'=>['gt',-1],'username'=>$username])->getField('id');
+            if(!empty($checkUsername)){
+                $this->error('用户名已被占用！');
+            }
+            $checkPhone=M('UcenterMember')->where(['status'=>['gt',-1],'mobile'=>$mobile])->getField('id');
+            if(!empty($checkPhone)){
+                $this->error('手机号已被占用！');
+            }
+            $checkEmail=M('UcenterMember')->where(['status'=>['gt',-1],'email'=>$email])->getField('id');
+            if(!empty($checkEmail)){
+                $this->error('邮箱已被占用！');
+            }
+            
+            
             /* 调用注册接口注册用户 */
             $User   =   new UserApi;
             $uid    =   $User->register($username, $password, $email,$mobile,$group_type);
