@@ -453,20 +453,17 @@ class MeetMemberController extends AdminController {
            $result_data=[];
            foreach ($file_data as $_info){
                $brand_name=$_info[0];
-               $region_name=$_info[1];
-               $city_name=$_info[2];
-               $store_name=$_info[3];
-               $store_code=$_info[4];
-               $realname=$_info[5];
-               $phone=$_info[6];
-               $sex=$_info[7];
+               $store_code=$_info[1];
+               $realname=$_info[2];
+               $phone=$_info[3];
+               $sex=$_info[4];
                if (!in_array($sex,['男','女'])) {
                     $_info[15] = '性别数据异常，正确格式： 男 or 女';
                     $result_data[] = $_info;
                     continue;
                }
-               $idcard=$_info[8];
-               $position=$_info[9];
+               $idcard=$_info[5];
+               $position=$_info[6];
                
                //检查文件格式
                $is_type_error=false;
@@ -478,21 +475,21 @@ class MeetMemberController extends AdminController {
                    }
                }
                if($is_type_error){
-                   $_info[15]='导入的列格式错误，导入失败！错误列：'.$this->import_title[$key_error];
+                   $_info[10]='导入的列格式错误，导入失败！错误列：'.$this->import_title[$key_error];
                    $result_data[] = $_info;
                    continue;
                }
-               if(empty($brand_name) || empty($region_name) || empty($city_name) || empty($store_name) || 
+               if(empty($brand_name) || 
                    empty($store_code) || empty($realname) || empty($phone) || empty($sex)){
-                   $_info[15]='必填项数据项为空,导入失败，请看表头*号！';
+                   $_info[10]='必填项数据项为空,导入失败，请看表头*号！';
                    $result_data[] = $_info;
                    continue;
                }
                
                //住宿类型
-               $hotel_type_val=$_info[10];
+               $hotel_type_val=$_info[7];
                if(!empty($hotel_type_val) && !in_array($hotel_type_val,['','不住宿','合住','单住'])){
-                   $_info[15]='住宿类型有误，请按照模板选项值填写,导入失败！';
+                   $_info[10]='住宿类型有误，请按照模板选项值填写,导入失败！';
                    $result_data[] = $_info;
                    continue;
                }
@@ -519,13 +516,13 @@ class MeetMemberController extends AdminController {
 //                    $house_type=2;
 //                }
                
-               $checkin_date=$_info[12];
-               $leave_date=$_info[13];
+               $checkin_date=$_info[8];
+               $leave_date=$_info[9];
                $is_stay=false;
                if(!empty($hotel_type)){
                    if(!empty($checkin_date) && !empty($leave_date)){
                        if(strtotime($checkin_date)>strtotime($leave_date)){
-                           $_info[15]='入住时间不能大于离店时间,导入失败！';
+                           $_info[10]='入住时间不能大于离店时间,导入失败！';
                            $result_data[] = $_info;
                            continue;
                        }
@@ -541,7 +538,7 @@ class MeetMemberController extends AdminController {
                    'status'=>array('neq',-1)
                ])->getField("id");
                if(!empty($check_res)){
-                   $_info[15]='此用户已经存在,导入失败！';
+                   $_info[10]='此用户已经存在,导入失败！';
                    $result_data[] = $_info;
                    continue;
                }
@@ -554,22 +551,27 @@ class MeetMemberController extends AdminController {
                    $brand_id=M("Brand")->add(['brand_name'=>$brand_name]);
                }
                //检查大区是否存在
-               $region_id=M("Region")->where(['region_name'=>$region_name,'brand_id'=>$brand_id])->getField('id');
-               if(empty($region_id)){
-                   $region_id=M("Region")->add(['region_name'=>$region_name,'brand_id'=>$brand_id]);
-               }
-               //检查城市是否存在
-               $city_id=M("City")->where(['city_name'=>$city_name,'brand_id'=>$brand_id,'region_id'=>$region_id])->getField('id');
-               if(empty($city_id)){
-                   $city_id=M("City")->add(['city_name'=>$city_name,'brand_id'=>$brand_id,'region_id'=>$region_id]);
-               }
+//                $region_id=M("Region")->where(['region_name'=>$region_name,'brand_id'=>$brand_id])->getField('id');
+//                if(empty($region_id)){
+//                    $region_id=M("Region")->add(['region_name'=>$region_name,'brand_id'=>$brand_id]);
+//                }
+//                //检查城市是否存在
+//                $city_id=M("City")->where(['city_name'=>$city_name,'brand_id'=>$brand_id,'region_id'=>$region_id])->getField('id');
+//                if(empty($city_id)){
+//                    $city_id=M("City")->add(['city_name'=>$city_name,'brand_id'=>$brand_id,'region_id'=>$region_id]);
+//                }
                //检查门店是否存在
-               $store_id=M("Store")->where(['store_name'=>$store_name,'brand_id'=>$brand_id,'region_id'=>$region_id,'city_id'=>$city_id,'store_code'=>$store_code])->getField('id');
-               if(empty($store_id)){
-                   $store_id=M("Store")->add(['store_name'=>$store_name,
-                       'brand_id'=>$brand_id,'region_id'=>$region_id,
-                       'city_id'=>$city_id,'store_code'=>strtoupper($store_code)]);
+               $store_Info=M("Store")->where(['store_code'=>$store_code])->field('id,city_id,region_id,brand_id')->find();
+               if(empty($store_Info)){
+                   $_info[10]='门店代码有误，未匹配到相对应的门店信息！';
+                   $result_data[] = $_info;
+                   continue;
                }
+               $store_id=$store_Info['id'];
+               $city_id=$store_Info['city_id'];
+               $region_id=$store_Info['region_id'];
+               $brand_id=$store_Info['brand_id'];
+               
                $save_data=[
                    'brand_id'=>$brand_id,//品牌id
                    'region_id'=>$region_id,//大区id
@@ -593,7 +595,7 @@ class MeetMemberController extends AdminController {
                }
                $add_res=M($this->_model)->add($save_data);
                if($add_res==false){
-                   $_info[15]='导入失败！';
+                   $_info[10]='导入失败！';
                    $result_data[] = $_info;
                    continue;
                }
@@ -601,7 +603,7 @@ class MeetMemberController extends AdminController {
                $qrcode=createQrcode($add_res);
                M($this->_model)->where(['id'=>$add_res])->save(['qrcode'=>$qrcode]);
                
-               $_info[15]='导入成功！';
+               $_info[10]='导入成功！';
                $result_data[] = $_info;
            }
            //下载结果集
@@ -620,9 +622,6 @@ class MeetMemberController extends AdminController {
        $title = "导入人员结果" . date("Y-m-d H:i:s");
        $header_data = array(
            array('品牌*', $style),
-           array('大区*', $style),
-           array('城市*', $style),
-           array('经销店名称*', $style),
            array('经销店代码*', $style),
            array('姓名*', $style),
            array('电话号码*', $style),
@@ -630,7 +629,6 @@ class MeetMemberController extends AdminController {
            array('身份证信息', $style),
            array('职位', $style),
            array('住宿类型', $style),
-           array('房型', $style),
            array('入住时间', $style),
            array('离店时间', $style),
            array('导入结果', $style),
