@@ -42,7 +42,7 @@ class MeetMemberController extends AdminController {
                     if($i>0){
                         $str_like.=" or ";
                     }
-                    $str_like.=" m.phone like '%".trim($_itemK)."%'";
+                    $str_like.=" m.phone like '%".trim($_itemK)."%' or  m.realname like  '%".trim($_itemK)."%' ";
                 }
                 $map['_string']=$str_like;
                 //查询多个数据 ，号分割出来
