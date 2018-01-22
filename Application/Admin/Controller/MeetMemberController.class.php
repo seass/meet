@@ -35,8 +35,13 @@ class MeetMemberController extends AdminController {
         $map['me.status']    =   array('eq',1);
         //模糊搜索
         if(!empty($_key)){
-            $map['m.realname|me.meet_name|m.phone|m.user_no|s.store_name|s.store_code|m1.realname']    =   array('like', '%'.(string)$_key.'%');
-        }
+            if(count(explode(',',trim($_key)))>1){
+                //查询多个数据 ，号分割出来
+                $map['m.phone']=['in',explode(',',trim($_key))];
+            }else{
+                 $map['m.realname|me.meet_name|m.phone|m.user_no|s.store_name|s.store_code|m1.realname']    =   array('like', '%'.(string)$_key.'%');
+                 
+           }
         if(!empty($_meet_id)){
             $map['me.id']=$_meet_id;
         }
