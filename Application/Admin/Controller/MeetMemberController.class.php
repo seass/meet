@@ -42,6 +42,7 @@ class MeetMemberController extends AdminController {
                  $map['m.realname|me.meet_name|m.phone|m.user_no|s.store_name|s.store_code|m1.realname']    =   array('like', '%'.(string)$_key.'%');
                  
            }
+        }
         if(!empty($_meet_id)){
             $map['me.id']=$_meet_id;
         }
@@ -137,6 +138,7 @@ class MeetMemberController extends AdminController {
                 $this->error('参数非法');
         }
     }
+    
     /**
      * 删除用户人员（清空）
      * @param unknown $meet_id
