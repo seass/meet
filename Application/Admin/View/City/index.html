@@ -46,7 +46,9 @@
 			<th class="row-selected"><input class="check-all" type="checkbox"/></th>
 			<!--<th class="">ID</th>-->
 			<th class="">所属品牌</th>
+			<th class="">品牌状态</th>
 			<th class="">所属大区</th>
+			<th class="">大区状态</th>
 			<th class="">城市名称</th>
 			<th class="">状态</th>
 			<th class="">操作</th>
@@ -59,7 +61,15 @@
             <td><input class="ids" type="checkbox" name="id[]" value="{$vo.id}" /></td>
 			<!--<td>{$vo.id}</td>-->
 			<td>{$vo.brand_name}</td>
+			<td>
+				<if condition="$vo.b_status eq 1">启用
+				<else/>禁用</if>
+			</td>
 			<td>{$vo.region_name}</td>
+			<td>
+				<if condition="$vo.r_status eq 1">启用
+				<else/>禁用</if>
+			</td>
 			<td>{$vo.city_name}</td>
 			<td>{$vo.status_text}</td>
 			<td>

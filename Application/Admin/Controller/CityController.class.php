@@ -25,6 +25,8 @@ class CityController extends AdminController {
         $brand_id   =   I('brand_id',null);
         $region_id   =   I('region_id',null);
         $map['c.status']    =   1;
+        $map['b.status']    =   1;
+        $map['r.status']    =   1;
         //模糊搜索
         if(!empty($_key)){
             $map['c.city_name|r.region_name|b.brand_name']    =   array('like', '%'.(string)$_key.'%');
@@ -41,7 +43,7 @@ class CityController extends AdminController {
                        ->order('c.id DESC')
                        ->join (C('DB_PREFIX').('region').' r ON r.id=c.region_id' )
                        ->join (C('DB_PREFIX').('brand').' b ON b.id=c.brand_id' );
-        $field='c.id,c.city_name,c.status,c.create_time,r.region_name,b.brand_name';
+        $field='c.id,c.city_name,c.status,c.create_time,r.region_name,b.brand_name,b.status b_status,r.status r_status';
         $list = $this->lists($list,null,null,null,$field);
         int_to_string($list);
         
