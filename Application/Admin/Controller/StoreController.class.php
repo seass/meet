@@ -26,6 +26,9 @@ class StoreController extends AdminController {
         $region_id   =   I('region_id',null);
         $city_id   =   I('city_id',null);
         $map['s.status']    = 1;
+        $map['c.status']    =   1;
+        $map['b.status']    =   1;
+        $map['r.status']    =   1;
         //模糊搜索
         if(!empty($_key)){
             $map['s.store_name|r.region_name|c.city_name|b.brand_name']    =   array('like', '%'.(string)$_key.'%');

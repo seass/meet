@@ -24,6 +24,7 @@ class RegionController extends AdminController {
         $_key       =   I('_key');
         $brand_id   =   I('brand_id',null);
         $map['r.status']    =1;
+        $map['b.status']    =   1;
         //模糊搜索
         if(!empty($_key)){
             $map['b.brand_name|r.region_name']    =   array('like', '%'.(string)$_key.'%');
@@ -35,7 +36,7 @@ class RegionController extends AdminController {
         ->where($map)
         ->order('r.id DESC')
         ->join (C('DB_PREFIX').('brand').' b ON b.id=r.brand_id' );
-        $field='r.id,r.region_name,b.brand_name,r.status,r.create_time';
+        $field='r.id,r.region_name,b.brand_name,r.status,r.create_time,b.status b_status';
         $list = $this->lists($list,null,null,null,$field);
         int_to_string($list);
         
