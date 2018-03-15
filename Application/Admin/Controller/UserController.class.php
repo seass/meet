@@ -36,7 +36,7 @@ class UserController extends AdminController {
         $list=M('Member m')
                     ->join (' left join '.C('DB_PREFIX').('ucenter_member').' um ON um.id=m.uid' )
                     ->where($map)->order('m.uid DESC');
-        $list = $this->lists($list,null,null,null,'m.*,um.email,um.mobile,um.group_type');
+        $list = $this->lists($list,null,null,null,'m.*,um.username,um.email,um.mobile,um.group_type');
         //var_dump($list);exit;
         //$list   = $this->lists('Member', $map);
         int_to_string($list);
